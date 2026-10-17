@@ -1,0 +1,33 @@
+# OS / editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.sw?
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Node (also ignored under app/)
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Local ETL / huge regenerable intermediates (if recreated)
+data/processed/normalized/
+data/processed/canonical/
+data/processed/exports/events/
+
+# UCDP GED CSV is ~260MB — over GitHub's 100MB file limit.
+# Keep it locally for ETL; app runtime uses app/public/data/ only.
+data/raw/ucdp/ged261/GEDEvent_v26_1.csv
+
+.cursor/
+NavItemsApplication/
+ArcGISPythonAPI/
+

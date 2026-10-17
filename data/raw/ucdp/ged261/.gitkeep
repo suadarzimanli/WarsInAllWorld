@@ -1,0 +1,3 @@
+# Keep this folder; the large GED CSV is gitignored (GitHub 100MB limit).
+# Download GEDEvent_v26_1.csv into this directory before running scripts/run_etl.py.
+# App deploys do not need it — they use app/public/data/.

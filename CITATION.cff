@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+title: "Wars In All World"
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Arzimanli
+    given-names: Suad
+version: 1.0.0
+date-released: 2026-07-25
+license: CC-BY-4.0
+repository-code: "https://github.com/suadarzimanli/WarsInAllWorld"
+url: "https://suadarzimanli.github.io/WarsInAllWorld/"
+keywords:
+  - historical conflict
+  - wars atlas
+  - geospatial visualization
+  - battle locations
+  - Correlates of War
+  - UCDP
+  - research atlas
+abstract: >-
+  Interactive research atlas of recorded wars with Map, Globe, and Numbers
+  views. Integrates geocoded battle and theater records from public datasets
+  (HCED, Correlates of War, War Atlas, UCDP GED, MIDLOC) behind a transparent
+  filtering and coverage model. A browser over ingested, geocoded records —
+  not a complete history of all wars, and not a claim that any region “had the
+  most war.”
