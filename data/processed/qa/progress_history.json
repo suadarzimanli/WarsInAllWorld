@@ -148,5 +148,20 @@
     "cow_proxy": 473,
     "cow_unmapped": 146,
     "cow_pct_with_battles": 16.35
+  },
+  {
+    "at": "2026-11-20T15:33:17.969362+00:00",
+    "wars_total": 2955,
+    "wars_with_battles": 2129,
+    "wars_proxy_only": 473,
+    "wars_unmapped": 353,
+    "crosswalks_total": 453,
+    "crosswalk_ambiguous": 0,
+    "crosswalk_accepted_decisions": 216,
+    "cow_total": 740,
+    "cow_with_battles": 121,
+    "cow_proxy": 473,
+    "cow_unmapped": 146,
+    "cow_pct_with_battles": 16.35
   }
 ]

@@ -62,7 +62,6 @@ hced:dutch_conquest_of_bali:1894_1906,Dutch Conquest of Bali (1894–1906),cow:4
 hced:ecuadorian_civil_war:1895_1895,Ecuadorian Civil War (1895),wa:samoan_civil_war,Samoan Civil War,0.778,hced_to_existing
 hced:ecuadorian_civil_wars,Ecuadorian Civil Wars,wa:uruguayan_civil_war,Uruguayan Civil War,0.7,hced_to_existing
 hced:ethiopian_war:1875_1875,Ethiopian War (1875),cow:1553,Second Ethiopian War,0.788,hced_to_existing
-hced:finnish_war_of_independence,Finnish War of Independence,wa:estonian_war_of_independence,Estonian War of Independence,0.8,hced_to_existing
 hced:franco_mandingo_war,Franco-Mandingo War,cow:389,French-Mandinka,0.706,hced_to_existing
 hced:french_conquest_of_indo_china,French Conquest of Indo-China,cow:345,French Conquest of Kabylia,0.727,hced_to_existing
 hced:german_colonial_wars_in_africa,German Colonial Wars in Africa,cow:1560,German East Africa Company War,0.733,hced_to_existing
@@ -138,4 +137,5 @@ hced:xhosa_civil_war,Xhosa Civil War,wa:xhosa_wars,Xhosa Wars,0.72,hced_to_exist
 hced:zulu_civil_war,Zulu Civil War,wa:anglo_zulu_war,Anglo-Zulu War,0.714,hced_to_existing
 ucdp:conflict:333,Afghanistan: Government,wa:afghanistan,Afghanistan War,0.703,ucdp_to_existing
 ucdp:conflict:390,Croatia: Serb,hced:croatian_war,Croatian War,0.75,ucdp_to_existing
+ucdp:conflict:392,Georgia: Abkhazia,wa:war_in_abkhazia,War in Abkhazia,0.71,ucdp_to_existing
 ucdp:conflict:409,Eritrea - Ethiopia,wa:eritrean_ethiopian_war,Eritrean–Ethiopian War,0.842,ucdp_to_existing

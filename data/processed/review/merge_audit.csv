@@ -95,140 +95,142 @@ wa:first_sino_japanese_war,cow:73,First Sino-Japanese War,1894.0,1895.0,First Si
 wa:gran_colombia_peru_war,cow:1512,Gran Colombia–Peru War,1828.0,1829.0,Peru-Gran Colombia War,1828.0,1829.0,fuzzy_name_year,1.0,auto,correct,"assistant (draft, 2026-11-20)",
 wa:libyan_civil_war,cow:976,Libyan Civil War (2011),2011.0,2011.0,Libyan Civil War of 2011,2011.0,2011.0,fuzzy_name_year,0.933,auto,correct,"assistant (draft, 2026-11-20)",
 wa:philippine_american_war,cow:414,Philippine–American War,1899.0,1902.0,American-Philippine,1899.0,1902.0,fuzzy_name_year,0.905,auto,correct,"assistant (draft, 2026-11-20)",
-hced:1st_balkan_war,cow:100,1st Balkan War,1912.0,1913.0,First Balkan,,,review_accepted,1.0,accepted,,,
+hced:1st_balkan_war,cow:100,1st Balkan War,1912.0,1913.0,First Balkan,,,review_accepted,1.0,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
 hced:1st_british_afghan_war,cow:322,1st British Afghan War,1839.0,1842.0,First British-Afghan,,,review_accepted,0.762,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:1st_british_ashanti_war,cow:311,1st British-Ashanti War,1824.0,1826.0,First British-Ashanti,,,review_accepted,0.773,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:1st_british_burmese_war,cow:310,1st British-Burmese War,1824.0,1826.0,First British-Burmese,,,review_accepted,0.773,accepted,correct,"assistant (draft, 2026-11-20)",Restored: id renamed after Bassein 1852 relabel; decision updated.
-hced:1st_carlist_war,cow:522,1st Carlist War,1833.0,1840.0,First Carlist War of 1834-1840,,,review_accepted,1.0,accepted,,,
+hced:1st_carlist_war,cow:522,1st Carlist War,1833.0,1840.0,First Carlist War of 1834-1840,,,review_accepted,1.0,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
 hced:1st_franco_dahomean_war,cow:394,1st Franco-Dahomean War,1890.0,1890.0,First Franco-Dahomeyan,,,review_accepted,1.0,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:1st_greco_turkish_war,cow:76,1st Greco-Turkish War,1897.0,1897.0,Greco-Turkish,,,review_accepted,0.765,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:1st_gulf_war,cow:211,1st Gulf War,1990.0,1991.0,Gulf War,,,review_accepted,0.8,accepted,correct,"assistant (draft, 2026-11-20)",
-hced:1st_indo_pakistani_war,cow:147,1st Indo-Pakistani War,1947.0,1948.0,First Kashmir,,,review_accepted,1.0,accepted,,,
-hced:1st_italo_ethiopian_war,wa:first_italo_ethiopian_war,1st Italo-Ethiopian War,1894.0,1896.0,wa:first_italo_ethiopian_war,,,review_accepted,0.792,accepted,,,
-hced:1st_new_zealand_war,wa:new_zealand_wars,1st New Zealand War,1843.0,1847.0,wa:new_zealand_wars,,,review_accepted,0.857,accepted,,,
-hced:1st_opium_war,cow:323,1st Opium War,1839.0,1842.0,First Opium,,,review_accepted,1.0,accepted,,,
+hced:1st_indo_pakistani_war,cow:147,1st Indo-Pakistani War,1947.0,1948.0,First Kashmir,,,review_accepted,1.0,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:1st_italo_ethiopian_war,wa:first_italo_ethiopian_war,1st Italo-Ethiopian War,1894.0,1896.0,wa:first_italo_ethiopian_war,,,review_accepted,0.792,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:1st_new_zealand_war,wa:new_zealand_wars,1st New Zealand War,1843.0,1847.0,wa:new_zealand_wars,,,review_accepted,0.857,accepted,correct,"assistant (draft, 2026-11-20)",part of the New Zealand Wars
+hced:1st_opium_war,cow:323,1st Opium War,1839.0,1842.0,First Opium,,,review_accepted,1.0,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
 hced:1st_schleswig_holstein_war,cow:13,1st Schleswig Holstein War,1848.0,1850.0,First Schleswig-Holstein,,,review_accepted,0.84,accepted,correct,"assistant (draft, 2026-11-20)",
-hced:2nd_anglo_maratha_war,wa:second_anglo_maratha_war,2nd Anglo-Maratha War,1803.0,1803.0,wa:second_anglo_maratha_war,,,review_accepted,0.756,accepted,,,
-hced:2nd_anglo_mysore_war,wa:anglo_mysore_wars,2nd Anglo-Mysore War,1783.0,1783.0,wa:anglo_mysore_wars,,,review_accepted,0.865,accepted,,,
-hced:2nd_balkan_war,cow:103,2nd Balkan War,1913.0,1913.0,Second Balkan,,,review_accepted,1.0,accepted,,,
+hced:2nd_anglo_maratha_war,wa:second_anglo_maratha_war,2nd Anglo-Maratha War,1803.0,1803.0,wa:second_anglo_maratha_war,,,review_accepted,0.756,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:2nd_anglo_mysore_war,wa:anglo_mysore_wars,2nd Anglo-Mysore War,1783.0,1783.0,wa:anglo_mysore_wars,,,review_accepted,0.865,accepted,correct,"assistant (draft, 2026-11-20)",part of the Anglo-Mysore wars
+hced:2nd_balkan_war,cow:103,2nd Balkan War,1913.0,1913.0,Second Balkan,,,review_accepted,1.0,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
 hced:2nd_boer_zulu_war,cow:1525,2nd Boer-Zulu War,1838.0,1838.0,Boer-Zulu War,,,review_accepted,0.867,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:2nd_british_ashanti_war,cow:367,2nd British Ashanti War,1873.0,1874.0,Second British-Ashanti,,,review_accepted,0.711,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:2nd_british_burmese_war,cow:339,2nd British-Burmese War,1852.0,1853.0,Second British-Burmese,,,review_accepted,0.711,accepted,correct,"assistant (draft, 2026-11-20)",
-hced:2nd_carlist_war,cow:597,2nd Carlist War,1872.0,1876.0,Third Carlist War of 1872-1876,,,review_accepted,1.0,accepted,,,
-hced:2nd_franco_dahomean_war,wa:second_franco_dahomean_war,2nd Franco-Dahomean War,1892.0,1892.0,wa:second_franco_dahomean_war,,,review_accepted,0.776,accepted,,,
-hced:2nd_greco_turkish_war,cow:115,2nd Greco-Turkish War,1921.0,1922.0,Second Greco-Turkish,,,review_accepted,1.0,accepted,,,
-hced:2nd_indo_pakistani_war,wa:indo_pakistani_war_of_1965,2nd Indo-Pakistani War,1965.0,1965.0,wa:indo_pakistani_war_of_1965,,,review_accepted,0.792,accepted,,,
-hced:2nd_italian_war_of_independence,wa:second_italian_war_of_independence,2nd Italian War of Independence,1859.0,1860.0,wa:second_italian_war_of_independence,,,review_accepted,0.831,accepted,,,
-hced:2nd_italo_ethiopian_war,wa:second_italo_ethiopian_war,2nd Italo-Ethiopian War,1934.0,1936.0,wa:second_italo_ethiopian_war,,,review_accepted,0.776,accepted,,,
-hced:2nd_new_zealand_war,wa:new_zealand_wars,2nd New Zealand War,1860.0,1870.0,wa:new_zealand_wars,,,review_accepted,0.857,accepted,,,
-hced:2nd_opium_war,cow:343,2nd Opium War,1857.0,1860.0,Second Opium,,,review_accepted,1.0,accepted,,,
-hced:2nd_russo_swedish_war,wa:russo_swedish_war_of_1788_1790,2nd Russo-Swedish War,1788.0,1790.0,wa:russo_swedish_war_of_1788_1790,,,review_accepted,0.706,accepted,,,
+hced:2nd_carlist_war,cow:597,2nd Carlist War,1872.0,1876.0,Third Carlist War of 1872-1876,,,review_accepted,1.0,accepted,correct,"assistant (draft, 2026-11-20)",HCED numbers it 2nd; years 1872-76 = COW Third Carlist War
+hced:2nd_franco_dahomean_war,wa:second_franco_dahomean_war,2nd Franco-Dahomean War,1892.0,1892.0,wa:second_franco_dahomean_war,,,review_accepted,0.776,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:2nd_greco_turkish_war,cow:115,2nd Greco-Turkish War,1921.0,1922.0,Second Greco-Turkish,,,review_accepted,1.0,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:2nd_indo_pakistani_war,wa:indo_pakistani_war_of_1965,2nd Indo-Pakistani War,1965.0,1965.0,wa:indo_pakistani_war_of_1965,,,review_accepted,0.792,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:2nd_italian_war_of_independence,wa:second_italian_war_of_independence,2nd Italian War of Independence,1859.0,1860.0,wa:second_italian_war_of_independence,,,review_accepted,0.831,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:2nd_italo_ethiopian_war,wa:second_italo_ethiopian_war,2nd Italo-Ethiopian War,1934.0,1936.0,wa:second_italo_ethiopian_war,,,review_accepted,0.776,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:2nd_new_zealand_war,wa:new_zealand_wars,2nd New Zealand War,1860.0,1870.0,wa:new_zealand_wars,,,review_accepted,0.857,accepted,correct,"assistant (draft, 2026-11-20)",part of the New Zealand Wars
+hced:2nd_opium_war,cow:343,2nd Opium War,1857.0,1860.0,Second Opium,,,review_accepted,1.0,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:2nd_russo_swedish_war,wa:russo_swedish_war_of_1788_1790,2nd Russo-Swedish War,1788.0,1790.0,wa:russo_swedish_war_of_1788_1790,,,review_accepted,0.706,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
 hced:2nd_schleswig_holstein_war,cow:46,2nd Schleswig Holstein War,1864.0,1864.0,Second Schleswig-Holstein,,,review_accepted,0.745,accepted,correct,"assistant (draft, 2026-11-20)",
-hced:2nd_seminole_indian_war,wa:second_seminole_war,2nd Seminole Indian War,1835.0,1842.0,wa:second_seminole_war,,,review_accepted,0.714,accepted,,,
-hced:2nd_seminole_indian_wars,wa:second_seminole_war,2nd Seminole Indian Wars,1836.0,1838.0,wa:second_seminole_war,,,review_accepted,1.0,accepted,,,
+hced:2nd_seminole_indian_war,wa:second_seminole_war,2nd Seminole Indian War,1835.0,1842.0,wa:second_seminole_war,,,review_accepted,0.714,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:2nd_seminole_indian_wars,wa:second_seminole_war,2nd Seminole Indian Wars,1836.0,1838.0,wa:second_seminole_war,,,review_accepted,1.0,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
 hced:2nd_sino_japanese_war,cow:130,2nd Sino-Japanese War,1939.0,1941.0,Third Sino-Japanese,,,review_accepted,0.75,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:3rd_british_afghan_war,cow:442,3rd British Afghan War,1919.0,1919.0,Third British-Afghan,,,review_accepted,0.762,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:3rd_british_burmese_wars,cow:387,3rd British-Burmese Wars,1885.0,1885.0,Third British-Burmese,,,review_accepted,0.756,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:3rd_british_kandyan_war,cow:305,3rd British-Kandyan War,1818.0,1818.0,British-Kandyan,,,review_accepted,0.789,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:3rd_british_maratha_war,cow:306,3rd British Maratha War,1817.0,1819.0,British-Maratha,,,review_accepted,0.789,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:3rd_british_maratha_wars,cow:306,3rd British Maratha Wars,1818.0,1818.0,British-Maratha,,,review_accepted,0.769,accepted,correct,"assistant (draft, 2026-11-20)",
-hced:3rd_franco_dahomean_war,wa:second_franco_dahomean_war,3rd Franco-Dahomean War,1893.0,1893.0,wa:second_franco_dahomean_war,,,review_accepted,0.776,accepted,,,
-hced:3rd_italian_war_of_independence,wa:third_italian_war_of_independence,3rd Italian War of Independence,1866.0,1866.0,wa:third_italian_war_of_independence,,,review_accepted,0.844,accepted,,,
-hced:american_civil_war,cow:572,American Civil War,1861.0,1865.0,U.S. Civil War of 1861-1865,,,review_accepted,1.0,accepted,,,
-hced:american_civil_wars,cow:572,American Civil Wars,1862.0,1865.0,U.S. Civil War of 1861-1865,,,review_accepted,1.0,accepted,,,
+hced:3rd_franco_dahomean_war,wa:second_franco_dahomean_war,3rd Franco-Dahomean War,1893.0,1893.0,wa:second_franco_dahomean_war,,,review_accepted,0.776,accepted,correct,"assistant (draft, 2026-11-20)",1893 campaign of the Second Franco-Dahomean War (1892-94)
+hced:3rd_italian_war_of_independence,wa:third_italian_war_of_independence,3rd Italian War of Independence,1866.0,1866.0,wa:third_italian_war_of_independence,,,review_accepted,0.844,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:american_civil_war,cow:572,American Civil War,1861.0,1865.0,U.S. Civil War of 1861-1865,,,review_accepted,1.0,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:american_civil_wars,cow:572,American Civil Wars,1862.0,1865.0,U.S. Civil War of 1861-1865,,,review_accepted,1.0,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
 hced:american_mexican_war,cow:7,American Mexican War,1846.0,1848.0,Mexican-American,,,review_accepted,0.889,accepted,correct,"assistant (draft, 2026-11-20)",
-hced:american_revolutionary_war,wa:revolution,American Revolutionary War,1778.0,1778.0,wa:revolution,,,review_accepted,0.844,accepted,,,
-hced:anglo_dutch_war,wa:fourth_anglo_dutch_war,Anglo-Dutch War,1782.0,1782.0,wa:fourth_anglo_dutch_war,,,review_accepted,0.811,accepted,,,
+hced:american_revolutionary_war,wa:revolution,American Revolutionary War,1778.0,1778.0,wa:revolution,,,review_accepted,0.844,accepted,correct,"assistant (draft, 2026-11-20)",wa:revolution = American Revolution 1775-83 (Q40949)
+hced:anglo_dutch_war,wa:fourth_anglo_dutch_war,Anglo-Dutch War,1782.0,1782.0,wa:fourth_anglo_dutch_war,,,review_accepted,0.811,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
 hced:anglo_persian_war,cow:25,Anglo-Persian War,1856.0,1857.0,Anglo-Persian,,,review_accepted,0.867,accepted,correct,"assistant (draft, 2026-11-20)",
-hced:angolan_war,wa:angolan_civil_war,Angolan War,1987.0,1987.0,wa:angolan_civil_war,,,review_accepted,0.786,accepted,,,
-hced:apache_indian_war,wa:apache_wars,Apache Indian War,1873.0,1881.0,wa:apache_wars,,,review_accepted,0.714,accepted,,,
-hced:apache_indian_wars,wa:apache_wars,Apache Indian Wars,1851.0,1886.0,wa:apache_wars,,,review_accepted,0.759,accepted,,,
+hced:angolan_war,wa:angolan_civil_war,Angolan War,1987.0,1987.0,wa:angolan_civil_war,,,review_accepted,0.786,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:apache_indian_war,wa:apache_wars,Apache Indian War,1873.0,1881.0,wa:apache_wars,,,review_accepted,0.714,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:apache_indian_wars,wa:apache_wars,Apache Indian Wars,1851.0,1886.0,wa:apache_wars,,,review_accepted,0.759,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
 hced:arab_israel_yom_kippur_war,cow:181,Arab Israel Yom Kippur War,1973.0,1973.0,Yom Kippur War,,,review_accepted,0.7,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:argentine_brazil_war,cow:315,Argentine Brazil War,1827.0,1827.0,Brazil-Argentine,,,review_accepted,0.889,accepted,correct,"assistant (draft, 2026-11-20)",
-hced:argentine_uruguayan_war,wa:uruguayan_civil_war,Argentine-Uruguayan War,1843.0,1845.0,wa:uruguayan_civil_war,,,review_accepted,0.714,accepted,,,
-hced:bannock_indian_war,wa:bannock_war,Bannock Indian War,1878.0,1878.0,wa:bannock_war,,,review_accepted,0.759,accepted,,,
-hced:bannock_indian_wars,wa:bannock_war,Bannock Indian Wars,1878.0,1878.0,wa:bannock_war,,,review_accepted,0.733,accepted,,,
-hced:black_hawk_indian_war,wa:black_hawk_war,Black Hawk Indian War,1832.0,1832.0,wa:black_hawk_war,,,review_accepted,0.8,accepted,,,
+hced:argentine_uruguayan_war,wa:uruguayan_civil_war,Argentine-Uruguayan War,1843.0,1845.0,wa:uruguayan_civil_war,,,review_accepted,0.714,accepted,correct,"assistant (draft, 2026-11-20)",Argentine intervention in the Uruguayan Guerra Grande (1839-51)
+hced:bannock_indian_war,wa:bannock_war,Bannock Indian War,1878.0,1878.0,wa:bannock_war,,,review_accepted,0.759,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:bannock_indian_wars,wa:bannock_war,Bannock Indian Wars,1878.0,1878.0,wa:bannock_war,,,review_accepted,0.733,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:black_hawk_indian_war,wa:black_hawk_war,Black Hawk Indian War,1832.0,1832.0,wa:black_hawk_war,,,review_accepted,0.8,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
 hced:british_afghan_war,cow:379,British Afghan War,1879.0,1879.0,Second British-Afghan,,,review_accepted,0.769,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:british_ashanti_war,cow:367,British-Ashanti War,1873.0,1873.0,Second British-Ashanti,,,review_accepted,0.78,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:british_bhutanese_wars,cow:360,British-Bhutanese Wars,1865.0,1865.0,British-Bhutanese,,,review_accepted,0.872,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:british_conquest_of_sind,cow:326,British Conquest of Sind,1843.0,1843.0,British-Sind,,,review_accepted,0.667,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:british_expedition_to_ethiopia,cow:362,British Expedition to Ethiopia,1868.0,1868.0,British-Ethiopian,,,review_accepted,0.723,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:british_sikh_war,cow:331,British Sikh War,1846.0,1846.0,First British-Sikh,,,review_accepted,1.0,accepted,correct,"assistant (draft, 2026-11-20)",
-hced:burmese_war,cow:387,Burmese War,1885.0,1885.0,Third British-Burmese,,,review_accepted,1.0,accepted,,,
-hced:cayuse_indian_war,wa:cayuse_war,Cayuse Indian War,1847.0,1848.0,wa:cayuse_war,,,review_accepted,0.741,accepted,,,
+hced:burmese_war,cow:387,Burmese War,1885.0,1885.0,Third British-Burmese,,,review_accepted,1.0,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:cayuse_indian_war,wa:cayuse_war,Cayuse Indian War,1847.0,1848.0,wa:cayuse_war,,,review_accepted,0.741,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
 hced:chaco_war,cow:124,Chaco War,1927.0,1935.0,Chaco,,,review_accepted,0.714,accepted,correct,"assistant (draft, 2026-11-20)",Restored: id renamed after Vanguardia year fix; decision updated.
-hced:chilean_war_of_the_confederation,wa:war_of_the_confederation,Chilean War of the Confederation,1837.0,1839.0,wa:war_of_the_confederation,,,review_accepted,0.857,accepted,,,
+hced:chilean_war_of_the_confederation,wa:war_of_the_confederation,Chilean War of the Confederation,1837.0,1839.0,wa:war_of_the_confederation,,,review_accepted,0.857,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
 hced:civil_war:1861_1864,cow:572,Civil War (1861–1864),1861.0,1864.0,U.S. Civil War of 1861-1865,,,review_accepted,1.0,accepted,correct,"assistant (draft, 2026-11-20)",
-hced:colombian_civil_war:1861_1861,wa:colombian_civil_war_of_1859_62,Colombian Civil War (1861),1861.0,1861.0,wa:colombian_civil_war_of_1859_62,,,review_accepted,0.776,accepted,,,
+hced:colombian_civil_war:1861_1861,wa:colombian_civil_war_of_1859_62,Colombian Civil War (1861),1861.0,1861.0,wa:colombian_civil_war_of_1859_62,,,review_accepted,0.776,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
 hced:colombian_war:1841_1841,cow:536,Colombian War (1841),1841.0,1841.0,First Colombian War of 1840-1842,,,review_accepted,1.0,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:colombian_war_of_the_thousand_days,cow:636,Colombian War of the Thousand Days,1899.0,1900.0,Colombian War of the Thousand Days of 1899-1902,,,review_accepted,0.84,accepted,correct,"assistant (draft, 2026-11-20)",
-hced:creek_indian_war,wa:creek_war,Creek Indian War,1813.0,1814.0,wa:creek_war,,,review_accepted,0.72,accepted,,,
+hced:creek_indian_war,wa:creek_war,Creek Indian War,1813.0,1814.0,wa:creek_war,,,review_accepted,0.72,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
 hced:crimean_war,cow:22,Crimean War,1853.0,1855.0,Crimean,,,review_accepted,0.778,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:cuban_revolution,cow:745,Cuban Revolution,1953.0,1958.0,Cuban Revolution of 1958-1959,,,review_accepted,0.711,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:ecuador_colombia_war,cow:43,Ecuador-Colombia War,1862.0,1863.0,Ecuadorian-Colombian,,,review_accepted,0.85,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:egyptian_ethiopian_wars,cow:372,Egyptian-Ethiopian Wars,1875.0,1875.0,Egyptian-Ethiopian,,,review_accepted,0.878,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:escobar_rebellion,cow:707,Escobar Rebellion,1929.0,1929.0,Escobar Rebellion of 1929,,,review_accepted,0.81,accepted,correct,"assistant (draft, 2026-11-20)",
+hced:finnish_war,cow:680,Finnish War,1918.0,1918.0,Finnish Civil War of 1918,,,review_accepted,1.0,accepted,correct,"assistant (draft, 2026-11-20)",Aland 1918 belongs to the Finnish Civil War
+hced:finnish_war_of_independence,cow:680,Finnish War of Independence,1918.0,1918.0,Finnish Civil War of 1918,,,review_accepted,1.0,accepted,correct,"assistant (draft, 2026-11-20)",White name for the 1918 Finnish Civil War
 hced:franco_prussian_war,cow:58,Franco-Prussian War,1870.0,1871.0,Franco-Prussian,,,review_accepted,0.882,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:franco_prussian_wars,cow:58,Franco-Prussian Wars,1870.0,1870.0,Franco-Prussian,,,review_accepted,0.857,accepted,correct,"assistant (draft, 2026-11-20)",
-hced:french_indo_chinese_war,cow:457,French Indo-Chinese War,1951.0,1951.0,French-Indochina,,,review_accepted,1.0,accepted,,,
-hced:french_revolutionary_war_1st_coalition,wa:french_revolutionary_wars,French Revolutionary War (1st Coalition),1792.0,1797.0,wa:french_revolutionary_wars,,,review_accepted,0.762,accepted,,,
-hced:french_revolutionary_war_2nd_coalition,wa:french_revolutionary_wars,French Revolutionary War (2nd Coalition),1799.0,1800.0,wa:french_revolutionary_wars,,,review_accepted,0.762,accepted,,,
-hced:french_revolutionary_war_irish_rising,wa:french_revolutionary_wars,French Revolutionary War (Irish Rising),1798.0,1798.0,wa:french_revolutionary_wars,,,review_accepted,0.774,accepted,,,
-hced:french_revolutionary_war_vendee,wa:war_in_the_vendee,French Revolutionary War (Vendee),1793.0,1793.0,wa:war_in_the_vendee,,,review_accepted,1.0,accepted,,,
-hced:french_revolutionary_war_vendee_war,wa:war_in_the_vendee,French Revolutionary War (Vendee War),1793.0,1793.0,wa:war_in_the_vendee,,,review_accepted,1.0,accepted,,,
-hced:french_revolutionary_war_vendeen_war,wa:war_in_the_vendee,French Revolutionary War (Vendeen War),1793.0,1793.0,wa:war_in_the_vendee,,,review_accepted,1.0,accepted,,,
-hced:french_revolutionary_wars_1st_coalition,wa:french_revolutionary_wars,French Revolutionary Wars (1st Coalition),1792.0,1800.0,wa:french_revolutionary_wars,,,review_accepted,0.781,accepted,,,
-hced:french_revolutionary_wars_1st_coaliton,wa:french_revolutionary_wars,French Revolutionary Wars (1st Coaliton),1796.0,1797.0,wa:french_revolutionary_wars,,,review_accepted,0.794,accepted,,,
-hced:french_revolutionary_wars_1st_coaltion,wa:french_revolutionary_wars,French Revolutionary Wars (1st Coaltion),1793.0,1793.0,wa:french_revolutionary_wars,,,review_accepted,0.794,accepted,,,
-hced:french_revolutionary_wars_2nd_coalition,wa:french_revolutionary_wars,French Revolutionary Wars (2nd Coalition),1799.0,1801.0,wa:french_revolutionary_wars,,,review_accepted,0.781,accepted,,,
-hced:french_revolutionary_wars_2nd_coaltion,wa:french_revolutionary_wars,French Revolutionary Wars (2nd Coaltion),1801.0,1801.0,wa:french_revolutionary_wars,,,review_accepted,0.794,accepted,,,
-hced:french_revolutionary_wars_first_coaltion,wa:french_revolutionary_wars,French Revolutionary Wars (First Coaltion),1794.0,1794.0,wa:french_revolutionary_wars,,,review_accepted,0.769,accepted,,,
-hced:french_revolutionary_wars_irish_rebels,wa:french_revolutionary_wars,French Revolutionary Wars (Irish Rebels),1798.0,1798.0,wa:french_revolutionary_wars,,,review_accepted,0.794,accepted,,,
-hced:french_revolutionary_wars_irish_rising,wa:french_revolutionary_wars,French Revolutionary Wars (Irish Rising),1796.0,1798.0,wa:french_revolutionary_wars,,,review_accepted,0.794,accepted,,,
-hced:french_revolutionary_wars_middle_east,wa:french_revolutionary_wars,French Revolutionary Wars (Middle East),1798.0,1801.0,wa:french_revolutionary_wars,,,review_accepted,0.806,accepted,,,
-hced:french_revolutionary_wars_middle_east_f,wa:french_revolutionary_wars,French Revolutionary Wars (Middle East)f,1798.0,1798.0,wa:french_revolutionary_wars,,,review_accepted,0.781,accepted,,,
-hced:french_revolutionary_wars_peninsula_campaign,wa:french_revolutionary_wars,French Revolutionary Wars (Peninsula Campaign),1795.0,1795.0,wa:french_revolutionary_wars,,,review_accepted,0.725,accepted,,,
-hced:french_revolutionary_wars_vendee,wa:war_in_the_vendee,French Revolutionary Wars (Vendee,1793.0,1793.0,wa:war_in_the_vendee,,,review_accepted,1.0,accepted,,,
-hced:french_revolutionary_wars_vendee_revolt,wa:war_in_the_vendee,French Revolutionary Wars (Vendee Revolt),1793.0,1793.0,wa:war_in_the_vendee,,,review_accepted,1.0,accepted,,,
-hced:french_revolutionary_wars_vendee_war,wa:war_in_the_vendee,French Revolutionary Wars (Vendee War),1793.0,1793.0,wa:war_in_the_vendee,,,review_accepted,1.0,accepted,,,
-hced:french_revolutionary_wars_vendeen_war,wa:war_in_the_vendee,French Revolutionary Wars (Vendeen War),1793.0,1793.0,wa:war_in_the_vendee,,,review_accepted,1.0,accepted,,,
+hced:french_indo_chinese_war,cow:457,French Indo-Chinese War,1951.0,1951.0,French-Indochina,,,review_accepted,1.0,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:french_revolutionary_war_1st_coalition,wa:french_revolutionary_wars,French Revolutionary War (1st Coalition),1792.0,1797.0,wa:french_revolutionary_wars,,,review_accepted,0.762,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:french_revolutionary_war_2nd_coalition,wa:french_revolutionary_wars,French Revolutionary War (2nd Coalition),1799.0,1800.0,wa:french_revolutionary_wars,,,review_accepted,0.762,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:french_revolutionary_war_irish_rising,wa:french_revolutionary_wars,French Revolutionary War (Irish Rising),1798.0,1798.0,wa:french_revolutionary_wars,,,review_accepted,0.774,accepted,correct,"assistant (draft, 2026-11-20)",1798 Irish rebellion with French intervention; HCED files it under the French Revolutionary Wars
+hced:french_revolutionary_war_vendee,wa:war_in_the_vendee,French Revolutionary War (Vendee),1793.0,1793.0,wa:war_in_the_vendee,,,review_accepted,1.0,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:french_revolutionary_war_vendee_war,wa:war_in_the_vendee,French Revolutionary War (Vendee War),1793.0,1793.0,wa:war_in_the_vendee,,,review_accepted,1.0,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:french_revolutionary_war_vendeen_war,wa:war_in_the_vendee,French Revolutionary War (Vendeen War),1793.0,1793.0,wa:war_in_the_vendee,,,review_accepted,1.0,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:french_revolutionary_wars_1st_coalition,wa:french_revolutionary_wars,French Revolutionary Wars (1st Coalition),1792.0,1800.0,wa:french_revolutionary_wars,,,review_accepted,0.781,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:french_revolutionary_wars_1st_coaliton,wa:french_revolutionary_wars,French Revolutionary Wars (1st Coaliton),1796.0,1797.0,wa:french_revolutionary_wars,,,review_accepted,0.794,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:french_revolutionary_wars_1st_coaltion,wa:french_revolutionary_wars,French Revolutionary Wars (1st Coaltion),1793.0,1793.0,wa:french_revolutionary_wars,,,review_accepted,0.794,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:french_revolutionary_wars_2nd_coalition,wa:french_revolutionary_wars,French Revolutionary Wars (2nd Coalition),1799.0,1801.0,wa:french_revolutionary_wars,,,review_accepted,0.781,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:french_revolutionary_wars_2nd_coaltion,wa:french_revolutionary_wars,French Revolutionary Wars (2nd Coaltion),1801.0,1801.0,wa:french_revolutionary_wars,,,review_accepted,0.794,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:french_revolutionary_wars_first_coaltion,wa:french_revolutionary_wars,French Revolutionary Wars (First Coaltion),1794.0,1794.0,wa:french_revolutionary_wars,,,review_accepted,0.769,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:french_revolutionary_wars_irish_rebels,wa:french_revolutionary_wars,French Revolutionary Wars (Irish Rebels),1798.0,1798.0,wa:french_revolutionary_wars,,,review_accepted,0.794,accepted,correct,"assistant (draft, 2026-11-20)",1798 Irish rebellion with French intervention; HCED files it under the French Revolutionary Wars
+hced:french_revolutionary_wars_irish_rising,wa:french_revolutionary_wars,French Revolutionary Wars (Irish Rising),1796.0,1798.0,wa:french_revolutionary_wars,,,review_accepted,0.794,accepted,correct,"assistant (draft, 2026-11-20)",1798 Irish rebellion with French intervention; HCED files it under the French Revolutionary Wars
+hced:french_revolutionary_wars_middle_east,wa:french_revolutionary_wars,French Revolutionary Wars (Middle East),1798.0,1801.0,wa:french_revolutionary_wars,,,review_accepted,0.806,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:french_revolutionary_wars_middle_east_f,wa:french_revolutionary_wars,French Revolutionary Wars (Middle East)f,1798.0,1798.0,wa:french_revolutionary_wars,,,review_accepted,0.781,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:french_revolutionary_wars_peninsula_campaign,wa:french_revolutionary_wars,French Revolutionary Wars (Peninsula Campaign),1795.0,1795.0,wa:french_revolutionary_wars,,,review_accepted,0.725,accepted,correct,"assistant (draft, 2026-11-20)","1795 War of the Pyrenees, part of the French Revolutionary Wars"
+hced:french_revolutionary_wars_vendee,wa:war_in_the_vendee,French Revolutionary Wars (Vendee,1793.0,1793.0,wa:war_in_the_vendee,,,review_accepted,1.0,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:french_revolutionary_wars_vendee_revolt,wa:war_in_the_vendee,French Revolutionary Wars (Vendee Revolt),1793.0,1793.0,wa:war_in_the_vendee,,,review_accepted,1.0,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:french_revolutionary_wars_vendee_war,wa:war_in_the_vendee,French Revolutionary Wars (Vendee War),1793.0,1793.0,wa:war_in_the_vendee,,,review_accepted,1.0,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:french_revolutionary_wars_vendeen_war,wa:war_in_the_vendee,French Revolutionary Wars (Vendeen War),1793.0,1793.0,wa:war_in_the_vendee,,,review_accepted,1.0,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
 hced:greek_war_n_of_independence,cow:504,Greek War  n    of Independence,1822.0,1822.0,Greek Independence War of 1821-1828,,,review_accepted,0.806,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:iran_iraq_war,cow:199,Iran-Iraq War,1982.0,1988.0,Iran-Iraq,,,review_accepted,0.818,accepted,correct,"assistant (draft, 2026-11-20)",Restored: id renamed after Basra 1915 relabel; decision updated.
 hced:iraq_iran_war,cow:199,Iraq-Iran War,1980.0,1988.0,Iran-Iraq,,,review_accepted,0.818,accepted,correct,"assistant (draft, 2026-11-20)",
-hced:italian_wars_of_independence,wa:first_italian_war_of_independence,Italian Wars of Independence,1849.0,1849.0,wa:first_italian_war_of_independence,,,review_accepted,0.885,accepted,,,
+hced:italian_wars_of_independence,wa:first_italian_war_of_independence,Italian Wars of Independence,1849.0,1849.0,wa:first_italian_war_of_independence,,,review_accepted,0.885,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
 hced:korean_war,cow:151,Korean War,1950.0,1953.0,Korean,,,review_accepted,0.75,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:kronstadt_rebellion,cow:690,Kronstadt Rebellion,1921.0,1921.0,Kronstadt Rebellion of 1921,,,review_accepted,0.826,accepted,correct,"assistant (draft, 2026-11-20)",
-hced:matabele_war,wa:first_matabele_war,Matabele War,1893.0,1893.0,wa:first_matabele_war,,,review_accepted,0.8,accepted,,,
-hced:matabele_war_advancing,wa:first_matabele_war,Matabele War                         Advancing,1893.0,1893.0,wa:first_matabele_war,,,review_accepted,0.7,accepted,,,
+hced:matabele_war,wa:first_matabele_war,Matabele War,1893.0,1893.0,wa:first_matabele_war,,,review_accepted,0.8,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:matabele_war_advancing,wa:first_matabele_war,Matabele War                         Advancing,1893.0,1893.0,wa:first_matabele_war,,,review_accepted,0.7,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
 hced:mexican_american_war,cow:7,Mexican-American War,1847.0,1847.0,Mexican-American,,,review_accepted,0.889,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:mexican_french_war,cow:40,Mexican-French War,1862.0,1867.0,Franco-Mexican,,,review_accepted,0.75,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:mexican_war_of_independence,cow:304,Mexican War of Independence,1810.0,1817.0,Mexican Independence,,,review_accepted,0.851,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:mexican_war_of_the_reform,cow:561,Mexican War of the Reform,1858.0,1860.0,Mexican Reform of 1858-1861,,,review_accepted,0.654,accepted,correct,"assistant (draft, 2026-11-20)",
-hced:modoc_indian_war,wa:modoc_war,Modoc Indian War,1872.0,1873.0,wa:modoc_war,,,review_accepted,0.72,accepted,,,
-hced:mysore_war,wa:anglo_mysore_wars,Mysore War                 ,1780.0,1780.0,wa:anglo_mysore_wars,,,review_accepted,0.741,accepted,,,
-hced:napoleonic_wars_100_days,wa:napoleonic_wars,Napoleonic Wars (100 Days),1815.0,1815.0,wa:napoleonic_wars,,,review_accepted,0.769,accepted,,,
+hced:modoc_indian_war,wa:modoc_war,Modoc Indian War,1872.0,1873.0,wa:modoc_war,,,review_accepted,0.72,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:mysore_war,wa:anglo_mysore_wars,Mysore War                 ,1780.0,1780.0,wa:anglo_mysore_wars,,,review_accepted,0.741,accepted,correct,"assistant (draft, 2026-11-20)","1780 = Second Anglo-Mysore War, part of Anglo-Mysore wars"
+hced:napoleonic_wars_100_days,wa:napoleonic_wars,Napoleonic Wars (100 Days),1815.0,1815.0,wa:napoleonic_wars,,,review_accepted,0.769,accepted,correct,"assistant (draft, 2026-11-20)","Hundred Days, part of the Napoleonic Wars"
 hced:national_filibuster_war,cow:1540,National Filibuster War,1855.0,1860.0,Filibuster War,,,review_accepted,0.757,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:national_filibuster_wars,cow:1540,National Filibuster Wars,1856.0,1856.0,Filibuster War,,,review_accepted,0.737,accepted,correct,"assistant (draft, 2026-11-20)",
-hced:nez_perce_indian_war,wa:nez_perce_war,Nez Perce Indian War,1877.0,1877.0,wa:nez_perce_war,,,review_accepted,0.788,accepted,,,
-hced:paraguayan_civil_war,wa:paraguayan_civil_war_of_1947,Paraguayan Civil War,1947.0,1947.0,wa:paraguayan_civil_war_of_1947,,,review_accepted,0.833,accepted,,,
+hced:nez_perce_indian_war,wa:nez_perce_war,Nez Perce Indian War,1877.0,1877.0,wa:nez_perce_war,,,review_accepted,0.788,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:paraguayan_civil_war,wa:paraguayan_civil_war_of_1947,Paraguayan Civil War,1947.0,1947.0,wa:paraguayan_civil_war_of_1947,,,review_accepted,0.833,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
 hced:paris_commune,cow:596,Paris Commune,1871.0,1871.0,Paris Commune War of 1871,,,review_accepted,0.684,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:philippines_war,cow:410,Philippines War,1897.0,1897.0,Spanish-Philippine,,,review_accepted,0.727,accepted,correct,"assistant (draft, 2026-11-20)",
-hced:red_river_indian_war,wa:red_river_war,Red River Indian War,1872.0,1875.0,wa:red_river_war,,,review_accepted,0.788,accepted,,,
-hced:red_river_indian_wars,wa:red_river_war,Red River Indian Wars,1874.0,1874.0,wa:red_river_war,,,review_accepted,0.765,accepted,,,
-hced:rohilla_war,wa:first_rohilla_war,Rohilla War,1774.0,1774.0,wa:first_rohilla_war,,,review_accepted,0.786,accepted,,,
+hced:red_river_indian_war,wa:red_river_war,Red River Indian War,1872.0,1875.0,wa:red_river_war,,,review_accepted,0.788,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:red_river_indian_wars,wa:red_river_war,Red River Indian Wars,1874.0,1874.0,wa:red_river_war,,,review_accepted,0.765,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:rohilla_war,wa:first_rohilla_war,Rohilla War,1774.0,1774.0,wa:first_rohilla_war,,,review_accepted,0.786,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
 hced:russo_afghan_war,cow:390,Russo-Afghan War,1885.0,1885.0,Russo-Afghan,,,review_accepted,0.857,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:russo_finnish_war,cow:142,Russo-Finnish War,1939.0,1940.0,Russo-Finnish,,,review_accepted,0.867,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:russo_japanese_war,cow:85,Russo-Japanese War,1904.0,1905.0,Russo-Japanese,,,review_accepted,0.875,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:russo_polish_war:1919_1920,cow:109,Russo-Polish War (1919–1920),1919.0,1920.0,Russo-Polish,,,review_accepted,0.857,accepted,correct,"assistant (draft, 2026-11-20)",
-hced:russo_swedish_war:1790_1790,wa:russo_swedish_war_of_1788_1790,Russo-Swedish War (1790),1790.0,1790.0,wa:russo_swedish_war_of_1788_1790,,,review_accepted,0.723,accepted,,,
-hced:russo_turkish_war:1811_1811,wa:eighth_russo_turkish_war,Russo-Turkish War (1811),1811.0,1811.0,wa:eighth_russo_turkish_war,,,review_accepted,0.829,accepted,,,
-hced:russo_turkish_war:1828_1828,wa:ninth_russo_turkish_war,Russo-Turkish War (1828),1828.0,1828.0,wa:ninth_russo_turkish_war,,,review_accepted,0.85,accepted,,,
-hced:russo_turkish_wars:1807_1811,wa:eighth_russo_turkish_war,Russo-Turkish Wars (1807–1811),1807.0,1811.0,wa:eighth_russo_turkish_war,,,review_accepted,0.81,accepted,,,
-hced:russo_turkish_wars:1828_1829,wa:ninth_russo_turkish_war,Russo-Turkish Wars (1828–1829),1828.0,1829.0,wa:ninth_russo_turkish_war,,,review_accepted,0.829,accepted,,,
+hced:russo_swedish_war:1790_1790,wa:russo_swedish_war_of_1788_1790,Russo-Swedish War (1790),1790.0,1790.0,wa:russo_swedish_war_of_1788_1790,,,review_accepted,0.723,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:russo_turkish_war:1811_1811,wa:eighth_russo_turkish_war,Russo-Turkish War (1811),1811.0,1811.0,wa:eighth_russo_turkish_war,,,review_accepted,0.829,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:russo_turkish_war:1828_1828,wa:ninth_russo_turkish_war,Russo-Turkish War (1828),1828.0,1828.0,wa:ninth_russo_turkish_war,,,review_accepted,0.85,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:russo_turkish_wars:1807_1811,wa:eighth_russo_turkish_war,Russo-Turkish Wars (1807–1811),1807.0,1811.0,wa:eighth_russo_turkish_war,,,review_accepted,0.81,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:russo_turkish_wars:1828_1829,wa:ninth_russo_turkish_war,Russo-Turkish Wars (1828–1829),1828.0,1829.0,wa:ninth_russo_turkish_war,,,review_accepted,0.829,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
 hced:satsuma_rebellion,cow:607,Satsuma Rebellion,1877.0,1877.0,Satsuma Rebellion of 1877,,,review_accepted,0.81,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:saudi_yemeni_war,cow:125,Saudi-Yemeni War,1934.0,1934.0,Saudi-Yemeni,,,review_accepted,0.857,accepted,correct,"assistant (draft, 2026-11-20)",
-hced:seminole_indian_war,wa:second_seminole_war,Seminole Indian War,1840.0,1840.0,wa:second_seminole_war,,,review_accepted,0.789,accepted,,,
+hced:seminole_indian_war,wa:second_seminole_war,Seminole Indian War,1840.0,1840.0,wa:second_seminole_war,,,review_accepted,0.789,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
 hced:serbo_bulgarian_war,cow:391,Serbo-Bulgarian War,1885.0,1885.0,Serbian-Bulgarian,,,review_accepted,0.833,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:serbo_turkish_war,cow:373,Serbo-Turkish War,1876.0,1876.0,Serbian-Turkish,,,review_accepted,0.75,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:seven_weeks_war,cow:55,Seven Weeks War,1866.0,1866.0,Seven Weeks,,,review_accepted,0.846,accepted,correct,"assistant (draft, 2026-11-20)",
@@ -238,15 +240,17 @@ hced:sino_japanese_war:1937_1941,cow:130,Sino-Japanese War (1937–1941),1937.0,
 hced:spanish_american_war,cow:79,Spanish-American War,1898.0,1899.0,Spanish-American,,,review_accepted,0.889,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:spanish_civil_war,cow:718,Spanish Civil War,1936.0,1940.0,Spanish Civil War of 1936-1939,,,review_accepted,0.723,accepted,correct,"assistant (draft, 2026-11-20)",Restored: id renamed after Saragossa relabel; decision updated.
 hced:spanish_moroccan_war,cow:31,Spanish-Moroccan War,1860.0,1860.0,First Spanish-Moroccan,,,review_accepted,0.762,accepted,correct,"assistant (draft, 2026-11-20)",
+hced:taiping_rebellion,cow:1534,Taiping Rebellion,1850.0,1866.0,Taiping Rebellion Phase 1,,,review_accepted,0.81,accepted,correct,"assistant (draft, 2026-11-20)",battles split by year to COW phases 1/2
 hced:tanzanian_ugandan_war,cow:190,Tanzanian-Ugandan War,1978.0,1979.0,Ugandian-Tanzanian,,,review_accepted,0.872,accepted,correct,"assistant (draft, 2026-11-20)",
+hced:vietnam_war,cow:163,Vietnam War                           ,1964.0,1975.0,"Vietnam War, Phase 2",,,review_accepted,0.733,accepted,correct,"assistant (draft, 2026-11-20)",battles split by year to COW phases 1/2
 hced:war_of_melilla,cow:399,War of Melilla,1893.0,1893.0,Melilla War,,,review_accepted,0.88,accepted,correct,"assistant (draft, 2026-11-20)",
-hced:war_of_the_american_revolutio,wa:revolution,War of the American Revolutio,1779.0,1779.0,wa:revolution,,,review_accepted,0.75,accepted,,,
-hced:war_of_the_american_revolution,wa:revolution,War of the American Revolution,1775.0,1783.0,wa:revolution,,,review_accepted,0.776,accepted,,,
+hced:war_of_the_american_revolutio,wa:revolution,War of the American Revolutio,1779.0,1779.0,wa:revolution,,,review_accepted,0.75,accepted,correct,"assistant (draft, 2026-11-20)",truncated HCED label; American Revolution
+hced:war_of_the_american_revolution,wa:revolution,War of the American Revolution,1775.0,1783.0,wa:revolution,,,review_accepted,0.776,accepted,correct,"assistant (draft, 2026-11-20)",wa:revolution = American Revolution 1775-83 (Q40949)
 hced:world_war_one,cow:106,World War One,1914.0,1918.0,World War I,,,review_accepted,0.833,accepted,correct,"assistant (draft, 2026-11-20)",
 hced:world_war_two,cow:139,World War Two,1943.0,1943.0,World War II,,,review_accepted,0.8,accepted,correct,"assistant (draft, 2026-11-20)",
-hced:y_war_of_the_american_revolution,wa:revolution,y War of the   American Revolution,1775.0,1780.0,wa:revolution,,,review_accepted,0.745,accepted,,,
-hced:yakima_indian_wars,wa:yakima_war,Yakima Indian Wars,1855.0,1858.0,wa:yakima_war,,,review_accepted,0.714,accepted,,,
-hced:yugoslav_civil_war,wa:yugoslav_wars,Yugoslav Civil War,1992.0,1992.0,wa:yugoslav_wars,,,review_accepted,0.774,accepted,,,
+hced:y_war_of_the_american_revolution,wa:revolution,y War of the   American Revolution,1775.0,1780.0,wa:revolution,,,review_accepted,0.745,accepted,correct,"assistant (draft, 2026-11-20)",garbled HCED label; American Revolution
+hced:yakima_indian_wars,wa:yakima_war,Yakima Indian Wars,1855.0,1858.0,wa:yakima_war,,,review_accepted,0.714,accepted,correct,"assistant (draft, 2026-11-20)",same war (title and years agree)
+hced:yugoslav_civil_war,wa:yugoslav_wars,Yugoslav Civil War,1992.0,1992.0,wa:yugoslav_wars,,,review_accepted,0.774,accepted,correct,"assistant (draft, 2026-11-20)",part of the Yugoslav Wars
 wa:1948_arab_israeli_war,cow:148,1948 Arab–Israeli War,1948.0,1949.0,Arab-Israeli,,,review_accepted,0.727,accepted,correct,"assistant (draft, 2026-11-20)",
 wa:1948_palestine_war,cow:1572,1948 Palestine war,1947.0,1949.0,Palestine War,,,review_accepted,0.839,accepted,correct,"assistant (draft, 2026-11-20)",
 wa:afghan_civil_war,cow:851,Afghan Civil War (1989-1992),1989.0,1992.0,Second Afghan Civil War of 1989-1992,,,review_accepted,0.839,accepted,correct,"assistant (draft, 2026-11-20)",

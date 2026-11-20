@@ -970,8 +970,10 @@ def build_canonical_wars(
         print(f"  Deduped wars: {before} → {len(wars_df)}")
     # drop helper cols later
     links_df = pd.DataFrame(links)
-    amb_df = pd.DataFrame(ambiguous)
-    rej_df = pd.DataFrame(rejected)
+    # Explicit columns: the files keep their header even when a queue is empty
+    # (e.g. every ambiguous pair has been decided), so later readers never fail.
+    amb_df = pd.DataFrame(ambiguous, columns=REVIEW_QUEUE_COLS)
+    rej_df = pd.DataFrame(rejected, columns=REVIEW_QUEUE_COLS)
 
     amb_df.to_csv(REVIEW / "ambiguous_matches.csv", index=False)
     rej_df.to_csv(REVIEW / "rejected_matches.csv", index=False)
@@ -1002,6 +1004,9 @@ PHASE_BATTLE_SPLITS: dict[str, list[tuple[int | None, int | None, str]]] = {
 }
 
 
+REVIEW_QUEUE_COLS = ["left_id", "left_title", "right_id", "right_title", "confidence", "reason"]
+
+
 def apply_phase_battle_split(war_id: str, year) -> str:
     """If war_id is a known multi-phase donor, send the event to the COW phase for that year."""
     wid = str(war_id)
@@ -1024,6 +1029,31 @@ def apply_phase_battle_split(war_id: str, year) -> str:
         if lo <= y <= hi:
             return target
     return rules[-1][2]
+
+
+# COW wars recorded as consecutive phases. Any battle attached to one phase
+# (from any source, after merges) is moved to the phase its year belongs to.
+# Battles without a year stay where they are.
+COW_PHASE_GROUPS: list[list[tuple[int | None, int | None, str]]] = [
+    [(None, 1964, "cow:748"), (1965, None, "cow:163")],  # Vietnam War phases 1 and 2
+    [(None, 1860, "cow:1534"), (1861, None, "cow:567")],  # Taiping Rebellion phases 1 and 2
+]
+_COW_PHASE_INDEX = {t: g for g in COW_PHASE_GROUPS for _a, _b, t in g}
+
+
+def route_cow_phase(war_id: str, year) -> str:
+    """Send a battle on a phased COW war to the phase covering its year."""
+    group = _COW_PHASE_INDEX.get(str(war_id))
+    if group is None or year is None or (isinstance(year, float) and pd.isna(year)):
+        return str(war_id)
+    try:
+        y = int(year)
+    except (TypeError, ValueError):
+        return str(war_id)
+    for y0, y1, target in group:
+        if (y0 is None or y >= y0) and (y1 is None or y <= y1):
+            return target
+    return str(war_id)
 
 
 def attach_battles(
@@ -1060,11 +1090,11 @@ def attach_battles(
         # Full cluster list (merged clusters included) — see resolve_cluster docstring.
         hit = resolve_cluster(hced_cluster_index.get(war_norm, []), year, merge_map)
         if hit is not None:
-            return hit
+            return route_cow_phase(hit, year)
         wid = war_by_norm.get(war_norm)
         if wid is None:
             wid = "hced:" + slugify(war_norm)
-        return merge_map.get(wid, wid)
+        return route_cow_phase(merge_map.get(wid, wid), year)
 
     # wa slug → war_id
     wa_slug_to_war = {}
@@ -1106,6 +1136,7 @@ def attach_battles(
             wid = apply_phase_battle_split(str(row.war_slug), row.year)
         else:
             wid = apply_phase_battle_split(wid, row.year)
+        wid = route_cow_phase(wid, row.year)
         events.append(
             {
                 "event_id": row.event_id,
@@ -1549,7 +1580,7 @@ def export_all(
             },
             {
                 "id": "midloc",
-                "citation": "Braithwaite, A. (2010). MIDLOC: Introducing the Militarized Interstate Dispute Location Dataset. Journal of Peace Research, 47(1), 91–98. Data: MIDLOC v2.1, Correlates of War Project.",
+                "citation": "Braithwaite, A. (2010). MIDLOC: Introducing the Militarized Interstate Dispute (MID) Location Dataset. Journal of Peace Research, 47(1), 91–98. Bezerra, P., & Braithwaite, A. (2019). Codebook for the Militarized Interstate Dispute Location (MIDLOC-A/I) Dataset, v2.1. Correlates of War Project.",
             },
         ]
     }

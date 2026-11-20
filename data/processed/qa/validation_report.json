@@ -15,9 +15,9 @@
     }
   ],
   "counts": {
-    "wars": 2959,
+    "wars": 2955,
     "events": 33455,
-    "theaters": 2133,
+    "theaters": 2129,
     "events_out_of_span": 32
   },
   "events_out_of_span_by_war": [

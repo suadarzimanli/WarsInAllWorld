@@ -73,6 +73,8 @@ Cuban Revolution,1953.0,1958.0,Cuban Revolution of 1958-1959,,,hced,hced:cuban_r
 Ecuador-Colombia War,1862.0,1863.0,Ecuadorian-Colombian,,,hced,hced:ecuador_colombia_war,cow,cow:43,review_accepted,0.85,review accepted → Ecuadorian-Colombian,accepted
 Egyptian-Ethiopian Wars,1875.0,1875.0,Egyptian-Ethiopian,,,hced,hced:egyptian_ethiopian_wars,cow,cow:372,review_accepted,0.878,review accepted → Egyptian-Ethiopian,accepted
 Escobar Rebellion,1929.0,1929.0,Escobar Rebellion of 1929,,,hced,hced:escobar_rebellion,cow,cow:707,review_accepted,0.81,review accepted → Escobar Rebellion of 1929,accepted
+Finnish War,1918.0,1918.0,Finnish Civil War of 1918,,,hced,hced:finnish_war,cow,cow:680,review_accepted,1.0,review accepted → Finnish Civil War of 1918,accepted
+Finnish War of Independence,1918.0,1918.0,Finnish Civil War of 1918,,,hced,hced:finnish_war_of_independence,cow,cow:680,review_accepted,1.0,review accepted → Finnish Civil War of 1918,accepted
 Franco-Prussian War,1870.0,1871.0,Franco-Prussian,,,hced,hced:franco_prussian_war,cow,cow:58,review_accepted,0.882,review accepted → Franco-Prussian,accepted
 Franco-Prussian Wars,1870.0,1870.0,Franco-Prussian,,,hced,hced:franco_prussian_wars,cow,cow:58,review_accepted,0.857,review accepted → Franco-Prussian,accepted
 French Indo-Chinese War,1951.0,1951.0,French-Indochina,,,hced,hced:french_indo_chinese_war,cow,cow:457,review_accepted,1.0,review accepted → French-Indochina,accepted
@@ -142,7 +144,9 @@ Sino-Japanese War (1937–1941),1937.0,1941.0,Third Sino-Japanese,,,hced,hced:si
 Spanish-American War,1898.0,1899.0,Spanish-American,,,hced,hced:spanish_american_war,cow,cow:79,review_accepted,0.889,review accepted → Spanish-American,accepted
 Spanish Civil War,1936.0,1940.0,Spanish Civil War of 1936-1939,,,hced,hced:spanish_civil_war,cow,cow:718,review_accepted,0.723,review accepted → Spanish Civil War of 1936-1939,accepted
 Spanish-Moroccan War,1860.0,1860.0,First Spanish-Moroccan,,,hced,hced:spanish_moroccan_war,cow,cow:31,review_accepted,0.762,review accepted → First Spanish-Moroccan,accepted
+Taiping Rebellion,1850.0,1866.0,Taiping Rebellion Phase 1,,,hced,hced:taiping_rebellion,cow,cow:1534,review_accepted,0.81,review accepted → Taiping Rebellion Phase 1,accepted
 Tanzanian-Ugandan War,1978.0,1979.0,Ugandian-Tanzanian,,,hced,hced:tanzanian_ugandan_war,cow,cow:190,review_accepted,0.872,review accepted → Ugandian-Tanzanian,accepted
+Vietnam War                           ,1964.0,1975.0,"Vietnam War, Phase 2",,,hced,hced:vietnam_war,cow,cow:163,review_accepted,0.733,"review accepted → Vietnam War, Phase 2",accepted
 War of Melilla,1893.0,1893.0,Melilla War,,,hced,hced:war_of_melilla,cow,cow:399,review_accepted,0.88,review accepted → Melilla War,accepted
 War of the American Revolutio,1779.0,1779.0,wa:revolution,,,hced,hced:war_of_the_american_revolutio,wa,wa:revolution,review_accepted,0.75,review accepted → wa:revolution,accepted
 War of the American Revolution,1775.0,1783.0,wa:revolution,,,hced,hced:war_of_the_american_revolution,wa,wa:revolution,review_accepted,0.776,review accepted → wa:revolution,accepted
@@ -308,10 +312,6 @@ War of the Pacific,1879.0,1884.0,War of the Pacific,1879.0,1883.0,war_atlas,wa:w
 World War I,1917.0,1918.0,World War I,1914.0,1918.0,war_atlas,wa:wwi,cow,cow:106,exact_name_year,1.0,exact name → World War I,auto
 World War II,1941.0,1945.0,World War II,1939.0,1945.0,war_atlas,wa:wwii,cow,cow:139,exact_name_year,1.0,exact name → World War II,auto
 Yom Kippur War,1973.0,1973.0,Yom Kippur War,1973.0,1973.0,war_atlas,wa:yom_kippur_war,cow,cow:181,exact_name_year,1.0,exact name → Yom Kippur War,auto
-Finnish War,1918.0,1918.0,Soviet-Finnish wars,1917.0,1944.0,hced,hced:finnish_war,wa,wa:soviet_finnish_wars,fuzzy_name_year,0.733,related_not_merged,needs_review
-Taiping Rebellion,1850.0,1866.0,Taiping Rebellion Phase 1,1850.0,1860.0,hced,hced:taiping_rebellion,cow,cow:1534,fuzzy_name_year,0.81,related_not_merged,needs_review
-Vietnam War                           ,1964.0,1975.0,"Vietnam War, Phase 2",1965.0,1975.0,hced,hced:vietnam_war,cow,cow:163,fuzzy_name_year,0.733,related_not_merged,needs_review
-Georgia: Abkhazia,1992.0,2011.0,War in Abkhazia,1992.0,1993.0,ucdp,ucdp:conflict:392,wa,wa:war_in_abkhazia,fuzzy_name_year,0.71,related_not_merged,needs_review
 1st Franco Dahomean Wars,1890.0,1890.0,Second Franco-Dahomean War,1892.0,1894.0,hced,hced:1st_franco_dahomean_wars,wa,wa:second_franco_dahomean_war,fuzzy_name_year,0.76,rejected_false_friend,rejected
 1st Indo-Pakistan War,1947.0,1948.0,Indo-Pakistani War of 1947–1948,1947.0,1949.0,hced,hced:1st_indo_pakistan_war,wa,wa:indo_pakistani_war_of_1947_1948,fuzzy_name_year,0.731,rejected_false_friend,rejected
 1st Schlewsig-Holstein War,1850.0,1850.0,First Schleswig-Holstein,1848.0,1848.0,hced,hced:1st_schlewsig_holstein_war,cow,cow:13,fuzzy_name_year,0.8,rejected_false_friend,rejected
@@ -360,7 +360,6 @@ Dutch Conquest of Bali (1894–1906),1894.0,1906.0,French Conquest of Chad,1899.
 Ecuadorian Civil War (1895),1895.0,1895.0,Samoan Civil War,1886.0,1894.0,hced,hced:ecuadorian_civil_war:1895_1895,wa,wa:samoan_civil_war,fuzzy_name_year,0.778,rejected_false_friend,rejected
 Ecuadorian Civil Wars,1835.0,1835.0,Uruguayan Civil War,1839.0,1851.0,hced,hced:ecuadorian_civil_wars,wa,wa:uruguayan_civil_war,fuzzy_name_year,0.7,rejected_false_friend,rejected
 Ethiopian War (1875),1875.0,1875.0,Second Ethiopian War,1868.0,1872.0,hced,hced:ethiopian_war:1875_1875,cow,cow:1553,fuzzy_name_year,0.788,rejected_false_friend,rejected
-Finnish War of Independence,1918.0,1918.0,Estonian War of Independence,1918.0,1920.0,hced,hced:finnish_war_of_independence,wa,wa:estonian_war_of_independence,fuzzy_name_year,0.8,rejected_false_friend,rejected
 Franco-Mandingo War,1883.0,1891.0,French-Mandinka,1885.0,1886.0,hced,hced:franco_mandingo_war,cow,cow:389,fuzzy_name_year,0.706,rejected_false_friend,rejected
 French Conquest of Indo-China,1847.0,1883.0,French Conquest of Kabylia,1856.0,1857.0,hced,hced:french_conquest_of_indo_china,cow,cow:345,fuzzy_name_year,0.727,rejected_false_friend,rejected
 German Colonial Wars in Africa,1889.0,1906.0,German East Africa Company War,1888.0,1889.0,hced,hced:german_colonial_wars_in_africa,cow,cow:1560,fuzzy_name_year,0.733,rejected_false_friend,rejected
@@ -436,6 +435,7 @@ Xhosa Civil War,1818.0,1818.0,Xhosa Wars,1779.0,1879.0,hced,hced:xhosa_civil_war
 Zulu Civil War,1883.0,1884.0,Anglo-Zulu War,1879.0,1879.0,hced,hced:zulu_civil_war,wa,wa:anglo_zulu_war,fuzzy_name_year,0.714,rejected_false_friend,rejected
 Afghanistan: Government,1989.0,2025.0,Afghanistan War,2001.0,2021.0,ucdp,ucdp:conflict:333,wa,wa:afghanistan,review_rejected,0.703,review rejected,rejected
 Croatia: Serb,1992.0,1995.0,Croatian War,1991.0,1993.0,ucdp,ucdp:conflict:390,hced,hced:croatian_war,fuzzy_name_year,0.75,rejected_false_friend,rejected
+Georgia: Abkhazia,1992.0,2011.0,War in Abkhazia,1992.0,1993.0,ucdp,ucdp:conflict:392,wa,wa:war_in_abkhazia,review_rejected,0.71,review rejected,rejected
 Eritrea - Ethiopia,1998.0,2016.0,Eritrean–Ethiopian War,1998.0,2000.0,ucdp,ucdp:conflict:409,wa,wa:eritrean_ethiopian_war,fuzzy_name_year,0.842,rejected_false_friend,rejected
 1991–1992 South Ossetia War,1991.0,1992.0,Georgia War of 1991-1993,1991.0,1993.0,war_atlas,wa:1991_1992_south_ossetia_war,cow,cow:871,fuzzy_name_year,0.706,rejected_false_friend,rejected
 Afghan Civil War (1992-1996),1992.0,1996.0,Second Afghan Civil War of 1989-1992,1989.0,1992.0,war_atlas,wa:afghan_civil_war_1992,cow,cow:851,fuzzy_name_year,0.774,rejected_false_friend,rejected

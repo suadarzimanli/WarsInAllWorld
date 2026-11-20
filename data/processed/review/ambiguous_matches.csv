@@ -1,5 +1,1 @@
 left_id,left_title,right_id,right_title,confidence,reason
-hced:finnish_war,Finnish War,wa:soviet_finnish_wars,Soviet-Finnish wars,0.733,hced_to_existing
-hced:taiping_rebellion,Taiping Rebellion,cow:1534,Taiping Rebellion Phase 1,0.81,hced_to_existing
-hced:vietnam_war,Vietnam War                           ,cow:163,"Vietnam War, Phase 2",0.733,hced_to_existing
-ucdp:conflict:392,Georgia: Abkhazia,wa:war_in_abkhazia,War in Abkhazia,0.71,ucdp_to_existing

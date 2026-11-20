@@ -2545,6 +2545,60 @@
       "status": "rejected",
       "decided_by": "assistant_review_2026-11-20",
       "notes": "1989–2025 UCDP conflict must not merge into the 2001–21 war only"
+    },
+    {
+      "left_id": "hced:taiping_rebellion",
+      "right_id": "cow:1534",
+      "left_title": "Taiping Rebellion",
+      "right_title": "Taiping Rebellion Phase 1",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "HCED covers the whole rebellion (1850-66); COW splits it into phase 1 (cow:1534) and phase 2 (cow:567). Merged, and battles are routed to the phase of their year (COW_PHASE_GROUPS)."
+    },
+    {
+      "left_id": "hced:vietnam_war",
+      "right_id": "cow:163",
+      "left_title": "Vietnam War",
+      "right_title": "Vietnam War, Phase 2",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "HCED covers 1964-75; COW phase 1 (cow:748, 1960-65) and phase 2 (cow:163, 1965-75). Merged, and battles are routed to the phase of their year (COW_PHASE_GROUPS)."
+    },
+    {
+      "left_id": "hced:finnish_war",
+      "right_id": "wa:soviet_finnish_wars",
+      "left_title": "Finnish War",
+      "right_title": "Soviet-Finnish wars",
+      "status": "rejected",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "HCED \"Finnish War\" is one 1918 battle (Aland) of the Finnish Civil War, not the 1917-44 Soviet-Finnish wars."
+    },
+    {
+      "left_id": "hced:finnish_war",
+      "right_id": "cow:680",
+      "left_title": "Finnish War",
+      "right_title": "Finnish Civil War of 1918",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Aland 1918 expedition belongs to the Finnish Civil War of 1918."
+    },
+    {
+      "left_id": "hced:finnish_war_of_independence",
+      "right_id": "cow:680",
+      "left_title": "Finnish War of Independence",
+      "right_title": "Finnish Civil War of 1918",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war: the White side called the 1918 civil war the War of Independence (Tampere, Vyborg, ... all 1918)."
+    },
+    {
+      "left_id": "ucdp:conflict:392",
+      "right_id": "wa:war_in_abkhazia",
+      "left_title": "Georgia: Abkhazia",
+      "right_title": "War in Abkhazia",
+      "status": "rejected",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Different units: UCDP conflict spans 1992-2011 (144 events); War Atlas war is 1992-93. Merging would stretch the war to 20 years."
     }
   ]
 }
