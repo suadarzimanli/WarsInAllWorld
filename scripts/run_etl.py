@@ -154,6 +154,11 @@ def ingest_hced() -> pd.DataFrame:
     df["minor"] = pd.to_numeric(df["Minor"], errors="coerce").eq(1)
     df["source"] = "hced"
     df["event_id"] = "hced:" + df["ID"].astype(str)
+    # HCED reuses a few IDs for different battles (e.g. Hull1643 = sieges of
+    # 1642 and 1643; Hoyerswerda1813 = battles of 1759 and 1813). Keep the first
+    # and suffix later ones (~2, ~3) so every event id is unique and stable.
+    nth = df.groupby("event_id").cumcount()
+    df.loc[nth > 0, "event_id"] = df.loc[nth > 0, "event_id"] + "~" + (nth[nth > 0] + 1).astype(str)
     out = df[
         [
             "event_id",

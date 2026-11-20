@@ -136,6 +136,12 @@ def validate(exports: Path = EXPORTS) -> dict:
         errors.append("wars.json is empty or not a list")
         return {"errors": errors, "warnings": warnings}
 
+    # --- events: one id per event (views count and de-duplicate by id) -------
+    eids = [f.get("properties", {}).get("event_id") for f in battles]
+    dup_e = [k for k, n in Counter(eids).items() if n > 1]
+    if dup_e:
+        errors.append(f"duplicate event_id in battles.geojson: {dup_e[:10]}")
+
     # --- wars -----------------------------------------------------------------
     ids = [w.get("war_id") for w in wars]
     dup = [k for k, n in Counter(ids).items() if n > 1]
