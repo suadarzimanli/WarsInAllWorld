@@ -550,12 +550,13 @@ function DualExplorers({
 
   // Drop unknown war ids (bad URL / stale session). Keep selection when only
   // filtered out of the current year/mode/coverage set.
+  const { selectedId: currentSelectedId, setSelectedId: setCurrentSelectedId } = state
   useEffect(() => {
-    if (!state.selectedId || !wars.length) return
-    if (!wars.some((w) => w.war_id === state.selectedId)) {
-      state.setSelectedId(null)
+    if (!currentSelectedId || !wars.length) return
+    if (!wars.some((w) => w.war_id === currentSelectedId)) {
+      setCurrentSelectedId(null)
     }
-  }, [wars, state.selectedId, state.setSelectedId])
+  }, [wars, currentSelectedId, setCurrentSelectedId])
 
   // One progressive sample for both views — same points on Map and Globe
   const battleCap = useProgressiveBattleCap(
@@ -643,27 +644,29 @@ export default function App() {
     let cancelled = false
     ;(async () => {
       try {
+        // Start every request at once; each layer appears as soon as its own file
+        // arrives instead of all layers waiting for the largest (battles).
+        // The loaders never throw for optional layers (they fall back to empty).
+        const guard =
+          <T,>(set: (v: T) => void) =>
+          (v: T) => {
+            if (!cancelled) set(v)
+          }
+        const metaP = loadCatalogMeta().then(guard(setCatalogMeta))
+        loadCitations().then(guard(setCitations))
+        loadProgressHistory().then(guard(setProgressHistory))
+        loadGeoJSON('wars.geojson').then(guard(setWarCentroids))
+        loadGeoJSON('midloc.geojson').then(guard(setMidloc))
+        loadGeoJSON('theaters.geojson').then(guard(setTheaters))
+        const battlesP = loadGeoJSON('battles.geojson').then(guard(setBattles))
+
         const w = await loadWars()
         if (cancelled) return
         setWars(w)
 
-        const [b, t, m, c, cites, meta, hist] = await Promise.all([
-          loadGeoJSON('battles.geojson'),
-          loadGeoJSON('theaters.geojson'),
-          loadGeoJSON('midloc.geojson'),
-          loadGeoJSON('wars.geojson'),
-          loadCitations(),
-          loadCatalogMeta(),
-          loadProgressHistory(),
-        ])
+        // Numbers page needs both battles and catalog metadata
+        await Promise.all([battlesP, metaP])
         if (cancelled) return
-        setBattles(b)
-        setTheaters(t)
-        setMidloc(m)
-        setWarCentroids(c)
-        setCitations(cites)
-        setCatalogMeta(meta)
-        setProgressHistory(hist)
         setBattlesReady(true)
       } catch (e) {
         if (!cancelled) setError(e instanceof Error ? e.message : String(e))

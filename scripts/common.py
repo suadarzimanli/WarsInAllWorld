@@ -76,6 +76,41 @@ def format_cow_warnum(value) -> int | float | None:
     return f
 
 
+# COW end-date sentinel: -7 = "war ongoing at the end of the dataset".
+# (-8 = not applicable, -9 = unknown.) Reading -7 as a year gives "7 BCE".
+COW_ONGOING = -7
+# Last year each COW war file covers — used as the censored end year.
+COW_DATA_END_V4 = 2007
+COW_DATA_END_INTRA_V51 = 2014
+
+
+def cow_end_year(values, censor_year: int) -> tuple[int | None, bool]:
+    """Latest COW end year across a war's rows, resolving the -7 'ongoing' code.
+
+    Returns (end_year, ongoing). When any row is still ongoing (-7) the war's end
+    is the dataset's last year and `ongoing` is True — right-censored, not ended.
+    """
+    years: list[int] = []
+    ongoing = False
+    if not isinstance(values, (list, tuple)):
+        try:
+            values = list(values)
+        except TypeError:
+            values = [values]
+    for v in values:
+        try:
+            n = int(float(v))
+        except (TypeError, ValueError):
+            continue
+        if n == COW_ONGOING:
+            ongoing = True
+        elif n > 0:
+            years.append(n)
+    if ongoing:
+        return censor_year, True
+    return (max(years) if years else None), False
+
+
 def cow_side_label(value) -> str:
     """Blank COW missing-data sentinels used in SideA/SideB fields."""
     s = str(value or "").strip()
@@ -98,6 +133,19 @@ def cow_numeric_deaths(series_or_value):
         return pd.to_numeric(series_or_value, errors="coerce").replace([-8, -9], pd.NA)
     val = pd.to_numeric(pd.Series([series_or_value]), errors="coerce").replace([-8, -9], pd.NA).iloc[0]
     return None if pd.isna(val) else float(val)
+
+
+def year_span_label(y0: int, y1: int) -> str:
+    """Readable span for titles: '1835', '1939–1945', '1045 BCE', '220–200 BCE', '30 BCE–14'."""
+
+    def fmt(y: int) -> str:
+        return f"{abs(y)} BCE" if y < 0 else str(y)
+
+    if y0 == y1:
+        return fmt(y0)
+    if y0 < 0 and y1 < 0:
+        return f"{abs(y0)}–{abs(y1)} BCE"
+    return f"{fmt(y0)}–{fmt(y1)}"
 
 
 def era_bucket(year: int | None) -> str:
@@ -150,20 +198,209 @@ def write_geojson(path: Path, features: list[dict]) -> None:
     write_json(path, {"type": "FeatureCollection", "features": features})
 
 
+# 5 decimal places ≈ 1 m — far finer than any source's geocoding precision,
+# and keeps the shipped GeoJSON much smaller than raw float output.
+COORD_DECIMALS = 5
+
+
+def _round_coord(v: float) -> float:
+    return round(float(v), COORD_DECIMALS)
+
+
 def point_feature(lon: float, lat: float, props: dict) -> dict:
     return {
         "type": "Feature",
-        "geometry": {"type": "Point", "coordinates": [lon, lat]},
+        "geometry": {"type": "Point", "coordinates": [_round_coord(lon), _round_coord(lat)]},
         "properties": props,
     }
 
 
 def polygon_feature(coords: list, props: dict) -> dict:
+    ring = [[_round_coord(x), _round_coord(y)] for x, y in coords]
     return {
         "type": "Feature",
-        "geometry": {"type": "Polygon", "coordinates": [coords]},
+        "geometry": {"type": "Polygon", "coordinates": [ring]},
         "properties": props,
     }
+
+
+# ---------------------------------------------------------------------------
+# Build provenance
+# ---------------------------------------------------------------------------
+
+# Every file the ETL reads. Recorded with SHA-256 so anyone can verify exactly
+# which inputs produced a given catalog.
+ETL_INPUT_FILES = [
+    RAW / "hced" / "HCED_Data_v3.csv",
+    RAW / "war-atlas" / "wars.csv",
+    RAW / "war-atlas" / "battles.csv",
+    RAW / "cow" / "Inter-StateWarData_v4.0.csv",
+    RAW / "cow" / "Extra-StateWarData_v4.0.csv",
+    RAW / "cow" / "Non-StateWarData_v4.0.csv",
+    RAW / "cow" / "Intra-State-Wars-v5.1" / "INTRA-STATE WARS v5.1 CSV.csv",
+    RAW / "cow" / "Dyadic-Interstate-War-Dataset" / "directed_dyadic_war.csv",
+    RAW / "cow" / "MIDLOC_2.1" / "MIDLOCA_2.1.csv",
+    RAW / "ucdp" / "ged261" / "GEDEvent_v26_1.csv",
+    REVIEW / "crosswalk_decisions.json",
+    REVIEW / "source_corrections.json",
+]
+
+
+def sha256_file(path: Path, chunk: int = 1 << 20) -> str:
+    import hashlib
+
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        while block := f.read(chunk):
+            h.update(block)
+    return h.hexdigest()
+
+
+def build_provenance(files: list[Path] | None = None) -> dict:
+    """Input checksums + software versions for this build (no timestamp, so
+    identical inputs give an identical record)."""
+    import platform
+
+    files = ETL_INPUT_FILES if files is None else files
+    inputs = []
+    for p in files:
+        rel = p.relative_to(ROOT).as_posix()
+        if p.exists():
+            inputs.append({"path": rel, "bytes": p.stat().st_size, "sha256": sha256_file(p)})
+        else:
+            inputs.append({"path": rel, "missing": True})
+    software = {"python": platform.python_version()}
+    for mod in ("pandas", "numpy", "shapely", "rapidfuzz"):
+        try:
+            software[mod] = __import__(mod).__version__
+        except Exception:  # pragma: no cover - optional
+            software[mod] = None
+    return {"inputs": inputs, "software": software}
+
+
+# ---------------------------------------------------------------------------
+# Longitude helpers (antimeridian-safe)
+# ---------------------------------------------------------------------------
+
+def circular_mean_lng(lngs) -> float | None:
+    """Mean longitude on the circle, in [-180, 180].
+
+    A plain arithmetic mean of 179 and -179 gives 0 (the wrong side of the
+    planet). Averaging unit vectors gives ±180, which is correct.
+    """
+    import math
+
+    vals = [float(v) for v in lngs if v is not None and v == v]
+    if not vals:
+        return None
+    sx = sum(math.cos(math.radians(v)) for v in vals)
+    sy = sum(math.sin(math.radians(v)) for v in vals)
+    if abs(sx) < 1e-12 and abs(sy) < 1e-12:
+        # Perfectly balanced around the globe — no meaningful centre; fall back.
+        return sum(vals) / len(vals)
+    return math.degrees(math.atan2(sy, sx))
+
+
+def unwrap_lngs(lngs: list[float]) -> list[float]:
+    """Express longitudes on the shortest continuous arc that contains them all.
+
+    Used before building hull polygons: points at 170°E and 170°W are 20° apart,
+    but a hull built in [-180, 180] would wrap the whole planet. We cut the
+    circle at the largest empty gap between points; if that gap already
+    contains the antimeridian the input is returned unchanged. Otherwise points
+    west of the cut get +360, and the result is recentred so its midpoint lies in
+    [-180, 180]; values may run past ±180 — Leaflet and Cesium both draw those.
+    """
+    if len(lngs) < 2:
+        return list(lngs)
+    xs = sorted(set(float(v) for v in lngs))
+    if len(xs) < 2:
+        return list(lngs)
+    # Gap between consecutive points, plus the wrap-around gap across ±180.
+    best_gap = 360.0 - (xs[-1] - xs[0])  # wrap gap: cutting here = no change
+    cut_after = None
+    for a, b in zip(xs, xs[1:]):
+        if b - a > best_gap:
+            best_gap = b - a
+            cut_after = a
+    if cut_after is None:
+        return list(lngs)
+    out = [v + 360.0 if v <= cut_after else v for v in lngs]
+    # Keep the arc's midpoint inside [-180, 180] so the shape lands on the main
+    # world copy (Caribbean + Philippines: -240..-65 rather than 120..295).
+    if (min(out) + max(out)) / 2 > 180:
+        out = [v - 360.0 for v in out]
+    return out
+
+
+# ---------------------------------------------------------------------------
+# UCDP war threshold
+# ---------------------------------------------------------------------------
+
+UCDP_WAR_THRESHOLD = 1000
+
+
+def ucdp_yearly_war_stats(events, threshold: int = UCDP_WAR_THRESHOLD):
+    """Per-conflict peak calendar-year deaths and number of war-level years.
+
+    UCDP's war definition is ≥1,000 battle-related deaths in a *single calendar
+    year*, not summed over the whole conflict. `events` needs columns
+    conflict_new_id, year, best. Returns a DataFrame indexed by conflict_new_id
+    with peak_year_deaths, war_years, warlike.
+    """
+    import pandas as pd
+
+    yearly = events.groupby(["conflict_new_id", "year"])["best"].sum()
+    out = pd.DataFrame(
+        {
+            "peak_year_deaths": yearly.groupby(level=0).max(),
+            "war_years": (yearly >= threshold).groupby(level=0).sum(),
+        }
+    )
+    out["war_years"] = out["war_years"].astype(int)
+    out["warlike"] = out["peak_year_deaths"] >= threshold
+    return out
+
+
+# ---------------------------------------------------------------------------
+# HCED source corrections + cluster routing
+# ---------------------------------------------------------------------------
+
+def load_source_corrections() -> list[dict]:
+    """Documented, per-record fixes for clear errors in raw source rows."""
+    path = REVIEW / "source_corrections.json"
+    if not path.exists():
+        return []
+    try:
+        raw = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return []
+    return [c for c in raw.get("corrections", []) if c.get("id")]
+
+
+def resolve_cluster(
+    clusters: list[tuple[int, int, str]],
+    year,
+    merge_map: dict[str, str],
+) -> str | None:
+    """Pick the cluster war_id for a battle year, following merges.
+
+    `clusters` must contain *every* year-cluster of a war name — including
+    clusters that were merged into another catalog war. Dropping merged
+    clusters sends their battles to the nearest surviving cluster (the bug that
+    put 427 WWII battles on a one-battle "World War II (1835)" record).
+    """
+    if not clusters:
+        return None
+    if year is None or (isinstance(year, float) and year != year):
+        wid = clusters[0][2]
+        return merge_map.get(wid, wid)
+    y = int(year)
+    for y0, y1, wid in clusters:
+        if y0 <= y <= y1:
+            return merge_map.get(wid, wid)
+    best = min(clusters, key=lambda c: min(abs(y - c[0]), abs(y - c[1])))
+    return merge_map.get(best[2], best[2])
 
 
 def cluster_years_by_gap(years: list[int], gap: int = 15) -> list[tuple[int, int]]:

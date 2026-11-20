@@ -20,14 +20,24 @@ from shapely.geometry import MultiPoint, Point
 
 # Allow `python scripts/run_etl.py`
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+# Windows consoles default to a legacy code page; never crash on "≥", "–", etc.
+for _stream in (sys.stdout, sys.stderr):
+    if hasattr(_stream, "reconfigure"):
+        _stream.reconfigure(encoding="utf-8", errors="replace")
 from common import (  # noqa: E402
     APP_PUBLIC_DATA,
     EXPORTS,
     HCED_YEAR_GAP,
     RAW,
     REVIEW,
+    COW_DATA_END_INTRA_V51,
+    COW_DATA_END_V4,
+    UCDP_WAR_THRESHOLD,
     append_progress_snapshot,
+    build_provenance,
+    circular_mean_lng,
     cluster_years_by_gap,
+    cow_end_year,
     cow_join_sides,
     cow_numeric_deaths,
     cow_side_label,
@@ -36,14 +46,26 @@ from common import (  # noqa: E402
     era_bucket,
     format_cow_warnum,
     load_crosswalk_decisions,
+    load_source_corrections,
     normalize_war_name,
     parse_year,
     point_feature,
     polygon_feature,
+    resolve_cluster,
     slugify,
+    ucdp_yearly_war_stats,
+    unwrap_lngs,
     write_geojson,
     write_json,
+    year_span_label,
 )
+
+# Max UCDP events shipped per conflict (keeps the browser payload small).
+# Totals in wars.json always use *all* events, never this sample.
+UCDP_EVENT_CAP = 400
+
+# Run-level stats surfaced in catalog_meta.json
+RUN_STATS: dict = {}
 
 csv.field_size_limit(min(sys.maxsize, 2**31 - 1))
 
@@ -60,14 +82,72 @@ def read_csv(path: Path, **kwargs) -> pd.DataFrame:
 # 01 Normalize
 # ---------------------------------------------------------------------------
 
+# Column names per source for each correctable field
+CORRECTION_FIELDS = {
+    "hced": {"id": "ID", "year": "Year", "war": "War", "lat": "Latitude", "lng": "Longitude"},
+    "war_atlas": {"id": "slug", "year": "year", "war": "war_slug", "lat": "lat", "lng": "lng"},
+}
+
+
+def apply_source_corrections(df: pd.DataFrame, source: str) -> pd.DataFrame:
+    """Apply review/source_corrections.json entries for one source (raw CSV stays untouched).
+
+    Each correction must still match its documented original value; a stale
+    correction (source updated upstream) is reported and skipped, never forced.
+    """
+    cols = CORRECTION_FIELDS[source]
+    corrections = [c for c in load_source_corrections() if c.get("source", "hced") == source]
+    df = df.copy()
+    applied, stale = 0, []
+    ids = df[cols["id"]].astype(str)
+    for c in corrections:
+        mask = ids == str(c["id"])
+        if not mask.any():
+            stale.append(f"{c['id']} (id not found)")
+            continue
+        field = str(c.get("field"))
+        col = cols.get(field) if field != "id" else None
+        if col is None:
+            stale.append(f"{c['id']} (unknown field {c.get('field')!r})")
+            continue
+        current = str(df.loc[mask, col].iloc[0]).strip()
+        if field in ("lat", "lng"):
+            try:
+                matches = abs(float(current) - float(c.get("from"))) < 1e-4
+            except (TypeError, ValueError):
+                matches = False
+        else:
+            matches = current == str(c.get("from")) or normalize_war_name(current) == normalize_war_name(
+                str(c.get("from", ""))
+            )
+        if not matches:
+            stale.append(f"{c['id']} ({col}={current!r}, expected {c.get('from')!r})")
+            continue
+        df[col] = df[col].astype(object)
+        df.loc[mask, col] = c["to"]
+        applied += 1
+    RUN_STATS["source_corrections_applied"] = RUN_STATS.get("source_corrections_applied", 0) + applied
+    print(f"  {source} source corrections applied: {applied}/{len(corrections)}")
+    for s_ in stale:
+        print(f"  WARNING stale correction skipped: {s_}")
+    return df
+
+
 def ingest_hced() -> pd.DataFrame:
     path = RAW / "hced" / "HCED_Data_v3.csv"
     df = read_csv(path, low_memory=False)
     df = df[df["ID"].notna() & (df["ID"].astype(str).str.strip() != "")]
+    df = apply_source_corrections(df, "hced")
     df["lat"] = pd.to_numeric(df["Latitude"], errors="coerce")
     df["lng"] = pd.to_numeric(df["Longitude"], errors="coerce")
     df = df[df["lat"].between(-90, 90) & df["lng"].between(-180, 180)]
     df["year"] = df["Year"].map(parse_year)
+    # HCED IDs end in the battle year ("Ionkovo1807"); use it only when Year is empty.
+    id_year = df["ID"].astype(str).str.extract(r"(\d{3,4})(?:-\d{2,4})?$")[0].map(parse_year)
+    missing = df["year"].isna() & id_year.notna()
+    if missing.any():
+        print(f"  HCED year taken from ID (Year field empty): {int(missing.sum())}")
+    df.loc[missing, "year"] = id_year[missing]
     df["war_raw"] = df["War"].fillna("").astype(str)
     df["war_norm"] = df["war_raw"].map(normalize_war_name)
     df["name"] = df["Battle"].fillna("").astype(str)
@@ -101,6 +181,7 @@ def ingest_war_atlas() -> tuple[pd.DataFrame, pd.DataFrame]:
     wars["war_id_src"] = "wa:" + wars["slug"].astype(str)
 
     battles = read_csv(RAW / "war-atlas" / "battles.csv")
+    battles = apply_source_corrections(battles, "war_atlas")
     battles["year"] = battles["year"].map(parse_year)
     battles["lat"] = pd.to_numeric(battles["lat"], errors="coerce")
     battles["lng"] = pd.to_numeric(battles["lng"], errors="coerce")
@@ -127,6 +208,11 @@ def ingest_war_atlas() -> tuple[pd.DataFrame, pd.DataFrame]:
     return wars, out_b
 
 
+def _cow_end(values, censor_year: int) -> dict:
+    end, ongoing = cow_end_year(values, censor_year)
+    return {"end_year": end, "ongoing_at_source_end": ongoing}
+
+
 def ingest_cow() -> pd.DataFrame:
     rows = []
 
@@ -141,7 +227,7 @@ def ingest_cow() -> pd.DataFrame:
                 "war_type": 1,
                 "war_class": "interstate",
                 "start_year": parse_year(g["StartYear1"].min()),
-                "end_year": parse_year(g["EndYear1"].replace([-8, -9], pd.NA).max()),
+                **_cow_end(g["EndYear1"], COW_DATA_END_V4),
                 "participants": "; ".join(states),
                 "deaths": cow_numeric_deaths(g["BatDeath"]).sum(min_count=1),
             }
@@ -161,7 +247,7 @@ def ingest_cow() -> pd.DataFrame:
                 "war_type": int(g["WarType"].iloc[0]) if pd.notna(g["WarType"].iloc[0]) else None,
                 "war_class": "extrastate",
                 "start_year": parse_year(g["StartYear1"].min()),
-                "end_year": parse_year(g["EndYear1"].replace([-8, -9], pd.NA).max()),
+                **_cow_end(g["EndYear1"], COW_DATA_END_V4),
                 "participants": "; ".join(dict.fromkeys(sides)),
                 "deaths": cow_numeric_deaths(g["BatDeath"]).sum(min_count=1),
             }
@@ -177,7 +263,7 @@ def ingest_cow() -> pd.DataFrame:
                 "war_type": int(r["WarType"]) if pd.notna(r["WarType"]) else None,
                 "war_class": "nonstate",
                 "start_year": parse_year(r["StartYear"]),
-                "end_year": parse_year(r["EndYear"]),
+                **_cow_end(g["EndYear"], COW_DATA_END_V4),
                 "participants": cow_join_sides(r.get("SideA1", ""), r.get("SideB1", "")),
                 "deaths": cow_numeric_deaths(r.get("TotalCombatDeaths")),
             }
@@ -193,7 +279,7 @@ def ingest_cow() -> pd.DataFrame:
                 "war_type": int(r["WarType"]) if pd.notna(r["WarType"]) else None,
                 "war_class": "intrastate",
                 "start_year": parse_year(r["StartYr1"]),
-                "end_year": parse_year(r["EndYr1"]),
+                **_cow_end(g["EndYr1"], COW_DATA_END_INTRA_V51),
                 "participants": cow_join_sides(r.get("SideA", ""), r.get("SideB", "")),
                 "deaths": cow_numeric_deaths(r.get("TotalBDeaths")),
             }
@@ -280,26 +366,37 @@ def ingest_ucdp() -> tuple[pd.DataFrame, pd.DataFrame]:
             deaths=("best", "sum"),
             event_count=("id", "count"),
             centroid_lat=("lat", "mean"),
-            centroid_lng=("lng", "mean"),
+            centroid_lng=("lng", circular_mean_lng),
         )
     )
     conflicts["title_norm"] = conflicts["title"].map(normalize_war_name)
-    conflicts["warlike"] = conflicts["deaths"] >= 1000
+    # UCDP war = ≥1,000 battle-related deaths in at least one calendar year.
+    # (Earlier versions summed deaths over the whole conflict, which wrongly
+    # promoted long low-intensity conflicts to "war".)
+    yearly = ucdp_yearly_war_stats(all_ev, UCDP_WAR_THRESHOLD)
+    conflicts = conflicts.merge(yearly, left_on="conflict_new_id", right_index=True, how="left")
+    conflicts["warlike"] = conflicts["warlike"].fillna(False).astype(bool)
+    cumulative_only = int(((conflicts["deaths"] >= UCDP_WAR_THRESHOLD) & ~conflicts["warlike"]).sum())
+    RUN_STATS["ucdp_cumulative_only_excluded"] = cumulative_only
     conflicts["war_id_src"] = "ucdp:conflict:" + conflicts["conflict_new_id"].astype(str)
     conflicts["definition_tier"] = conflicts["warlike"].map(
         lambda w: "ucdp_warlike" if w else "ucdp_conflict"
     )
 
-    # Sample up to 400 events per conflict (highest deaths first)
-    all_ev = all_ev.sort_values("best", ascending=False)
-    events = all_ev.groupby("conflict_new_id", group_keys=False).head(400).copy()
+    # Ship at most UCDP_EVENT_CAP events per conflict (highest deaths first).
+    # This is a display sample only — see events_total / deaths in wars.json.
+    all_ev = all_ev.sort_values(["best", "id"], ascending=[False, True])
+    events = all_ev.groupby("conflict_new_id", group_keys=False).head(UCDP_EVENT_CAP).copy()
+    RUN_STATS["ucdp_event_cap"] = UCDP_EVENT_CAP
+    RUN_STATS["ucdp_events_state_based_total"] = int(len(all_ev))
     events["event_id"] = "ucdp:" + events["id"].astype(str)
     events["source"] = "ucdp"
     events["name"] = events["conflict_name"]
     events["deaths_best"] = events["best"]
     events = events.rename(columns={"where_prec": "where_prec"})
     print(
-        f"  UCDP conflicts: {len(conflicts)} (warlike: {int(conflicts['warlike'].sum())}), "
+        f"  UCDP conflicts: {len(conflicts)} (war-level in ≥1 year: {int(conflicts['warlike'].sum())}; "
+        f"excluded because only cumulative deaths ≥{UCDP_WAR_THRESHOLD}: {cumulative_only}), "
         f"event samples: {len(events)}"
     )
     return conflicts, events
@@ -455,12 +552,30 @@ def build_canonical_wars(
         on_keep_separate,
     ):
         """Apply merge gate; call on_auto() or on_keep_separate(needs_review: bool)."""
+
+        def _y(v):
+            return None if v is None or (isinstance(v, float) and pd.isna(v)) else int(v)
+
+        # Context saved with every link so merges can be audited by a human later
+        ctx = {
+            "left_title": left_title,
+            "left_start": _y(left_start),
+            "left_end": _y(left_end),
+            "right_title": match[1] if match else None,
+            "right_start": _y(match[4]) if match else None,
+            "right_end": _y(match[5]) if match else None,
+        }
         forced_right = accepted_by_left.get(left_id)
         if forced_right:
             title = title_by_id.get(forced_right, forced_right)
             score = float(match[2]) if match and match[0] == forced_right else 1.0
             links.append(
                 {
+                    **ctx,
+                    # Reviewer-forced target can differ from the fuzzy best match
+                    "right_title": title,
+                    "right_start": None,
+                    "right_end": None,
                     "left_source": left_source,
                     "left_id": left_id,
                     "right_source": forced_right.split(":")[0],
@@ -491,6 +606,7 @@ def build_canonical_wars(
             )
             links.append(
                 {
+                    **ctx,
                     "left_source": left_source,
                     "left_id": left_id,
                     "right_source": wid.split(":")[0],
@@ -508,6 +624,7 @@ def build_canonical_wars(
         if exact_name and years_overlap(left_start, left_end, rstart, rend, pad=3):
             links.append(
                 {
+                    **ctx,
                     "left_source": left_source,
                     "left_id": left_id,
                     "right_source": wid.split(":")[0],
@@ -525,6 +642,7 @@ def build_canonical_wars(
         ):
             links.append(
                 {
+                    **ctx,
                     "left_source": left_source,
                     "left_id": left_id,
                     "right_source": wid.split(":")[0],
@@ -567,6 +685,7 @@ def build_canonical_wars(
                 )
             links.append(
                 {
+                    **ctx,
                     "left_source": left_source,
                     "left_id": left_id,
                     "right_source": wid.split(":")[0],
@@ -599,6 +718,8 @@ def build_canonical_wars(
                 "wikidata_qid": None,
                 "participant_summary": row.participants,
                 "death_estimate": None if pd.isna(row.deaths) else float(row.deaths),
+                "death_source": None if pd.isna(row.deaths) else "cow_battle_deaths",
+                "ongoing_at_source_end": bool(row.ongoing_at_source_end),
                 "title_norm": row.title_norm,
             }
         )
@@ -691,6 +812,9 @@ def build_canonical_wars(
     # 3) HCED distinct war strings — split polluted multi-century bags by year gaps
     hced_valid = hced[hced["war_norm"].astype(str).str.len() > 0].copy()
     hced_cluster_count = 0
+    # Every year-cluster of every HCED war name, *including* clusters that get
+    # merged into an existing COW/Atlas war. attach_battles needs the full list.
+    hced_cluster_index: dict[str, list[tuple[int, int, str]]] = defaultdict(list)
     for war_norm, grp in hced_valid.groupby("war_norm"):
         title_raw = grp["war_raw"].iloc[0]
         title_clean = normalize_war_name(title_raw)
@@ -714,10 +838,11 @@ def build_canonical_wars(
             cluster_battles = grp[grp["year"].between(y0, y1)]
             if multi:
                 wid = f"hced:{base_slug}:{y0}_{y1}"
-                title_out = f"{display} ({y0}–{y1})"
+                title_out = f"{display} ({year_span_label(int(y0), int(y1))})"
             else:
                 wid = f"hced:{base_slug}"
                 title_out = str(display)
+            hced_cluster_index[war_norm].append((int(y0), int(y1), wid))
             m = best_match(title_clean, y0, y1, all_named, pad=5)
             skip_add = {"v": False}
 
@@ -784,11 +909,14 @@ def build_canonical_wars(
             for w in wars:
                 if w["war_id"] == wid:
                     w["ucdp_conflict_id"] = _row.conflict_new_id
+                    w["ucdp_peak_year_deaths"] = int(_row.peak_year_deaths)
+                    w["ucdp_war_years"] = int(_row.war_years)
                     srcs = set((w["sources"] or "").split("|"))
                     srcs.add("ucdp")
                     w["sources"] = "|".join(sorted(s for s in srcs if s))
                     if w.get("death_estimate") is None:
                         w["death_estimate"] = float(_row.deaths)
+                        w["death_source"] = "ucdp_best_total"
                     break
             _skip["v"] = True
 
@@ -825,6 +953,9 @@ def build_canonical_wars(
                 "wikidata_qid": None,
                 "participant_summary": None,
                 "death_estimate": float(row.deaths),
+                "death_source": "ucdp_best_total",
+                "ucdp_peak_year_deaths": int(row.peak_year_deaths),
+                "ucdp_war_years": int(row.war_years),
                 "title_norm": row.title_norm,
                 "ucdp_centroid_lat": row.centroid_lat,
                 "ucdp_centroid_lng": row.centroid_lng,
@@ -848,7 +979,7 @@ def build_canonical_wars(
         f"  Canonical wars: {len(wars_df)}, crosswalks: {len(links_df)}, "
         f"ambiguous: {len(amb_df)}, rejected: {len(rej_df)}"
     )
-    return wars_df, links_df, amb_df
+    return wars_df, links_df, amb_df, dict(hced_cluster_index)
 
 
 # ---------------------------------------------------------------------------
@@ -901,7 +1032,9 @@ def attach_battles(
     wa_battles: pd.DataFrame,
     ucdp_events: pd.DataFrame,
     links: pd.DataFrame,
-) -> pd.DataFrame:
+    hced_cluster_index: dict[str, list[tuple[int, int, str]]],
+    ucdp_conflicts: pd.DataFrame,
+) -> tuple[pd.DataFrame, dict[str, dict]]:
     # Map source ids → canonical war_id (follow auto + accepted review merges)
     merge_map: dict[str, str] = {}
     if len(links):
@@ -912,18 +1045,10 @@ def attach_battles(
                 merge_map[str(row.left_id)] = str(row.right_id)
 
     war_by_norm = {}
-    # HCED cluster lookup: war_norm → [(y0, y1, war_id), ...]
-    hced_clusters: dict[str, list[tuple[int, int, str]]] = defaultdict(list)
     for row in wars.itertuples():
         war_by_norm[row.title_norm] = row.war_id
         hced_norm = getattr(row, "hced_norm", None)
         if isinstance(hced_norm, str) and hced_norm:
-            y0 = getattr(row, "hced_y0", row.start_year)
-            y1 = getattr(row, "hced_y1", row.end_year)
-            if y0 is not None and not (isinstance(y0, float) and pd.isna(y0)):
-                hced_clusters[hced_norm].append(
-                    (int(y0), int(y1 if y1 is not None and not (isinstance(y1, float) and pd.isna(y1)) else y0), row.war_id)
-                )
             war_by_norm[hced_norm] = row.war_id
 
     # Also map hced slug ids
@@ -932,15 +1057,10 @@ def attach_battles(
             war_by_norm[row.title_norm] = row.war_id
 
     def resolve_hced_war_id(war_norm: str, year) -> str:
-        clusters = hced_clusters.get(war_norm, [])
-        if year is not None and not (isinstance(year, float) and pd.isna(year)) and clusters:
-            y = int(year)
-            for y0, y1, wid in clusters:
-                if y0 <= y <= y1:
-                    return merge_map.get(wid, wid)
-            # Nearest cluster by year distance
-            best = min(clusters, key=lambda c: min(abs(y - c[0]), abs(y - c[1])))
-            return merge_map.get(best[2], best[2])
+        # Full cluster list (merged clusters included) — see resolve_cluster docstring.
+        hit = resolve_cluster(hced_cluster_index.get(war_norm, []), year, merge_map)
+        if hit is not None:
+            return hit
         wid = war_by_norm.get(war_norm)
         if wid is None:
             wid = "hced:" + slugify(war_norm)
@@ -1044,8 +1164,25 @@ def attach_battles(
     ev["year"] = pd.to_numeric(ev["year"], errors="coerce")
     ev["deaths_best"] = pd.to_numeric(ev["deaths_best"], errors="coerce")
 
+    # Full (unsampled) UCDP totals per catalog war: a war can absorb several
+    # UCDP conflicts via the crosswalk, so sum over every linked conflict.
+    ucdp_totals: dict[str, dict] = {}
+    for row in ucdp_conflicts.itertuples():
+        if not row.warlike:
+            continue
+        wid = ucdp_to_war.get(str(row.conflict_new_id), f"ucdp:conflict:{row.conflict_new_id}")
+        wid = merge_map.get(wid, wid)
+        if wid not in valid_wars:
+            continue
+        t = ucdp_totals.setdefault(wid, {"events_total": 0, "deaths_total": 0})
+        t["events_total"] += int(row.event_count)
+        t["deaths_total"] += int(row.deaths)
+    shown = ev[ev["source"] == "ucdp"].groupby("war_id").size().to_dict()
+    for wid, t in ucdp_totals.items():
+        t["events_shown"] = int(shown.get(wid, 0))
+
     print(f"  Attached battles/events: {len(ev)}")
-    return ev
+    return ev, ucdp_totals
 
 
 # ---------------------------------------------------------------------------
@@ -1057,13 +1194,47 @@ def _buffer_deg(km: float, lat: float) -> float:
     return km / (111.32 * max(0.2, abs(math.cos(math.radians(lat)))))
 
 
+def widen_placeholder_spans(wars: pd.DataFrame, battles: pd.DataFrame) -> pd.DataFrame:
+    """War Atlas writes end_year = start_year as a placeholder for wars it has not
+    dated yet (e.g. Russo-Ukrainian War "2014–2014" with battles to 2025). Only for
+    War-Atlas-only wars with such a single-year span whose own linked battles fall
+    outside it, widen the span to cover those battles and flag it. Every other
+    span is kept exactly as the source gives it.
+    """
+    wars = wars.copy()
+    yrs = battles.dropna(subset=["year"]).groupby("war_id")["year"].agg(["min", "max"])
+    wars["span_from_battles"] = False
+    n = 0
+    for i, row in wars.iterrows():
+        if row["definition_tier"] != "atlas_curated" or row["war_id"] not in yrs.index:
+            continue
+        s0, s1 = row["start_year"], row["end_year"]
+        if pd.isna(s0) or pd.isna(s1) or int(s0) != int(s1):
+            continue
+        lo, hi = int(yrs.loc[row["war_id"], "min"]), int(yrs.loc[row["war_id"], "max"])
+        if lo >= int(s0) and hi <= int(s1):
+            continue
+        wars.at[i, "start_year"] = min(int(s0), lo)
+        wars.at[i, "end_year"] = max(int(s1), hi)
+        wars.at[i, "span_from_battles"] = True
+        n += 1
+    RUN_STATS["spans_widened_from_battles"] = n
+    print(f"  War Atlas single-year placeholder spans widened to their battles: {n}")
+    return wars
+
+
 def derive_theaters(wars: pd.DataFrame, battles: pd.DataFrame) -> list[dict]:
     features = []
     by_war = battles.groupby("war_id")
     for war_id, g in by_war:
         pts = list(zip(g["lng"].astype(float), g["lat"].astype(float)))
         # unique rounded points
-        uniq = list({(round(x, 4), round(y, 4)) for x, y in pts})
+        uniq = sorted({(round(x, 4), round(y, 4)) for x, y in pts})
+        # Pacific-spanning wars: build the hull in a continuous longitude range
+        # instead of wrapping the polygon around the whole planet.
+        if uniq:
+            un_lngs = unwrap_lngs([x for x, _ in uniq])
+            uniq = [(x2, y) for x2, (_x, y) in zip(un_lngs, uniq)]
         props_base = {
             "war_id": war_id,
             "point_count": len(uniq),
@@ -1143,7 +1314,7 @@ def cow_midloc_centroids(midloc: pd.DataFrame) -> dict[float | int, tuple[float,
     joined = dy.merge(m, left_on="disno", right_on="dispnum", how="inner")
     if joined.empty:
         return {}
-    cents = joined.groupby("warnum").agg(lat=("lat", "mean"), lng=("lng", "mean"))
+    cents = joined.groupby("warnum").agg(lat=("lat", "mean"), lng=("lng", circular_mean_lng))
     out: dict[float | int, tuple[float, float]] = {}
     for warnum, r in cents.iterrows():
         key = format_cow_warnum(warnum)
@@ -1154,17 +1325,92 @@ def cow_midloc_centroids(midloc: pd.DataFrame) -> dict[float | int, tuple[float,
     return out
 
 
+def _opt_int(v) -> int | None:
+    if v is None or (isinstance(v, float) and pd.isna(v)) or v is pd.NA:
+        return None
+    try:
+        return int(v)
+    except (TypeError, ValueError):
+        return None
+
+
+def _opt_bool(v) -> bool:
+    """True only for real truthy flags; NaN/None/pd.NA (non-COW rows) → False.
+
+    Works for Python bools and numpy.bool_ alike (`x is True` fails for numpy).
+    """
+    if v is None or v is pd.NA or (isinstance(v, float) and pd.isna(v)):
+        return False
+    return bool(v)
+
+
+def _opt_str(v) -> str | None:
+    if v is None or (isinstance(v, float) and pd.isna(v)) or v is pd.NA:
+        return None
+    s = str(v)
+    return s or None
+
+
+def source_coverage(
+    hced: pd.DataFrame,
+    cow: pd.DataFrame,
+    wa_wars: pd.DataFrame,
+    wa_battles: pd.DataFrame,
+    midloc: pd.DataFrame,
+    ucdp_conflicts: pd.DataFrame,
+) -> list[dict]:
+    """Year span each source actually contributes (computed, not assumed).
+
+    Trends near a boundary partly reflect which sources exist, not only real
+    change in warfare — the About panel shows this table.
+    """
+
+    def span(series) -> tuple[int | None, int | None]:
+        s = pd.to_numeric(series, errors="coerce").dropna()
+        if s.empty:
+            return None, None
+        return int(s.min()), int(s.max())
+
+    cow_formal = cow[cow["war_class"] != "intrastate"]
+    cow_intra = cow[cow["war_class"] == "intrastate"]
+    rows = [
+        ("hced", "HCED v3 battles", span(hced["year"]), "Encyclopedia-derived battle list"),
+        (
+            "cow_formal",
+            "COW inter-, extra-, non-state wars v4.0",
+            (span(cow_formal["start_year"])[0], span(cow_formal["end_year"])[1]),
+            "Formal war list (≥1,000 battle deaths)",
+        ),
+        (
+            "cow_intra",
+            "COW intra-state wars v5.1",
+            (span(cow_intra["start_year"])[0], span(cow_intra["end_year"])[1]),
+            "Civil, regional, intercommunal wars",
+        ),
+        ("war_atlas", "The War Atlas battles", span(wa_battles["year"]), "Curated from Wikidata/Wikipedia"),
+        ("midloc", "MIDLOC v2.1", span(midloc["year"]), "Militarized disputes — not wars"),
+        (
+            "ucdp",
+            "UCDP GED 26.1 (state-based events)",
+            (span(ucdp_conflicts["start_year"])[0], span(ucdp_conflicts["end_year"])[1]),
+            "Georeferenced events",
+        ),
+    ]
+    return [{"id": i, "label": lbl, "from": a, "to": b, "note": note} for i, lbl, (a, b), note in rows]
+
+
 def export_all(
     wars: pd.DataFrame,
     battles: pd.DataFrame,
     midloc: pd.DataFrame,
     theater_features: list[dict],
     links: pd.DataFrame,
+    ucdp_totals: dict[str, dict],
+    coverage: list[dict],
 ) -> None:
     # Aggregate battle counts onto wars
     counts = battles.groupby("war_id").size().to_dict()
-    death_sum = battles.groupby("war_id")["deaths_best"].sum(min_count=1).to_dict()
-    cents = battles.groupby("war_id").agg(lat=("lat", "mean"), lng=("lng", "mean"))
+    cents = battles.groupby("war_id").agg(lat=("lat", "mean"), lng=("lng", circular_mean_lng))
     midloc_by_warnum = cow_midloc_centroids(midloc)
 
     war_features = []
@@ -1199,7 +1445,7 @@ def export_all(
             "title": row.title,
             "start_year": None if pd.isna(row.start_year) else int(row.start_year),
             "end_year": None if pd.isna(row.end_year) else int(row.end_year),
-            "era_bucket": row.era_bucket,
+            "era_bucket": era_bucket(None if pd.isna(row.start_year) else int(row.start_year)),
             "definition_tier": row.definition_tier,
             "war_class": row.war_class,
             "sources": row.sources,
@@ -1211,8 +1457,19 @@ def export_all(
             "death_estimate": None
             if pd.isna(row.death_estimate)
             else float(row.death_estimate),
+            # cow_battle_deaths | ucdp_best_total — the two are not the same measure
+            "death_source": _opt_str(getattr(row, "death_source", None)),
             "battle_count": int(counts.get(wid, 0)),
-            "event_deaths": None if wid not in death_sum or pd.isna(death_sum[wid]) else float(death_sum[wid]),
+            # UCDP battle-related deaths over ALL linked events (not the map sample)
+            "event_deaths": float(ucdp_totals[wid]["deaths_total"]) if wid in ucdp_totals else None,
+            "ucdp_events_total": int(ucdp_totals[wid]["events_total"]) if wid in ucdp_totals else None,
+            "ucdp_events_shown": int(ucdp_totals[wid]["events_shown"]) if wid in ucdp_totals else None,
+            "ucdp_peak_year_deaths": _opt_int(getattr(row, "ucdp_peak_year_deaths", None)),
+            "ucdp_war_years": _opt_int(getattr(row, "ucdp_war_years", None)),
+            # COW code -7: still ongoing when the source dataset ends (end year is censored)
+            "ongoing_at_source_end": _opt_bool(getattr(row, "ongoing_at_source_end", None)),
+            # War Atlas placeholder span (start = end) widened to cover its own battles
+            "span_from_battles": _opt_bool(getattr(row, "span_from_battles", None)),
             "geo_source": geo_source,
         }
         wars_records.append(props)
@@ -1261,19 +1518,7 @@ def export_all(
         for r in midloc.itertuples()
     ]
 
-    # Timeline index
-    timeline: dict[str, list[str]] = defaultdict(list)
-    for p in wars_records:
-        if p["start_year"] is None:
-            continue
-        y0 = p["start_year"]
-        y1 = p["end_year"] if p["end_year"] is not None else y0
-        # Index by decade for compact file; app expands
-        for y in range(y0, y1 + 1):
-            # Only store year keys that change — actually full years can be large;
-            # store start years list + range filter client-side from wars.csv
-            pass
-    # Compact: just export wars list; client filters by year range
+    # Client filters by year range from the wars list
     write_json(EXPORTS / "wars.json", wars_records)
     write_geojson(EXPORTS / "wars.geojson", war_features)
     write_geojson(EXPORTS / "battles.geojson", battle_features)
@@ -1284,15 +1529,19 @@ def export_all(
         "datasets": [
             {
                 "id": "hced",
-                "citation": "Miller, C., & Bakar, K. S. (2023). Conflict Events Worldwide Since 1468BC: Introducing the Historical Conflict Event Dataset. Journal of Conflict Resolution.",
+                "citation": "Miller, C., & Bakar, K. S. (2023). Conflict Events Worldwide Since 1468BC: Introducing the Historical Conflict Event Dataset. Journal of Conflict Resolution. Data: HCED v3.",
             },
             {
                 "id": "cow",
-                "citation": "Sarkees, Meredith Reid and Frank Whelon Wayman (2010). Resort to War: 1816–2007. CQ Press. Correlates of War Project.",
+                "citation": "Sarkees, M. R., & Wayman, F. W. (2010). Resort to War: 1816–2007. CQ Press. Correlates of War Project — Inter-State, Extra-State and Non-State War Data v4.0, and Directed Dyadic Inter-State War Data.",
+            },
+            {
+                "id": "cow_intra",
+                "citation": "Dixon, J. S., & Sarkees, M. R. (2016). A Guide to Intra-state Wars: An Examination of Civil, Regional, and Intercommunal Wars, 1816–2014. CQ Press. Correlates of War Project — Intra-State War Data v5.1.",
             },
             {
                 "id": "ucdp",
-                "citation": "Uppsala Conflict Data Program (UCDP) Georeferenced Event Dataset (GED) Global version 26.1. CC BY 4.0.",
+                "citation": "Sundberg, R., & Melander, E. (2013). Introducing the UCDP Georeferenced Event Dataset. Journal of Peace Research, 50(4), 523–532. Data: UCDP Georeferenced Event Dataset (GED) Global version 26.1, Uppsala Conflict Data Program. CC BY 4.0.",
             },
             {
                 "id": "war_atlas",
@@ -1300,7 +1549,7 @@ def export_all(
             },
             {
                 "id": "midloc",
-                "citation": "Braithwaite, Alex; and Douglas Lemke. Militarized Interstate Dispute Locations (MIDLOC) v2.1. Correlates of War Project.",
+                "citation": "Braithwaite, A. (2010). MIDLOC: Introducing the Militarized Interstate Dispute Location Dataset. Journal of Peace Research, 47(1), 91–98. Data: MIDLOC v2.1, Correlates of War Project.",
             },
         ]
     }
@@ -1420,6 +1669,21 @@ def export_all(
         "geo_source_counts": {str(k): int(v) for k, v in geo_source_counts.items()},
         "year_min": int(pd.Series([p["start_year"] for p in wars_records if p["start_year"] is not None]).min()),
         "year_max": int(pd.Series([p["end_year"] for p in wars_records if p["end_year"] is not None]).max()),
+        "ucdp_war_rule": f"≥{UCDP_WAR_THRESHOLD:,} battle-related deaths in at least one calendar year",
+        "ucdp_event_cap": RUN_STATS.get("ucdp_event_cap"),
+        "ucdp_events_shown": int((battles["source"] == "ucdp").sum()),
+        "ucdp_events_linked_total": int(sum(t["events_total"] for t in ucdp_totals.values())),
+        "ucdp_cumulative_only_excluded": RUN_STATS.get("ucdp_cumulative_only_excluded"),
+        "source_corrections_applied": RUN_STATS.get("source_corrections_applied", 0),
+        "spans_widened_from_battles": RUN_STATS.get("spans_widened_from_battles", 0),
+        "theaters_antimeridian": sum(
+            1
+            for f in theater_features
+            if any(abs(pt[0]) > 180 for pt in f["geometry"]["coordinates"][0])
+        ),
+        "source_coverage": coverage,
+        # SHA-256 of every input + software versions (verifiable build record)
+        "build_provenance": build_provenance(),
     }
     write_json(EXPORTS / "catalog_meta.json", qa)
     hist = append_progress_snapshot(qa)
@@ -1445,16 +1709,33 @@ def main() -> None:
     ucdp_conflicts, ucdp_events = ingest_ucdp()
 
     print("02 Canonical wars + crosswalk...")
-    wars, links, _amb = build_canonical_wars(cow, wa_wars, hced, ucdp_conflicts)
+    wars, links, _amb, hced_clusters = build_canonical_wars(cow, wa_wars, hced, ucdp_conflicts)
+    # Every crosswalk link (auto, accepted, rejected, needs_review) with titles + years,
+    # so merge accuracy can be audited (scripts/audit_crosswalk.py).
+    links.sort_values(["review_status", "left_id", "right_id"]).to_csv(
+        REVIEW / "crosswalk_links.csv", index=False
+    )
 
     print("03 Attach battles/events...")
-    battles = attach_battles(wars, hced, wa_battles, ucdp_events, links)
+    battles, ucdp_totals = attach_battles(
+        wars, hced, wa_battles, ucdp_events, links, hced_clusters, ucdp_conflicts
+    )
+
+    wars = widen_placeholder_spans(wars, battles)
 
     print("04 Derive theaters...")
     theaters = derive_theaters(wars, battles)
 
     print("05 Export GeoJSON + app public data...")
-    export_all(wars, battles, midloc, theaters, links)
+    coverage = source_coverage(hced, cow, wa_wars, wa_battles, midloc, ucdp_conflicts)
+    export_all(wars, battles, midloc, theaters, links, ucdp_totals, coverage)
+
+    print("06 Validate exports...")
+    from validate_exports import main as validate_main
+
+    status = validate_main()
+    if status != 0:
+        raise SystemExit(status)
     print("Done.")
 
 

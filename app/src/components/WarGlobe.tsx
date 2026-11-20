@@ -9,7 +9,7 @@ import {
   heatFill,
   peakHeatDensity,
 } from '../lib/heatmap'
-import { escapeHtml, pointLngLat } from '../lib/geoSafe'
+import { circularMeanLng, escapeHtml, pointLngLat } from '../lib/geoSafe'
 import {
   clearMapFocusConsumed,
   focusKey,
@@ -236,7 +236,9 @@ export function WarGlobe({
         const lng = Number(pt[0])
         const lat = Number(pt[1])
         if (!Number.isFinite(lat) || !Number.isFinite(lng)) continue
-        if (lat < -90 || lat > 90 || lng < -180 || lng > 180) continue
+        // Theater rings that cross the antimeridian are stored with lng up to ±360
+        // (continuous outline); Cesium normalises them, so do not drop those points.
+        if (lat < -90 || lat > 90 || lng < -360 || lng > 360) continue
         clean.push([lng, lat])
       }
       return clean.length >= 3 ? clean : null
@@ -616,9 +618,11 @@ export function WarGlobe({
     let north = -90
     let used = 0
 
+    const seenLngs: number[] = []
     const addLngLat = (lng: number, lat: number) => {
       if (!Number.isFinite(lat) || !Number.isFinite(lng)) return
       if (!first) first = [lng, lat]
+      seenLngs.push(lng)
       west = Math.min(west, lng)
       east = Math.max(east, lng)
       south = Math.min(south, lat)
@@ -680,10 +684,13 @@ export function WarGlobe({
     const tooWide = crossesDateline || lonSpan > 120 || north - south > 80
 
     if (tooWide) {
-      const midLng = crossesDateline ? first[0] : (west + east) / 2
-      const midLat = (south + north) / 2
+      // Centre on the circular mean of all points (not just the first one) and
+      // pull back far enough to see a continent- or ocean-spanning war whole.
+      const midLng = circularMeanLng(seenLngs) ?? first[0]
+      const midLat = Math.max(-60, Math.min(60, (south + north) / 2))
+      const altitude = crossesDateline || lonSpan > 120 ? 14_000_000 : 6_000_000
       viewer.camera.flyTo({
-        destination: Cesium.Cartesian3.fromDegrees(midLng, midLat, 3_500_000),
+        destination: Cesium.Cartesian3.fromDegrees(midLng, midLat, altitude),
         duration: 1.0,
       })
     } else if (positions.length >= 2) {
@@ -777,9 +784,15 @@ export function WarGlobe({
       )}
       {displayMode === 'heatmap' && (
         <div className="heat-legend" aria-hidden>
-          <span>{heatScale === 'absolute' ? 'Lower (abs)' : 'Lower density'}</span>
+          <span>
+            <span className="hl-long">{heatScale === 'absolute' ? 'Lower (abs)' : 'Lower density'}</span>
+            <span className="hl-short">Low</span>
+          </span>
           <div className="heat-legend-bar" />
-          <span>{heatScale === 'absolute' ? 'Higher (abs)' : 'Higher density'}</span>
+          <span>
+            <span className="hl-long">{heatScale === 'absolute' ? 'Higher (abs)' : 'Higher density'}</span>
+            <span className="hl-short">High</span>
+          </span>
         </div>
       )}
     </div>

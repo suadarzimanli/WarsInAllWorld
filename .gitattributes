@@ -1,0 +1,5 @@
+# Inputs below are SHA-256-checksummed in catalog_meta.json (build_provenance).
+# Never let Git rewrite their line endings, or checksums differ between
+# Windows and the Linux CI runner even though the data is identical.
+data/raw/** -text
+data/processed/review/*.json -text

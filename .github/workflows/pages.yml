@@ -3,6 +3,7 @@ name: Deploy GitHub Pages
 on:
   push:
     branches: [main, master]
+  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -15,7 +16,36 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Tests gate the deploy: a regression in the app or the shipped catalog stops it.
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - name: Lint, typecheck and test the app (includes shipped-data checks)
+        working-directory: app
+        run: |
+          npm ci
+          npm run lint
+          npx tsc -b
+          npm test
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: ETL unit tests + validate committed exports
+        run: |
+          pip install -r requirements.txt
+          python -m unittest discover -s scripts/tests -v
+          python scripts/validate_exports.py
+
   build:
+    needs: checks
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -45,6 +75,7 @@ jobs:
 
   deploy:
     needs: build
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

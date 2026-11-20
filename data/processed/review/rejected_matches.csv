@@ -22,18 +22,19 @@ hced:2nd_british_kandyan_war,2nd British-Kandyan War,cow:305,British-Kandyan,0.7
 hced:2nd_indo_pakistan_war,2nd Indo-Pakistan War,wa:indo_pakistani_war_of_1965,Indo-Pakistani War of 1965,0.766,hced_to_existing
 hced:2nd_riel_rebellion,2nd Riel Rebellion,cow:371,Kokand Rebellion,0.706,hced_to_existing
 hced:2nd_zhili_fengtian_war,2nd Zhili-Fengtian War,cow:692,First Zhili-Fengtien War of 1922,0.704,hced_to_existing
-hced:afghan_civil_war:1929_1929,Afghan Civil War (1929–1929),wa:austrian_civil_war,Austrian Civil War,0.765,hced_to_existing
+hced:afghan_civil_war:1929_1929,Afghan Civil War (1929),wa:austrian_civil_war,Austrian Civil War,0.765,hced_to_existing
 hced:afghan_civil_war:1978_1996,Afghan Civil War (1978–1996),wa:angolan_civil_war,Angolan Civil War,0.848,hced_to_existing
 hced:afghan_civil_wars,Afghan Civil Wars,wa:argentine_civil_wars,Argentine Civil Wars,0.757,hced_to_existing
-hced:afghan_war:1878_1878,Afghan War                                             (1878–1878),cow:381,Gun War,0.706,hced_to_existing
+hced:afghan_war:1878_1878,Afghan War                                             (1878),cow:381,Gun War,0.706,hced_to_existing
 hced:algerian_war_of_independence,Algerian War of Independence,wa:eritrean_war_of_independence,Eritrean War of Independence,0.893,hced_to_existing
 hced:american_colonial_wars,American Colonial Wars,wa:cherokee_american_wars,Cherokee–American wars,0.727,hced_to_existing
 hced:anglo_arab_wars:1809_1821,Anglo-Arab Wars (1809–1821),wa:anglo_ashanti_wars,Anglo-Ashanti wars,0.788,hced_to_existing
-hced:anglo_arab_wars:1839_1839,Anglo-Arab Wars (1839–1839),wa:anglo_ashanti_wars,Anglo-Ashanti wars,0.788,hced_to_existing
+hced:anglo_arab_wars:1839_1839,Anglo-Arab Wars (1839),wa:anglo_ashanti_wars,Anglo-Ashanti wars,0.788,hced_to_existing
 hced:anglo_irish_war,Anglo-Irish War,wa:irish_civil_war,Irish Civil War,0.733,hced_to_existing
 hced:anglo_irish_wars,Anglo-Irish Wars,wa:irish_civil_war,Irish Civil War,0.71,hced_to_existing
 hced:anhui_zhili_war,Anhui-Zhili War,cow:685,Zhili-Anfu War of 1920,0.703,hced_to_existing
 hced:argentine_brazilian_war,Argentine-Brazilian War,cow:315,Brazil-Argentine,0.821,hced_to_existing
+hced:argentine_war,Argentine War,wa:argentine_civil_wars,Argentine Civil Wars,0.788,hced_to_existing
 hced:bambatha_rebellion,Bambatha Rebellion,cow:421,Kuanhama Rebellion,0.722,hced_to_existing
 hced:bangladesh_war_of_independence,Bangladesh War of Independence,wa:angolan_war_of_independence,Angolan War of Independence,0.877,hced_to_existing
 hced:belgian_war,Belgian War,wa:black_war,Black War,0.7,hced_to_existing
@@ -44,23 +45,23 @@ hced:canudos_rebellion,Canudos Rebellion,cow:406,Mazrui Rebellion,0.727,hced_to_
 hced:cape_frontier_wars,Cape Frontier Wars,wa:australian_frontier_wars,Australian frontier wars,0.714,hced_to_existing
 hced:central_american_national_wars,Central American National Wars,cow:1510,Central American Confederation War,0.844,hced_to_existing
 hced:central_american_wars:1828_1835,Central American Wars (1828–1835),cow:1510,Central American Confederation War,0.727,hced_to_existing
-hced:chaco_war:1906_1906,Chaco War (1906–1906),wa:aceh_war,Aceh War,0.706,hced_to_existing
 hced:chad_civil_war,Chad Civil War,wa:cambodian_civil_war,Cambodian Civil War,0.788,hced_to_existing
 hced:chad_civil_wars,Chad Civil Wars,wa:cambodian_civil_war,Cambodian Civil War,0.765,hced_to_existing
 hced:chad_libyan_war,Chad-Libyan War,wa:chadian_libyan_war,Chadian–Libyan War,0.909,hced_to_existing
 hced:chadian_civil_war,Chadian Civil War,wa:cambodian_civil_war,Cambodian Civil War,0.889,hced_to_existing
 hced:chilean_wars_of_independence,Chilean Wars of Independence,wa:brazilian_war_of_independence,Brazilian War of Independence,0.842,hced_to_existing
 hced:civil_war:1918_1949,Civil War (1918–1949),wa:greek_civil_war,Greek Civil War,0.75,hced_to_existing
-hced:civil_war:1990_1990,Civil War (1990–1990),wa:cold_war,Cold War,0.706,hced_to_existing
+hced:civil_war:1990_1990,Civil War (1990),wa:cold_war,Cold War,0.706,hced_to_existing
+hced:colombian_civil_wars,Colombian Civil Wars,wa:colombian_civil_war_of_1859_62,Colombian Civil War of 1859–62,0.76,hced_to_existing
 hced:comanche_wars,Comanche Wars,wa:apache_wars,Apache Wars,0.75,hced_to_existing
 hced:congolese_civil_war,Congolese Civil War,wa:nigerian_civil_war,Nigerian Civil War,0.703,hced_to_existing
 hced:cuban_war,Cuban War,wa:banana_wars,Banana Wars,0.7,hced_to_existing
 hced:dhofar_war,Dhofar War,wa:shifta_war,Shifta War,0.7,hced_to_existing
-hced:dutch_conquest_of_aceh:1904_1904,Dutch Conquest of Aceh (1904–1904),cow:415,French Conquest of Chad,0.756,hced_to_existing
+hced:dutch_conquest_of_aceh:1904_1904,Dutch Conquest of Aceh (1904),cow:415,French Conquest of Chad,0.756,hced_to_existing
 hced:dutch_conquest_of_bali:1894_1906,Dutch Conquest of Bali (1894–1906),cow:415,French Conquest of Chad,0.711,hced_to_existing
-hced:ecuadorian_civil_war:1895_1895,Ecuadorian Civil War (1895–1895),wa:samoan_civil_war,Samoan Civil War,0.778,hced_to_existing
+hced:ecuadorian_civil_war:1895_1895,Ecuadorian Civil War (1895),wa:samoan_civil_war,Samoan Civil War,0.778,hced_to_existing
 hced:ecuadorian_civil_wars,Ecuadorian Civil Wars,wa:uruguayan_civil_war,Uruguayan Civil War,0.7,hced_to_existing
-hced:ethiopian_war:1875_1875,Ethiopian War (1875–1875),cow:1553,Second Ethiopian War,0.788,hced_to_existing
+hced:ethiopian_war:1875_1875,Ethiopian War (1875),cow:1553,Second Ethiopian War,0.788,hced_to_existing
 hced:finnish_war_of_independence,Finnish War of Independence,wa:estonian_war_of_independence,Estonian War of Independence,0.8,hced_to_existing
 hced:franco_mandingo_war,Franco-Mandingo War,cow:389,French-Mandinka,0.706,hced_to_existing
 hced:french_conquest_of_indo_china,French Conquest of Indo-China,cow:345,French Conquest of Kabylia,0.727,hced_to_existing
@@ -70,14 +71,16 @@ hced:greek_war_of_independence,Greek War of Independence,wa:argentine_war_of_ind
 hced:greek_wars_of_independence,Greek Wars of Independence,wa:argentine_war_of_independence,Argentine War of Independence,0.836,hced_to_existing
 hced:hungarian_czech_war,Hungarian Czech War,wa:hungarian_czechoslovak_romania_war,Hungarian-Czechoslovak-România War,0.717,hced_to_existing
 hced:ifni_war,Ifni War,cow:158,IfniWar,0.933,hced_to_existing
+hced:indian_war:1832_1836,Indian War        (1832–1836),wa:texas_indian_wars,Texas–Indian Wars,0.741,hced_to_existing
 hced:indian_war:1855_1878,Indian War        (1855–1878),cow:1557,Oman-Ibadi War,0.75,hced_to_existing
 hced:indo_pakistan_war,Indo-Pakistan War,wa:indo_pakistani_war_of_1965,Indo-Pakistani War of 1965,0.791,hced_to_existing
 hced:indonesian_civil_wars,Indonesian Civil Wars,wa:laotian_civil_war,Laotian Civil War,0.737,hced_to_existing
 hced:indonesian_malaysian_conflict,Indonesian-Malaysian Conflict,wa:indonesia_malaysia_confrontation,Indonesia–Malaysia confrontation,0.787,hced_to_existing
 hced:indonesian_malaysian_confrontation,Indonesian-                       Malaysian Confrontation ,wa:indonesia_malaysia_confrontation,Indonesia–Malaysia confrontation,0.97,hced_to_existing
+hced:italo_ethiopian_war,Italo-Ethiopian War    ,wa:first_italo_ethiopian_war,First Italo-Ethiopian War,0.864,hced_to_existing
 hced:italo_turkish_war,Italo-Turkish War,cow:97,Italian-Turkish,0.75,hced_to_existing
 hced:kichai_indian_war,Kichai Indian War,wa:texas_indian_wars,Texas–Indian Wars,0.706,hced_to_existing
-hced:kickapoo_indian_wars:1838_1838,Kickapoo Indian Wars (1838–1838),wa:texas_indian_wars,Texas–Indian Wars,0.703,hced_to_existing
+hced:kickapoo_indian_wars:1838_1838,Kickapoo Indian Wars (1838),wa:texas_indian_wars,Texas–Indian Wars,0.703,hced_to_existing
 hced:kickapoo_indian_wars:1862_1873,Kickapoo Indian Wars (1862–1873),wa:texas_indian_wars,Texas–Indian Wars,0.703,hced_to_existing
 hced:kossovo_war,Kossovo War,cow:221,War for Kosovo,0.8,hced_to_existing
 hced:latvian_war_of_independence,Latvian War of Independence,wa:lithuanian_wars_of_independence,Lithuanian Wars of Independence,0.862,hced_to_existing
@@ -98,19 +101,18 @@ hced:persian_revolution,Persian Revolution,wa:mexican_revolution,Mexican Revolut
 hced:peruvian_civil_war,Peruvian Civil War,wa:uruguayan_civil_war,Uruguayan Civil War,0.757,hced_to_existing
 hced:peruvian_civil_wars,Peruvian Civil Wars,wa:uruguayan_civil_war,Uruguayan Civil War,0.737,hced_to_existing
 hced:peruvian_colombian_war,Peruvian-Colombian War,cow:1512,Peru-Gran Colombia War,0.818,hced_to_existing
-hced:peruvian_war_of_independence:1862_1862,Peruvian War of Independence (1862–1862),wa:second_italian_war_of_independence,Second Italian War of Independence,0.71,hced_to_existing
 hced:pit_river_indian_war,Pit River Indian War,wa:texas_indian_wars,Texas–Indian Wars,0.703,hced_to_existing
 hced:polish_czech_war,Polish-Czech War,wa:polish_czechoslovak_war,Polish–Czechoslovak War,0.821,hced_to_existing
-hced:pontiacs_war:1763_1763,Pontiacs War          (1763–1763),wa:pontiacs_war,Pontiac's War,0.96,hced_to_existing
+hced:pontiacs_war:1763_1763,Pontiacs War          (1763),wa:pontiacs_war,Pontiac's War,0.96,hced_to_existing
 hced:prussian_war,Prussian War,wa:austro_prussian_war,Austro-Prussian War,0.774,hced_to_existing
 hced:red_clouds_war,Red Clouds War,wa:red_clouds_war,Red Cloud's War,0.897,hced_to_existing
 hced:russian_civil_war,Russian Civil War,wa:irish_civil_war,Irish Civil War,0.75,hced_to_existing
 hced:russian_civil_wars,Russian Civil Wars,wa:irish_civil_war,Irish Civil War,0.727,hced_to_existing
 hced:russo_persian_wars,Russo-Persian Wars,cow:316,Russo-Persian,0.839,hced_to_existing
 hced:russo_turkish_war:1877_1878,Russo-Turkish War (1877–1878),cow:376,Russo-Turkoman,0.71,hced_to_existing
+hced:saudi_rashidi_wars,Saudi-Rashidi Wars,wa:saudi_rashidi_war,Saudi–Rashidi War,0.971,hced_to_existing
 hced:second_chechen_war,Second Chechen War,wa:second_congo_war,Second Congo War,0.765,hced_to_existing
 hced:seven_week_s_war,Seven Week's War,cow:55,Seven Weeks,0.741,hced_to_existing
-hced:seven_years_war:1866_1866,Seven Years War (1866–1866),wa:ten_years_war,Ten Years' War,0.857,hced_to_existing
 hced:sioux_indian_wars,Sioux Indian Wars,wa:texas_indian_wars,Texas–Indian Wars,0.765,hced_to_existing
 hced:somalian_civil_war,Somalian Civil War,wa:somali_civil_war,Somali Civil War (1991),0.821,hced_to_existing
 hced:spanish_algerian_wars:1775_1783,Spanish-Algerian Wars (1775–1783),wa:danish_algerian_war,Danish–Algerian War,0.9,hced_to_existing
@@ -124,15 +126,16 @@ hced:turko_wahhabi_war,Turko-Wahhabi War,wa:egyptian_wahhabi_war,Egyptian–Wahh
 hced:uruguayan_war,Uruguayan War,cow:327,Uruguay War,0.917,hced_to_existing
 hced:uruguyan_war_of_independence,Uruguyan War of Independence,wa:peruvian_war_of_independence,Peruvian War of Independence,0.857,hced_to_existing
 hced:ute_indian_wars:1855_1863,Ute Indian Wars (1855–1863),wa:texas_indian_wars,Texas–Indian Wars,0.875,hced_to_existing
-hced:ute_indian_wars:1879_1879,Ute Indian Wars (1879–1879),wa:texas_indian_wars,Texas–Indian Wars,0.875,hced_to_existing
+hced:ute_indian_wars:1879_1879,Ute Indian Wars (1879),wa:texas_indian_wars,Texas–Indian Wars,0.875,hced_to_existing
 hced:venezuelan_civil_wars,Venezuelan Civil Wars,wa:nauruan_civil_war,Nauruan Civil War,0.737,hced_to_existing
-hced:war_of_independence:1814_1814,War of Independence (1814–1814),wa:bolivian_war_of_independence,Bolivian War of Independence,0.809,hced_to_existing
+hced:war_of_independence:1814_1814,War of Independence (1814),wa:bolivian_war_of_independence,Bolivian War of Independence,0.809,hced_to_existing
 hced:war_of_liberation,(War of Liberation,cow:302,Liberation of Chile,0.722,hced_to_existing
 hced:war_of_the_meiji_restoration,War of the Meiji Restoration,wa:dominican_restoration_war,Dominican Restoration War,0.717,hced_to_existing
 hced:war_of_the_second_polish_partition,War of the Second Polish Partition,wa:war_of_the_second_coalition,War of the Second Coalition,0.787,hced_to_existing
 hced:western_sahara_wars,Western Sahara Wars,cow:474,Western Saharan,0.824,hced_to_existing
 hced:word_war_ii,Word War II,cow:139,World War II,0.957,hced_to_existing
+hced:xhosa_civil_war,Xhosa Civil War,wa:xhosa_wars,Xhosa Wars,0.72,hced_to_existing
 hced:zulu_civil_war,Zulu Civil War,wa:anglo_zulu_war,Anglo-Zulu War,0.714,hced_to_existing
+ucdp:conflict:333,Afghanistan: Government,wa:afghanistan,Afghanistan War,0.703,ucdp_to_existing
 ucdp:conflict:390,Croatia: Serb,hced:croatian_war,Croatian War,0.75,ucdp_to_existing
 ucdp:conflict:409,Eritrea - Ethiopia,wa:eritrean_ethiopian_war,Eritrean–Ethiopian War,0.842,ucdp_to_existing
-ucdp:conflict:416,Central African Republic: Government,wa:central_african_republic_bush_war,Central African Republic Bush War,0.706,ucdp_to_existing

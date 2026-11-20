@@ -1,0 +1,325 @@
+{
+  "note": "Per-record corrections for clear errors in raw HCED v3 and War Atlas rows, applied at ingest by scripts/run_etl.py. Each entry names the source, the record ID (HCED ID or War Atlas slug), the field changed (year, war, lat or lng), the original value, and the reason. Raw CSVs are never edited. Year and war-label fixes were found by the year-outlier check (a battle dated far outside every other battle with the same war label); coordinate fixes by the location-outlier check in scripts/validate_exports.py. Outliers under generic or genuinely multi-period labels were checked and left unchanged — see reviewed_no_change.",
+  "reviewed": "2026-11-20",
+  "corrections": [
+    {
+      "id": "Moulmein1835",
+      "field": "year",
+      "from": "1835",
+      "to": 1942,
+      "reason": "Battle of Moulmein (Burma campaign, January 1942); labelled World War II in the source but dated 1835.",
+      "source": "hced"
+    },
+    {
+      "id": "Tolosa, Basque Country721",
+      "field": "year",
+      "from": "721",
+      "to": 1813,
+      "reason": "Labelled Napoleonic Wars with British, Spanish and French participants: the Battle of Tolosa, June 1813. The year 721 appears to be confused with the Battle of Toulouse (721).",
+      "source": "hced"
+    },
+    {
+      "id": "Cerro de Pasco1862",
+      "field": "year",
+      "from": "1862",
+      "to": 1820,
+      "reason": "Battle of Cerro de Pasco in the Peruvian War of Independence (December 1820); 1862 is outside that war.",
+      "source": "hced"
+    },
+    {
+      "id": "Vanguardia1906",
+      "field": "year",
+      "from": "1906",
+      "to": 1928,
+      "reason": "Fortín Vanguardia incident between Paraguay and Bolivia (December 1928), the prelude to the Chaco War.",
+      "source": "hced"
+    },
+    {
+      "id": "Riga1709-1710",
+      "field": "war",
+      "from": "World War I",
+      "to": "2nd Great Northern War",
+      "reason": "Siege of Riga 1709–1710 belongs to the Great Northern War (HCED's main label for it is '2nd Great Northern War').",
+      "source": "hced"
+    },
+    {
+      "id": "Leningrad1941",
+      "field": "war",
+      "from": "World War I",
+      "to": "World War II",
+      "reason": "Siege of Leningrad began in 1941 — World War II.",
+      "source": "hced"
+    },
+    {
+      "id": "Irriwaddy1945",
+      "field": "war",
+      "from": "World War I",
+      "to": "World War II",
+      "reason": "Irrawaddy operations of 1945 — World War II Burma campaign.",
+      "source": "hced"
+    },
+    {
+      "id": "Koniggratz1866",
+      "field": "war",
+      "from": "Seven Years War",
+      "to": "Seven Weeks War",
+      "reason": "Battle of Königgrätz (1866) — Austro-Prussian (Seven Weeks) War.",
+      "source": "hced"
+    },
+    {
+      "id": "Saragossa1808-1809",
+      "field": "war",
+      "from": "Spanish Civil War",
+      "to": "Napoleonic Wars (Peninsula Campaign)",
+      "reason": "Sieges of Saragossa 1808–1809 — Peninsular War.",
+      "source": "hced"
+    },
+    {
+      "id": "St Kitts1805",
+      "field": "war",
+      "from": "War of the American Revolution",
+      "to": "Napoleonic Wars",
+      "reason": "French raid on St Kitts (1805) — Napoleonic Wars.",
+      "source": "hced"
+    },
+    {
+      "id": "Boston Harbour1813",
+      "field": "war",
+      "from": "War of the American Revolution",
+      "to": "War of 1812",
+      "reason": "Action off Boston Harbour (1813, Chesapeake vs Shannon) — War of 1812.",
+      "source": "hced"
+    },
+    {
+      "id": "Annapolis Royal1744",
+      "field": "war",
+      "from": "War of the Spanish Succession",
+      "to": "King George's War",
+      "reason": "Siege of Annapolis Royal (1744) — King George's War.",
+      "source": "hced"
+    },
+    {
+      "id": "Louisbourg1745",
+      "field": "war",
+      "from": "King William's War",
+      "to": "King George's War",
+      "reason": "Siege of Louisbourg (1745) — King George's War, not King William's War (1688–1697).",
+      "source": "hced"
+    },
+    {
+      "id": "Montebello1859",
+      "field": "war",
+      "from": "French Revolutionary Wars (2nd Coalition)",
+      "to": "2nd Italian War of Independence",
+      "reason": "Battle of Montebello (1859) — Second Italian War of Independence.",
+      "source": "hced"
+    },
+    {
+      "id": "Ramnagar1848",
+      "field": "war",
+      "from": "French Revolutionary Wars (2nd Coalition)",
+      "to": "2nd British-Sikh War",
+      "reason": "Battle of Ramnagar (1848) — Second Anglo-Sikh War.",
+      "source": "hced"
+    },
+    {
+      "id": "Novara1500",
+      "field": "war",
+      "from": "1st Italian War of Independence",
+      "to": "Italian War of Louis XII",
+      "reason": "Capture of Novara (1500) — Italian War of 1499–1504 (Louis XII).",
+      "source": "hced"
+    },
+    {
+      "id": "Bassein, Burma1852",
+      "field": "war",
+      "from": "1st British-Burmese War",
+      "to": "2nd British-Burmese War",
+      "reason": "Capture of Bassein (1852) — Second Anglo-Burmese War.",
+      "source": "hced"
+    },
+    {
+      "id": "Ututlan1524",
+      "field": "lng",
+      "from": "91.17018",
+      "to": -91.17018,
+      "reason": "Utatlán (Q'umarkaj), Guatemala — longitude sign flipped in the source (placed it in Bangladesh).",
+      "source": "hced"
+    },
+    {
+      "id": "Perimeter (2nd)1950",
+      "field": "lat",
+      "from": "49.77039",
+      "to": 35.87,
+      "reason": "Pusan Perimeter (Korean War, 1950) was geocoded to Manitoba, Canada. Approximate location: Naktong River front near Daegu.",
+      "source": "hced"
+    },
+    {
+      "id": "Perimeter (2nd)1950",
+      "field": "lng",
+      "from": "-97.10419",
+      "to": 128.6,
+      "reason": "See latitude entry — approximate Pusan Perimeter location near Daegu.",
+      "source": "hced"
+    },
+    {
+      "source": "hced",
+      "id": "Syracuse1085",
+      "field": "lat",
+      "from": "43.048122",
+      "to": 37.0755,
+      "reason": "Norman siege of Syracuse, Sicily (1085). Geocoded to Syracuse, New York; the source's own Country field says Italy."
+    },
+    {
+      "source": "hced",
+      "id": "Syracuse1085",
+      "field": "lng",
+      "from": "-76.1474244",
+      "to": 15.2866,
+      "reason": "See latitude entry."
+    },
+    {
+      "source": "hced",
+      "id": "Mitla Pass1967",
+      "field": "lat",
+      "from": "16.921324",
+      "to": 29.95,
+      "reason": "Mitla Pass, Sinai (1967). Geocoded to Mitla, Oaxaca, Mexico; the source's Country field says Egypt. Approximate pass location."
+    },
+    {
+      "source": "hced",
+      "id": "Mitla Pass1967",
+      "field": "lng",
+      "from": "-96.3625053",
+      "to": 32.92,
+      "reason": "See latitude entry."
+    },
+    {
+      "source": "hced",
+      "id": "Cape St Vincent1797",
+      "field": "lat",
+      "from": "46.110155",
+      "to": 37.0,
+      "reason": "Naval battle off Cape St Vincent, Portugal (1797). Geocoded to Nova Scotia; the source's Country field says Portugal. Approximate (off the cape)."
+    },
+    {
+      "source": "hced",
+      "id": "Cape St Vincent1797",
+      "field": "lng",
+      "from": "-60.2231588",
+      "to": -9.2,
+      "reason": "See latitude entry."
+    },
+    {
+      "source": "war_atlas",
+      "id": "saratoga_campaign_b",
+      "field": "lng",
+      "from": "73.416667",
+      "to": -73.416667,
+      "reason": "Saratoga campaign (1777), New York: longitude sign flipped in the source (placed it in Kazakhstan)."
+    },
+    {
+      "source": "hced",
+      "id": "Basra1915",
+      "field": "war",
+      "from": "Iran-Iraq War",
+      "to": "World War I",
+      "reason": "Fighting at Basra/Shaiba in 1915 belongs to the Mesopotamian campaign of World War I, not the 1980–88 Iran–Iraq War."
+    },
+    {
+      "source": "hced",
+      "id": "Basra2003",
+      "field": "war",
+      "from": "['Gulf War']",
+      "to": "Invasion of Iraq",
+      "reason": "Battle of Basra (2003) belongs to the 2003 invasion of Iraq (COW 'Invasion of Iraq'), not the 1990–91 Gulf War. Found in the merge audit."
+    }
+  ],
+  "reviewed_no_change": {
+    "note": "HCED year-split records flagged by validate_exports.py and checked by hand: the dates are genuine; the source simply reuses a war label across separate periods. They stay separate catalog records.",
+    "war_ids": [
+      "hced:afghan_civil_war:1929_1929",
+      "hced:anglo_saxon_conquest_of_britain:652_652",
+      "hced:civil_war:-220_-220",
+      "hced:crusader_muslim_wars:1247_1247",
+      "hced:early_christian_reconquest_of_spain:1195_1195",
+      "hced:early_christian_reconquest_of_spain:1212_1212",
+      "hced:early_christian_reconquest_of_spain:1236_1248",
+      "hced:mughal_conquest_of_northern_india:1612_1612",
+      "hced:muslim_conquest_of_northern_india:1194_1194",
+      "hced:persian_afghan_wars:1818_1818",
+      "hced:persian_afghan_wars:1837_1837",
+      "hced:persian_afghan_wars:1856_1863",
+      "hced:turkish_hungarian_wars:1492_1492"
+    ]
+  },
+  "known_unresolved": [
+    {
+      "source": "war_atlas",
+      "id": "battle_of_arroyo_grande_b",
+      "issue": "Geocoded to Arroyo Grande, California; the battle was in the Río de la Plata region. True coordinates not verified, so left unchanged and flagged by validate_exports.py."
+    }
+  ],
+  "reviewed_location_ok": {
+    "note": "Events flagged by the location-outlier check and confirmed by hand as genuine: colonial, naval and overseas actions far from a war's main theatre (Caribbean campaigns of European wars, Petropavlovsk 1854, Cuddalore 1783, Lake Baikal 1919, …). Excluded from future warnings so new outliers stand out.",
+    "event_ids": [
+      "hced:Ambon1796",
+      "hced:Bloody Swamp1742",
+      "hced:Cape Colony1795",
+      "hced:Cartagena, Colombia1697",
+      "hced:Cartagena, Colombia1708",
+      "hced:Chita1920",
+      "hced:Colombo1796",
+      "hced:Colonia do Sacrimento1735",
+      "hced:Faial1812",
+      "hced:Fayal1814",
+      "hced:Grenada1796",
+      "hced:Guadeloupe1794",
+      "hced:Guyana1813",
+      "hced:Limonade1691",
+      "hced:Madeira1815",
+      "hced:Martinique1793",
+      "hced:Martinique1794",
+      "hced:Montserrat1811",
+      "hced:Palo Hincado1808",
+      "hced:Petropavlosk1854",
+      "hced:Port-au-Prince1803",
+      "hced:Rio de Janeiro1710",
+      "hced:Rio de Janeiro1711",
+      "hced:Saldanha Bay1796",
+      "hced:San Juan1797",
+      "hced:Santa Marta1702",
+      "hced:Santo Domingo1809",
+      "hced:St George's Caye1798",
+      "hced:St Kitts1805",
+      "hced:St Lucia1794",
+      "hced:St Lucia1796",
+      "hced:St Pierre and Miquelon1793",
+      "hced:St Vincent1796",
+      "hced:Surinam1800",
+      "hced:Trincomalee1795",
+      "hced:Trinidad, West Indies1797",
+      "hced:Tristan de Cunha1815",
+      "hced:Vertieres1803",
+      "wa:action_of_8_september_1796_b",
+      "wa:battle_of_blaauwberg_b",
+      "wa:battle_of_cuddalore_b",
+      "wa:battle_of_dondon_1795_b",
+      "wa:battle_of_jean_rabel_b",
+      "wa:battle_of_la_bombarde_b",
+      "wa:battle_of_lake_baikal_b",
+      "wa:battle_of_mahe_b",
+      "wa:battle_of_martinique_b",
+      "wa:battle_of_negapatam_b",
+      "wa:battle_of_port_republicain_b",
+      "wa:battle_of_san_domingo_b",
+      "wa:battle_of_san_juan_b",
+      "wa:battle_of_st_georges_caye_b",
+      "wa:battle_of_the_acul_b",
+      "wa:great_siege_of_gibraltar_b",
+      "wa:macau_incident_b",
+      "wa:second_battle_of_verrettes_b",
+      "wa:siege_of_petropavlovsk_b"
+    ]
+  }
+}

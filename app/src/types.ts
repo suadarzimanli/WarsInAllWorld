@@ -22,10 +22,33 @@ export type War = {
   wikidata_qid: string | null
   participant_summary: string | null
   death_estimate: number | null
+  /** cow_battle_deaths | ucdp_best_total — different measures, never compare directly */
+  death_source?: string | null
   battle_count: number
+  /** UCDP battle-related deaths summed over ALL linked events (not the map sample) */
   event_deaths: number | null
+  /** All UCDP events linked to this war */
+  ucdp_events_total?: number | null
+  /** UCDP events actually shipped to the map (capped per conflict) */
+  ucdp_events_shown?: number | null
+  /** Highest single-calendar-year UCDP death total */
+  ucdp_peak_year_deaths?: number | null
+  /** Calendar years with ≥1,000 UCDP battle-related deaths */
+  ucdp_war_years?: number | null
+  /** COW code -7: war still ongoing when the source dataset ends (end year censored) */
+  ongoing_at_source_end?: boolean
+  /** War Atlas gave a one-year placeholder span; widened to cover its own battles */
+  span_from_battles?: boolean
   /** battles | ucdp_centroid | midloc_dyadic | participant_centroid */
   geo_source?: string | null
+}
+
+export type SourceCoverageRow = {
+  id: string
+  label: string
+  from: number | null
+  to: number | null
+  note: string
 }
 
 export type GeoJSONFeatureCollection = {
@@ -70,6 +93,19 @@ export type CatalogMeta = {
   crosswalk_accepted_decisions?: number
   tier_coverage?: Record<string, { total: number; battles: number; proxy: number; unmapped: number }>
   geo_source_counts?: Record<string, number>
+  ucdp_war_rule?: string
+  ucdp_event_cap?: number | null
+  ucdp_events_shown?: number
+  ucdp_events_linked_total?: number
+  ucdp_cumulative_only_excluded?: number | null
+  source_corrections_applied?: number
+  spans_widened_from_battles?: number
+  theaters_antimeridian?: number
+  source_coverage?: SourceCoverageRow[]
+  build_provenance?: {
+    inputs: Array<{ path: string; bytes?: number; sha256?: string; missing?: boolean }>
+    software: Record<string, string | null>
+  }
 }
 
 export type ProgressSnapshot = {

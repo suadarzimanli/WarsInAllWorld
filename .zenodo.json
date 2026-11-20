@@ -1,0 +1,23 @@
+{
+  "title": "Wars In All World: an interactive research atlas of recorded wars",
+  "upload_type": "software",
+  "description": "Interactive research atlas of recorded wars (Map, Globe and Numbers views) built from HCED v3, Correlates of War (inter-, extra-, non- and intra-state wars; MIDLOC v2.1), The War Atlas and UCDP GED 26.1. A reproducible Python pipeline merges wars across sources (with a merge-precision audit, see data/processed/qa/merge_audit_summary.json), applies documented per-record source corrections, records SHA-256 checksums of every input, and validates the exported catalog before deployment. Not a complete history of all wars; coverage limits are reported in the app.",
+  "creators": [
+    {
+      "name": "Arzimanli, Suad"
+    }
+  ],
+  "license": "MIT",
+  "keywords": [
+    "historical conflict",
+    "wars atlas",
+    "geospatial visualization",
+    "data integration",
+    "provenance",
+    "reproducibility",
+    "Correlates of War",
+    "UCDP",
+    "HCED"
+  ],
+  "notes": "Code: MIT. Derived catalog data (data/processed, app/public/data): CC BY 4.0 (see LICENSE-DATA). Source datasets keep their own licenses; cite them as listed in app/public/data/citations.json."
+}

@@ -9,8 +9,13 @@ export const BATTLE_OVERVIEW_SOFT_MAX = 12000
 const BATTLE_FOCUS_CAP = 8000
 export const MIDLOC_OVERVIEW_CAP = 1200
 export const CENTROID_OVERVIEW_CAP = 2000
-/** Cap heat source points so Absolute/Relative binning stays responsive. */
-export const HEAT_POINT_SOFT_MAX = 25000
+/**
+ * Cap on heat source points. Must stay above the catalog size: Absolute mode
+ * compares cells with the peak density of the FULL catalog, so binning only a
+ * sample would systematically under-colour every cell. Binning ~35k points is
+ * a single cheap pass; only the resulting cells are drawn.
+ */
+export const HEAT_POINT_SOFT_MAX = 60000
 
 export type FilteredPoints = GeoJSONFeatureCollection & { truncated: boolean }
 

@@ -1,0 +1,76 @@
+{
+  "what": "Precision of machine merges between source war lists (share of judged merges that join the same war).",
+  "reviewers": [
+    "assistant (draft, 2026-11-20)"
+  ],
+  "overall": {
+    "merges": 309,
+    "judged": 226,
+    "correct": 224,
+    "wrong": 2,
+    "unsure": 1,
+    "unjudged": 82,
+    "precision": 0.9912,
+    "ci95": [
+      0.9683,
+      0.9976
+    ]
+  },
+  "by_method": {
+    "exact_name_year": {
+      "merges": 64,
+      "judged": 63,
+      "correct": 63,
+      "wrong": 0,
+      "unsure": 1,
+      "unjudged": 0,
+      "precision": 1.0,
+      "ci95": [
+        0.9425,
+        1.0
+      ]
+    },
+    "fuzzy_name_year": {
+      "merges": 32,
+      "judged": 32,
+      "correct": 31,
+      "wrong": 1,
+      "unsure": 0,
+      "unjudged": 0,
+      "precision": 0.9688,
+      "ci95": [
+        0.8426,
+        0.9945
+      ]
+    },
+    "review_accepted": {
+      "merges": 213,
+      "judged": 131,
+      "correct": 130,
+      "wrong": 1,
+      "unsure": 0,
+      "unjudged": 82,
+      "precision": 0.9924,
+      "ci95": [
+        0.958,
+        0.9987
+      ]
+    }
+  },
+  "wrong_merges": [
+    {
+      "left_id": "hced:saudi_rashidi_wars",
+      "left_title": "Saudi-Rashidi Wars",
+      "right_id": "wa:saudi_rashidi_war",
+      "right_title": "Saudi–Rashidi War",
+      "note": "HCED label is an umbrella for Saudi–Rashidi fighting 1887–1921; merged into one 1903–07 war, so 1887–1902 and 1915–21 battles land in the wrong war."
+    },
+    {
+      "left_id": "wa:indo_pakistani_war_of_1971",
+      "left_title": "Indo-Pakistani War of 1971",
+      "right_id": "cow:782",
+      "right_title": "Pakistan - Bengal War of 1971",
+      "note": "Interstate Indo-Pakistani war merged into COW intra-state war #782; COW interstate war #178 (Bangladesh) is the right target."
+    }
+  ]
+}

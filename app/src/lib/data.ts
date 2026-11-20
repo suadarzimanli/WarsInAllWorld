@@ -139,7 +139,7 @@ export const DEFINITION_MODES: Array<{
   {
     id: 'warlike_ucdp',
     label: 'Warlike',
-    hint: 'COW wars plus UCDP conflicts with ≥1,000 battle-related deaths.',
+    hint: 'COW wars plus UCDP conflicts with ≥1,000 battle-related deaths in at least one calendar year.',
   },
 ]
 
@@ -223,7 +223,8 @@ export function filterWars(
   const sort = opts.sort ?? 'year_asc'
   return list.sort((a, b) => {
     if (sort === 'title') return a.title.localeCompare(b.title)
-    if (sort === 'battles') return (b.battle_count ?? 0) - (a.battle_count ?? 0)
+    if (sort === 'battles')
+      return (b.battle_count ?? 0) - (a.battle_count ?? 0) || (a.start_year ?? 0) - (b.start_year ?? 0)
     if (sort === 'year_desc') return (b.start_year ?? 0) - (a.start_year ?? 0)
     return (a.start_year ?? 0) - (b.start_year ?? 0)
   })

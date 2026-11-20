@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-07-24T20:20:11.215382+00:00",
+  "updated_at": "2026-11-20T00:00:00+00:00",
   "decisions": [
     {
       "left_id": "wa:anglo_persian_war",
@@ -614,7 +614,7 @@
       "right_battles": 0
     },
     {
-      "left_id": "hced:1st_british_burmese_war:1824_1826",
+      "left_id": "hced:1st_british_burmese_war",
       "right_id": "cow:310",
       "left_title": "1st British-Burmese War (1824–1826)",
       "right_title": "First British-Burmese",
@@ -622,7 +622,7 @@
       "match_reason": "hced_to_existing",
       "status": "accepted",
       "decided_by": "auto_safe_v2",
-      "notes": "safe accept: left_battles=12 right_battles=0",
+      "notes": "safe accept: left_battles=12 right_battles=0 (id was hced:1st_british_burmese_war:1824_1826; renamed after a source correction removed a stray year-split)",
       "left_battles": 12,
       "right_battles": 0
     },
@@ -913,7 +913,7 @@
       "right_battles": 11
     },
     {
-      "left_id": "hced:spanish_civil_war:1936_1940",
+      "left_id": "hced:spanish_civil_war",
       "right_id": "cow:718",
       "left_title": "Spanish Civil War (1936–1940)",
       "right_title": "Spanish Civil War of 1936-1939",
@@ -921,7 +921,7 @@
       "match_reason": "hced_to_existing",
       "status": "accepted",
       "decided_by": "agent_research_v1",
-      "notes": "Spanish Civil War; years align",
+      "notes": "Spanish Civil War; years align (id was hced:spanish_civil_war:1936_1940; renamed after a source correction removed a stray year-split)",
       "left_battles": 35,
       "right_battles": 24
     },
@@ -965,7 +965,7 @@
       "right_battles": 9
     },
     {
-      "left_id": "hced:chaco_war:1927_1935",
+      "left_id": "hced:chaco_war",
       "right_id": "cow:124",
       "left_title": "Chaco War (1927–1935)",
       "right_title": "Chaco",
@@ -973,7 +973,7 @@
       "match_reason": "hced_to_existing",
       "status": "accepted",
       "decided_by": "agent_research_v1",
-      "notes": "Chaco War; HCED start slightly early, same conflict",
+      "notes": "Chaco War; HCED start slightly early, same conflict (id was hced:chaco_war:1927_1935; renamed after a source correction removed a stray year-split)",
       "left_battles": 19,
       "right_battles": 4
     },
@@ -1017,7 +1017,7 @@
       "right_battles": 97
     },
     {
-      "left_id": "hced:iran_iraq_war:1982_1988",
+      "left_id": "hced:iran_iraq_war",
       "right_id": "cow:199",
       "left_title": "Iran-Iraq War (1982–1988)",
       "right_title": "Iran-Iraq",
@@ -1025,7 +1025,7 @@
       "match_reason": "hced_to_existing",
       "status": "accepted",
       "decided_by": "agent_research_v1",
-      "notes": "Iran-Iraq late cluster onto same COW war",
+      "notes": "Iran-Iraq late cluster onto same COW war (id updated after Basra 1915 correction removed the 1915 split)",
       "left_battles": 5,
       "right_battles": 9
     },
@@ -1171,19 +1171,6 @@
       "notes": "Hungarian War of 1848-49",
       "left_battles": 21,
       "right_battles": 0
-    },
-    {
-      "left_id": "hced:1st_british_burmese_war:1852_1852",
-      "right_id": "cow:339",
-      "left_title": "1st British-Burmese War (1852–1852)",
-      "right_title": "Second British-Burmese",
-      "confidence": 0.711,
-      "match_reason": "hced_to_existing",
-      "status": "accepted",
-      "decided_by": "agent_research_v1",
-      "notes": "HCED mislabeled '1st' but 1852 = Second British-Burmese",
-      "left_battles": 13,
-      "right_battles": 5
     },
     {
       "left_id": "hced:spanish_moroccan_war",
@@ -1719,13 +1706,13 @@
     },
     {
       "left_id": "wa:indo_pakistani_war_of_1971",
-      "right_id": "cow:782",
+      "right_id": "cow:178",
       "left_title": "Indo-Pakistani War of 1971",
-      "right_title": "Pakistan - Bengal War of 1971",
-      "notes": "Bangladesh / 1971 war",
+      "right_title": "Bangladesh",
+      "notes": "Interstate Indo-Pakistani war of Dec 1971 = COW interstate war #178, not intra-state #782 (corrected in merge audit).",
       "left_battles": 1,
       "status": "accepted",
-      "decided_by": "agent_orphan_v1",
+      "decided_by": "merge_audit_2026-11-20",
       "confidence": 0.95,
       "match_reason": "orphan_research"
     },
@@ -1773,15 +1760,6 @@
       "notes": "1896-98 Philippine Revolution vs Spain",
       "left_battles": 1,
       "status": "accepted",
-      "decided_by": "agent_orphan_v1",
-      "confidence": 0.95,
-      "match_reason": "orphan_research"
-    },
-    {
-      "left_id": "hced:british_sudan_wars",
-      "right_id": "cow:412",
-      "notes": "British-Sudan ≠ British-Pathan",
-      "status": "rejected",
       "decided_by": "agent_orphan_v1",
       "confidence": 0.95,
       "match_reason": "orphan_research"
@@ -1848,6 +1826,725 @@
       "decided_by": "agent_orphan_v1",
       "confidence": 0.95,
       "match_reason": "orphan_research"
+    },
+    {
+      "left_id": "hced:saudi_rashidi_wars",
+      "right_id": "wa:saudi_rashidi_war",
+      "left_title": "Saudi-Rashidi Wars",
+      "right_title": "Saudi–Rashidi War",
+      "status": "rejected",
+      "decided_by": "merge_audit_2026-11-20",
+      "notes": "HCED umbrella label (1887–1921) must not merge into the specific 1903–07 war."
+    },
+    {
+      "left_id": "hced:1st_balkan_war",
+      "right_id": "cow:100",
+      "left_title": "1st Balkan War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war; COW First Balkan is the exact match"
+    },
+    {
+      "left_id": "hced:1st_carlist_war",
+      "right_id": "cow:522",
+      "left_title": "1st Carlist War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war (First Carlist)"
+    },
+    {
+      "left_id": "hced:1st_indo_pakistani_war",
+      "right_id": "cow:147",
+      "left_title": "1st Indo-Pakistani War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war (First Kashmir 1947–48)"
+    },
+    {
+      "left_id": "hced:1st_italo_ethiopian_war",
+      "right_id": "wa:first_italo_ethiopian_war",
+      "left_title": "1st Italo-Ethiopian War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:1st_new_zealand_war",
+      "right_id": "wa:new_zealand_wars",
+      "left_title": "1st New Zealand War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Part of the New Zealand Wars"
+    },
+    {
+      "left_id": "hced:1st_opium_war",
+      "right_id": "cow:323",
+      "left_title": "1st Opium War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war (First Opium)"
+    },
+    {
+      "left_id": "hced:2nd_anglo_maratha_war",
+      "right_id": "wa:second_anglo_maratha_war",
+      "left_title": "2nd Anglo-Maratha War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:2nd_anglo_mysore_war",
+      "right_id": "wa:anglo_mysore_wars",
+      "left_title": "2nd Anglo-Mysore War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Part of the Anglo-Mysore wars"
+    },
+    {
+      "left_id": "hced:2nd_balkan_war",
+      "right_id": "cow:103",
+      "left_title": "2nd Balkan War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war; COW Second Balkan is the exact match"
+    },
+    {
+      "left_id": "hced:2nd_carlist_war",
+      "right_id": "cow:597",
+      "left_title": "2nd Carlist War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "HCED \"2nd\" Carlist 1872–76 = Third Carlist War"
+    },
+    {
+      "left_id": "hced:2nd_franco_dahomean_war",
+      "right_id": "wa:second_franco_dahomean_war",
+      "left_title": "2nd Franco-Dahomean War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:2nd_greco_turkish_war",
+      "right_id": "cow:115",
+      "left_title": "2nd Greco-Turkish War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war (Second Greco-Turkish)"
+    },
+    {
+      "left_id": "hced:2nd_indo_pakistani_war",
+      "right_id": "wa:indo_pakistani_war_of_1965",
+      "left_title": "2nd Indo-Pakistani War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:2nd_italian_war_of_independence",
+      "right_id": "wa:second_italian_war_of_independence",
+      "left_title": "2nd Italian War of Independence",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:2nd_italo_ethiopian_war",
+      "right_id": "wa:second_italo_ethiopian_war",
+      "left_title": "2nd Italo-Ethiopian War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:2nd_new_zealand_war",
+      "right_id": "wa:new_zealand_wars",
+      "left_title": "2nd New Zealand War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Part of the New Zealand Wars"
+    },
+    {
+      "left_id": "hced:2nd_opium_war",
+      "right_id": "cow:343",
+      "left_title": "2nd Opium War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war (Second Opium)"
+    },
+    {
+      "left_id": "hced:2nd_russo_swedish_war",
+      "right_id": "wa:russo_swedish_war_of_1788_1790",
+      "left_title": "2nd Russo-Swedish War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:2nd_seminole_indian_war",
+      "right_id": "wa:second_seminole_war",
+      "left_title": "2nd Seminole Indian War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:2nd_seminole_indian_wars",
+      "right_id": "wa:second_seminole_war",
+      "left_title": "2nd Seminole Indian Wars",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "1836–38 battles belong to the Second Seminole War"
+    },
+    {
+      "left_id": "hced:3rd_franco_dahomean_war",
+      "right_id": "wa:second_franco_dahomean_war",
+      "left_title": "3rd Franco-Dahomean War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "1893 campaign of the 1892–94 Franco-Dahomean war (HCED numbering differs)"
+    },
+    {
+      "left_id": "hced:3rd_italian_war_of_independence",
+      "right_id": "wa:third_italian_war_of_independence",
+      "left_title": "3rd Italian War of Independence",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:american_civil_war",
+      "right_id": "cow:572",
+      "left_title": "American Civil War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "US Civil War, not the Central American War"
+    },
+    {
+      "left_id": "hced:american_civil_wars",
+      "right_id": "cow:572",
+      "left_title": "American Civil Wars",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "US Civil War, not the Central American War"
+    },
+    {
+      "left_id": "hced:american_revolutionary_war",
+      "right_id": "wa:revolution",
+      "left_title": "American Revolutionary War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:anglo_dutch_war",
+      "right_id": "wa:fourth_anglo_dutch_war",
+      "left_title": "Anglo-Dutch War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war (1782 = Fourth Anglo-Dutch War)"
+    },
+    {
+      "left_id": "hced:angolan_war",
+      "right_id": "wa:angolan_civil_war",
+      "left_title": "Angolan War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "1987 fighting is part of the Angolan Civil War"
+    },
+    {
+      "left_id": "hced:apache_indian_war",
+      "right_id": "wa:apache_wars",
+      "left_title": "Apache Indian War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Part of the Apache Wars"
+    },
+    {
+      "left_id": "hced:apache_indian_wars",
+      "right_id": "wa:apache_wars",
+      "left_title": "Apache Indian Wars",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Part of the Apache Wars"
+    },
+    {
+      "left_id": "hced:argentine_uruguayan_war",
+      "right_id": "wa:uruguayan_civil_war",
+      "left_title": "Argentine-Uruguayan War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Argentine-Uruguayan fighting 1843–45 is the Guerra Grande"
+    },
+    {
+      "left_id": "hced:bannock_indian_war",
+      "right_id": "wa:bannock_war",
+      "left_title": "Bannock Indian War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:bannock_indian_wars",
+      "right_id": "wa:bannock_war",
+      "left_title": "Bannock Indian Wars",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:black_hawk_indian_war",
+      "right_id": "wa:black_hawk_war",
+      "left_title": "Black Hawk Indian War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:burmese_war",
+      "right_id": "cow:387",
+      "left_title": "Burmese War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "1885 = Third British-Burmese War"
+    },
+    {
+      "left_id": "hced:cayuse_indian_war",
+      "right_id": "wa:cayuse_war",
+      "left_title": "Cayuse Indian War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:chilean_war_of_the_confederation",
+      "right_id": "wa:war_of_the_confederation",
+      "left_title": "Chilean War of the Confederation",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:colombian_civil_war:1861_1861",
+      "right_id": "wa:colombian_civil_war_of_1859_62",
+      "left_title": "Colombian Civil War (1861)",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "1861 is within the 1859–62 Colombian civil war"
+    },
+    {
+      "left_id": "hced:creek_indian_war",
+      "right_id": "wa:creek_war",
+      "left_title": "Creek Indian War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:french_indo_chinese_war",
+      "right_id": "cow:457",
+      "left_title": "French Indo-Chinese War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "French Indochina War, not the Chinese Civil War"
+    },
+    {
+      "left_id": "hced:french_revolutionary_war_1st_coalition",
+      "right_id": "wa:french_revolutionary_wars",
+      "left_title": "French Revolutionary War (1st Coalition)",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Part of the French Revolutionary Wars"
+    },
+    {
+      "left_id": "hced:french_revolutionary_war_2nd_coalition",
+      "right_id": "wa:french_revolutionary_wars",
+      "left_title": "French Revolutionary War (2nd Coalition)",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Part of the French Revolutionary Wars"
+    },
+    {
+      "left_id": "hced:french_revolutionary_wars_1st_coalition",
+      "right_id": "wa:french_revolutionary_wars",
+      "left_title": "French Revolutionary Wars (1st Coalition)",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Part of the French Revolutionary Wars"
+    },
+    {
+      "left_id": "hced:french_revolutionary_wars_1st_coaliton",
+      "right_id": "wa:french_revolutionary_wars",
+      "left_title": "French Revolutionary Wars (1st Coaliton)",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Part of the French Revolutionary Wars"
+    },
+    {
+      "left_id": "hced:french_revolutionary_wars_1st_coaltion",
+      "right_id": "wa:french_revolutionary_wars",
+      "left_title": "French Revolutionary Wars (1st Coaltion)",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Part of the French Revolutionary Wars"
+    },
+    {
+      "left_id": "hced:french_revolutionary_wars_2nd_coalition",
+      "right_id": "wa:french_revolutionary_wars",
+      "left_title": "French Revolutionary Wars (2nd Coalition)",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Part of the French Revolutionary Wars"
+    },
+    {
+      "left_id": "hced:french_revolutionary_wars_2nd_coaltion",
+      "right_id": "wa:french_revolutionary_wars",
+      "left_title": "French Revolutionary Wars (2nd Coaltion)",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Part of the French Revolutionary Wars"
+    },
+    {
+      "left_id": "hced:french_revolutionary_wars_first_coaltion",
+      "right_id": "wa:french_revolutionary_wars",
+      "left_title": "French Revolutionary Wars (First Coaltion)",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Part of the French Revolutionary Wars"
+    },
+    {
+      "left_id": "hced:french_revolutionary_wars_middle_east",
+      "right_id": "wa:french_revolutionary_wars",
+      "left_title": "French Revolutionary Wars (Middle East)",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Part of the French Revolutionary Wars"
+    },
+    {
+      "left_id": "hced:french_revolutionary_wars_middle_east_f",
+      "right_id": "wa:french_revolutionary_wars",
+      "left_title": "French Revolutionary Wars (Middle East)f",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Part of the French Revolutionary Wars"
+    },
+    {
+      "left_id": "hced:french_revolutionary_wars_peninsula_campaign",
+      "right_id": "wa:french_revolutionary_wars",
+      "left_title": "French Revolutionary Wars (Peninsula Campaign)",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Part of the French Revolutionary Wars"
+    },
+    {
+      "left_id": "hced:french_revolutionary_war_vendee",
+      "right_id": "wa:war_in_the_vendee",
+      "left_title": "French Revolutionary War (Vendee)",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Vendée war 1793"
+    },
+    {
+      "left_id": "hced:french_revolutionary_war_vendee_war",
+      "right_id": "wa:war_in_the_vendee",
+      "left_title": "French Revolutionary War (Vendee War)",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Vendée war 1793"
+    },
+    {
+      "left_id": "hced:french_revolutionary_war_vendeen_war",
+      "right_id": "wa:war_in_the_vendee",
+      "left_title": "French Revolutionary War (Vendeen War)",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Vendée war 1793"
+    },
+    {
+      "left_id": "hced:french_revolutionary_wars_vendee",
+      "right_id": "wa:war_in_the_vendee",
+      "left_title": "French Revolutionary Wars (Vendee",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Vendée war 1793"
+    },
+    {
+      "left_id": "hced:french_revolutionary_wars_vendee_revolt",
+      "right_id": "wa:war_in_the_vendee",
+      "left_title": "French Revolutionary Wars (Vendee Revolt)",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Vendée war 1793"
+    },
+    {
+      "left_id": "hced:french_revolutionary_wars_vendee_war",
+      "right_id": "wa:war_in_the_vendee",
+      "left_title": "French Revolutionary Wars (Vendee War)",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Vendée war 1793"
+    },
+    {
+      "left_id": "hced:french_revolutionary_wars_vendeen_war",
+      "right_id": "wa:war_in_the_vendee",
+      "left_title": "French Revolutionary Wars (Vendeen War)",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Vendée war 1793"
+    },
+    {
+      "left_id": "hced:french_revolutionary_war_irish_rising",
+      "right_id": "wa:french_revolutionary_wars",
+      "left_title": "French Revolutionary War (Irish Rising)",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Irish rising 1796–98 within the French Revolutionary Wars"
+    },
+    {
+      "left_id": "hced:french_revolutionary_wars_irish_rebels",
+      "right_id": "wa:french_revolutionary_wars",
+      "left_title": "French Revolutionary Wars (Irish Rebels)",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Irish rising 1796–98 within the French Revolutionary Wars"
+    },
+    {
+      "left_id": "hced:french_revolutionary_wars_irish_rising",
+      "right_id": "wa:french_revolutionary_wars",
+      "left_title": "French Revolutionary Wars (Irish Rising)",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Irish rising 1796–98 within the French Revolutionary Wars"
+    },
+    {
+      "left_id": "hced:italian_wars_of_independence",
+      "right_id": "wa:first_italian_war_of_independence",
+      "left_title": "Italian Wars of Independence",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war (1848–49)"
+    },
+    {
+      "left_id": "hced:matabele_war",
+      "right_id": "wa:first_matabele_war",
+      "left_title": "Matabele War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:matabele_war_advancing",
+      "right_id": "wa:first_matabele_war",
+      "left_title": "Matabele War                         Advancing",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war (garbled HCED label)"
+    },
+    {
+      "left_id": "hced:modoc_indian_war",
+      "right_id": "wa:modoc_war",
+      "left_title": "Modoc Indian War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:mysore_war",
+      "right_id": "wa:anglo_mysore_wars",
+      "left_title": "Mysore War                 ",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Part of the Anglo-Mysore wars"
+    },
+    {
+      "left_id": "hced:napoleonic_wars_100_days",
+      "right_id": "wa:napoleonic_wars",
+      "left_title": "Napoleonic Wars (100 Days)",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Hundred Days 1815 within the Napoleonic Wars"
+    },
+    {
+      "left_id": "hced:nez_perce_indian_war",
+      "right_id": "wa:nez_perce_war",
+      "left_title": "Nez Perce Indian War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:paraguayan_civil_war",
+      "right_id": "wa:paraguayan_civil_war_of_1947",
+      "left_title": "Paraguayan Civil War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:red_river_indian_war",
+      "right_id": "wa:red_river_war",
+      "left_title": "Red River Indian War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:red_river_indian_wars",
+      "right_id": "wa:red_river_war",
+      "left_title": "Red River Indian Wars",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:rohilla_war",
+      "right_id": "wa:first_rohilla_war",
+      "left_title": "Rohilla War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:russo_swedish_war:1790_1790",
+      "right_id": "wa:russo_swedish_war_of_1788_1790",
+      "left_title": "Russo-Swedish War (1790)",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:russo_turkish_war:1811_1811",
+      "right_id": "wa:eighth_russo_turkish_war",
+      "left_title": "Russo-Turkish War (1811)",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:russo_turkish_war:1828_1828",
+      "right_id": "wa:ninth_russo_turkish_war",
+      "left_title": "Russo-Turkish War (1828)",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:russo_turkish_wars:1807_1811",
+      "right_id": "wa:eighth_russo_turkish_war",
+      "left_title": "Russo-Turkish Wars (1807–1811)",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:russo_turkish_wars:1828_1829",
+      "right_id": "wa:ninth_russo_turkish_war",
+      "left_title": "Russo-Turkish Wars (1828–1829)",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:seminole_indian_war",
+      "right_id": "wa:second_seminole_war",
+      "left_title": "Seminole Indian War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "1840 is within the Second Seminole War"
+    },
+    {
+      "left_id": "hced:war_of_the_american_revolutio",
+      "right_id": "wa:revolution",
+      "left_title": "War of the American Revolutio",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war (truncated label)"
+    },
+    {
+      "left_id": "hced:war_of_the_american_revolution",
+      "right_id": "wa:revolution",
+      "left_title": "War of the American Revolution",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:y_war_of_the_american_revolution",
+      "right_id": "wa:revolution",
+      "left_title": "y War of the   American Revolution",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war (garbled label)"
+    },
+    {
+      "left_id": "hced:yakima_indian_wars",
+      "right_id": "wa:yakima_war",
+      "left_title": "Yakima Indian Wars",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Same war"
+    },
+    {
+      "left_id": "hced:yugoslav_civil_war",
+      "right_id": "wa:yugoslav_wars",
+      "left_title": "Yugoslav Civil War",
+      "status": "accepted",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "1992 fighting is part of the Yugoslav Wars"
+    },
+    {
+      "left_id": "hced:argentine_war",
+      "right_id": "wa:argentine_civil_wars",
+      "left_title": "Argentine War",
+      "right_title": "Argentine Civil Wars",
+      "status": "rejected",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "1813 battles belong to the War of Independence, not the later civil wars"
+    },
+    {
+      "left_id": "hced:colombian_civil_wars",
+      "right_id": "wa:colombian_civil_war_of_1859_62",
+      "left_title": "Colombian Civil Wars",
+      "right_title": "Colombian Civil War of 1859–62",
+      "status": "rejected",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "1823–77 umbrella must not merge into one 1859–62 war"
+    },
+    {
+      "left_id": "hced:indian_war:1832_1836",
+      "right_id": "wa:texas_indian_wars",
+      "left_title": "Indian War        (1832–1836)",
+      "right_title": "Texas–Indian Wars",
+      "status": "rejected",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Generic \"Indian War\" 1832–36 mixes several conflicts"
+    },
+    {
+      "left_id": "hced:italo_ethiopian_war",
+      "right_id": "wa:first_italo_ethiopian_war",
+      "left_title": "Italo-Ethiopian War    ",
+      "right_title": "First Italo-Ethiopian War",
+      "status": "rejected",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "1887–95 record includes the earlier 1887–89 war; umbrella must not merge into 1894–96 war"
+    },
+    {
+      "left_id": "hced:xhosa_civil_war",
+      "right_id": "wa:xhosa_wars",
+      "left_title": "Xhosa Civil War",
+      "right_title": "Xhosa Wars",
+      "status": "rejected",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "Internal Xhosa civil war (1818), not the Cape–Xhosa wars"
+    },
+    {
+      "left_id": "ucdp:conflict:333",
+      "right_id": "wa:afghanistan",
+      "left_title": "Afghanistan: Government",
+      "right_title": "Afghanistan War",
+      "status": "rejected",
+      "decided_by": "assistant_review_2026-11-20",
+      "notes": "1989–2025 UCDP conflict must not merge into the 2001–21 war only"
     }
   ]
 }

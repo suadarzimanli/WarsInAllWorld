@@ -7,13 +7,13 @@ type Props = {
   compact?: boolean
 }
 
-type State = { error: Error | null; resetKey: number }
+type State = { error: Error | null; resetKey: number; label: string | undefined }
 
 /**
  * Contains render errors so Cesium/Leaflet failures do not blank the whole app.
  */
 export class ErrorBoundary extends Component<Props, State> {
-  state: State = { error: null, resetKey: 0 }
+  state: State = { error: null, resetKey: 0, label: this.props.label }
 
   static getDerivedStateFromError(error: Error): Partial<State> {
     return { error }
@@ -23,10 +23,13 @@ export class ErrorBoundary extends Component<Props, State> {
     console.error(`[ErrorBoundary${this.props.label ? `:${this.props.label}` : ''}]`, error, info)
   }
 
-  componentDidUpdate(prevProps: Props) {
-    if (prevProps.label !== this.props.label && this.state.error) {
-      this.setState((s) => ({ error: null, resetKey: s.resetKey + 1 }))
-    }
+  // Clear a stale error when the boundary is reused for a different view
+  // (derived during render — avoids a second render from setState in componentDidUpdate).
+  static getDerivedStateFromProps(props: Props, state: State): Partial<State> | null {
+    if (props.label === state.label) return null
+    return state.error
+      ? { error: null, resetKey: state.resetKey + 1, label: props.label }
+      : { label: props.label }
   }
 
   private retry = () => {

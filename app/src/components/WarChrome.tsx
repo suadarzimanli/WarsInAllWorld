@@ -26,10 +26,13 @@ import {
 } from '../lib/data'
 import {
   coverageStats,
+  deathEstimateLabel,
   geoSourceConfidence,
   geoSourceLabel,
   theaterMethodLabel,
   theaterQualityLabel,
+  ucdpSampleNote,
+  warSpanLabel,
   type CoverageStats,
 } from '../lib/geoLabels'
 import { useDebouncedValue } from '../lib/perf'
@@ -119,7 +122,9 @@ export function WarChrome({
 }: Props) {
   const location = useLocation()
   const [tab, setTab] = useState<Tab>('list')
-  const [sort, setSort] = useState<WarSort>('year_asc')
+  // Open on the best-documented wars (WWII, Napoleonic…) rather than the oldest
+  // single-battle records — first impressions matter.
+  const [sort, setSort] = useState<WarSort>('battles')
   const [visible, setVisible] = useState(LIST_CHUNK)
   const [mobileDetailOpen, setMobileDetailOpen] = useState(false)
   const [fromText, setFromText] = useState(yearLabel(yearFrom))
@@ -577,10 +582,10 @@ export function WarChrome({
                       onChange={(e) => setSort(e.target.value as WarSort)}
                       aria-label="Sort wars"
                     >
+                      <option value="battles">Most mapped battles</option>
                       <option value="year_asc">Year ↑</option>
                       <option value="year_desc">Year ↓</option>
                       <option value="title">Title A–Z</option>
-                      <option value="battles">Most points</option>
                     </select>
                   </div>
                 </div>
@@ -813,9 +818,7 @@ export function WarChrome({
             <dl className="meta-grid">
               <div className="meta-card">
                 <dt>Years</dt>
-                <dd>
-                  {formatYear(selected.start_year)} – {formatYear(selected.end_year)}
-                </dd>
+                <dd>{warSpanLabel(selected, formatYear)}</dd>
               </div>
               <div className="meta-card">
                 <dt>Points</dt>
@@ -878,8 +881,25 @@ export function WarChrome({
               )}
               {selected.death_estimate != null && (
                 <div className="meta-card">
-                  <dt>Death estimate</dt>
+                  <dt>{deathEstimateLabel(selected.death_source)}</dt>
                   <dd>{Math.round(selected.death_estimate).toLocaleString()}</dd>
+                </div>
+              )}
+              {selected.ucdp_peak_year_deaths != null && (
+                <div className="meta-card">
+                  <dt>UCDP peak year</dt>
+                  <dd>
+                    {selected.ucdp_peak_year_deaths.toLocaleString()} deaths
+                    {selected.ucdp_war_years != null && (
+                      <> · {selected.ucdp_war_years} war-level year{selected.ucdp_war_years === 1 ? '' : 's'}</>
+                    )}
+                  </dd>
+                </div>
+              )}
+              {ucdpSampleNote(selected) && (
+                <div className="meta-card wide">
+                  <dt>UCDP events on map</dt>
+                  <dd>{ucdpSampleNote(selected)}</dd>
                 </div>
               )}
               {selected.wikidata_qid && (

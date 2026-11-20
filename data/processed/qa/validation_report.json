@@ -1,0 +1,372 @@
+{
+  "errors": [],
+  "warnings": [
+    "32 events (0.10%) fall >5y outside their war's span (see report)",
+    "1 events sit far from an otherwise compact war (possible geocoding errors; see report)"
+  ],
+  "location_outliers": [
+    {
+      "war_id": "wa:portuguese_conquest_of_the_banda_oriental",
+      "event_id": "wa:battle_of_arroyo_grande_b",
+      "name": "Battle of Arroyo Grande",
+      "lat": 35.12083,
+      "lng": -120.58667,
+      "km_from_war_centre": 9528
+    }
+  ],
+  "counts": {
+    "wars": 2959,
+    "events": 33455,
+    "theaters": 2133,
+    "events_out_of_span": 32
+  },
+  "events_out_of_span_by_war": [
+    [
+      "cow:304",
+      7
+    ],
+    [
+      "wa:war_in_the_vendee",
+      5
+    ],
+    [
+      "wa:peruvian_war_of_independence",
+      4
+    ],
+    [
+      "cow:474",
+      3
+    ],
+    [
+      "wa:chinese_civil_war",
+      2
+    ],
+    [
+      "wa:chouannerie",
+      2
+    ],
+    [
+      "wa:napoleonic_wars",
+      2
+    ],
+    [
+      "wa:eritrean_war_of_independence",
+      1
+    ],
+    [
+      "wa:laotian_civil_war",
+      1
+    ],
+    [
+      "cow:147",
+      1
+    ],
+    [
+      "cow:990",
+      1
+    ],
+    [
+      "wa:mexican_revolution",
+      1
+    ],
+    [
+      "wa:venezuelan_war_of_independence",
+      1
+    ],
+    [
+      "wa:italian_campaign_of_1796_1797",
+      1
+    ]
+  ],
+  "events_out_of_span_sample": [
+    {
+      "event_id": "hced:Aculco1810",
+      "year": 1810,
+      "war_id": "cow:304",
+      "war_span": [
+        1817,
+        1818
+      ]
+    },
+    {
+      "event_id": "hced:Barentu2000",
+      "year": 2000,
+      "war_id": "wa:eritrean_war_of_independence",
+      "war_span": [
+        1961,
+        1991
+      ]
+    },
+    {
+      "event_id": "hced:Chacaltaya1814",
+      "year": 1814,
+      "war_id": "wa:peruvian_war_of_independence",
+      "war_span": [
+        1821,
+        1824
+      ]
+    },
+    {
+      "event_id": "hced:Dolores, Mexico1810",
+      "year": 1810,
+      "war_id": "cow:304",
+      "war_span": [
+        1817,
+        1818
+      ]
+    },
+    {
+      "event_id": "hced:Huanta1814",
+      "year": 1814,
+      "war_id": "wa:peruvian_war_of_independence",
+      "war_span": [
+        1821,
+        1824
+      ]
+    },
+    {
+      "event_id": "hced:Luang Prabang1953",
+      "year": 1953,
+      "war_id": "wa:laotian_civil_war",
+      "war_span": [
+        1959,
+        1975
+      ]
+    },
+    {
+      "event_id": "hced:Matara1815",
+      "year": 1815,
+      "war_id": "wa:peruvian_war_of_independence",
+      "war_span": [
+        1821,
+        1824
+      ]
+    },
+    {
+      "event_id": "hced:Monte de las Cruces1810",
+      "year": 1810,
+      "war_id": "cow:304",
+      "war_span": [
+        1817,
+        1818
+      ]
+    },
+    {
+      "event_id": "hced:Umachiri1815",
+      "year": 1815,
+      "war_id": "wa:peruvian_war_of_independence",
+      "war_span": [
+        1821,
+        1824
+      ]
+    },
+    {
+      "event_id": "wa:2013_india_pakistan_border_incidents_b",
+      "year": 2013,
+      "war_id": "cow:147",
+      "war_span": [
+        1947,
+        1949
+      ]
+    },
+    {
+      "event_id": "wa:2022_chinese_military_exercises_around_taiwan_b",
+      "year": 2022,
+      "war_id": "wa:chinese_civil_war",
+      "war_span": [
+        1927,
+        1950
+      ]
+    },
+    {
+      "event_id": "wa:batalla_del_monte_de_las_cruces_b",
+      "year": 1810,
+      "war_id": "cow:304",
+      "war_span": [
+        1817,
+        1818
+      ]
+    },
+    {
+      "event_id": "wa:battle_of_amgala_b",
+      "year": 1989,
+      "war_id": "cow:474",
+      "war_span": [
+        1975,
+        1983
+      ]
+    },
+    {
+      "event_id": "wa:battle_of_auray_b",
+      "year": 1815,
+      "war_id": "wa:chouannerie",
+      "war_span": [
+        1794,
+        1800
+      ]
+    },
+    {
+      "event_id": "wa:battle_of_bangui_b",
+      "year": 2021,
+      "war_id": "cow:990",
+      "war_span": [
+        2012,
+        2013
+      ]
+    },
+    {
+      "event_id": "wa:battle_of_calderon_bridge_b",
+      "year": 1811,
+      "war_id": "cow:304",
+      "war_span": [
+        1817,
+        1818
+      ]
+    },
+    {
+      "event_id": "wa:battle_of_dong_yin_b",
+      "year": 1965,
+      "war_id": "wa:chinese_civil_war",
+      "war_span": [
+        1927,
+        1950
+      ]
+    },
+    {
+      "event_id": "wa:battle_of_echaubrognes_b",
+      "year": 1815,
+      "war_id": "wa:war_in_the_vendee",
+      "war_span": [
+        1793,
+        1796
+      ]
+    },
+    {
+      "event_id": "wa:battle_of_el_veladero_b",
+      "year": 1811,
+      "war_id": "cow:304",
+      "war_span": [
+        1817,
+        1818
+      ]
+    },
+    {
+      "event_id": "wa:battle_of_guelta_zemmour_b",
+      "year": 1989,
+      "war_id": "cow:474",
+      "war_span": [
+        1975,
+        1983
+      ]
+    },
+    {
+      "event_id": "wa:battle_of_hausa_b",
+      "year": 1989,
+      "war_id": "cow:474",
+      "war_span": [
+        1975,
+        1983
+      ]
+    },
+    {
+      "event_id": "wa:battle_of_laiguillon_b",
+      "year": 1815,
+      "war_id": "wa:war_in_the_vendee",
+      "war_span": [
+        1793,
+        1796
+      ]
+    },
+    {
+      "event_id": "wa:battle_of_lipantitlan_b",
+      "year": 1835,
+      "war_id": "wa:mexican_revolution",
+      "war_span": [
+        1910,
+        1920
+      ]
+    },
+    {
+      "event_id": "wa:battle_of_lodi_b",
+      "year": 1796,
+      "war_id": "wa:napoleonic_wars",
+      "war_span": [
+        1803,
+        1815
+      ]
+    },
+    {
+      "event_id": "wa:battle_of_matasiete_b",
+      "year": 2025,
+      "war_id": "wa:venezuelan_war_of_independence",
+      "war_span": [
+        1810,
+        1823
+      ]
+    },
+    {
+      "event_id": "wa:battle_of_mathes_b",
+      "year": 1815,
+      "war_id": "wa:war_in_the_vendee",
+      "war_span": [
+        1793,
+        1796
+      ]
+    },
+    {
+      "event_id": "wa:battle_of_redon_b",
+      "year": 1815,
+      "war_id": "wa:chouannerie",
+      "war_span": [
+        1794,
+        1800
+      ]
+    },
+    {
+      "event_id": "wa:battle_of_rocheserviere_b",
+      "year": 1815,
+      "war_id": "wa:war_in_the_vendee",
+      "war_span": [
+        1793,
+        1796
+      ]
+    },
+    {
+      "event_id": "wa:battle_of_the_bridge_of_arcole_b",
+      "year": 1796,
+      "war_id": "wa:napoleonic_wars",
+      "war_span": [
+        1803,
+        1815
+      ]
+    },
+    {
+      "event_id": "wa:battle_of_thouars_1815_b",
+      "year": 1815,
+      "war_id": "wa:war_in_the_vendee",
+      "war_span": [
+        1793,
+        1796
+      ]
+    },
+    {
+      "event_id": "wa:battle_of_zacatecas_b",
+      "year": 1811,
+      "war_id": "cow:304",
+      "war_span": [
+        1817,
+        1818
+      ]
+    },
+    {
+      "event_id": "wa:fall_of_the_republic_of_venice_b",
+      "year": 1790,
+      "war_id": "wa:italian_campaign_of_1796_1797",
+      "war_span": [
+        1796,
+        1797
+      ]
+    }
+  ],
+  "hced_split_review_queue": []
+}

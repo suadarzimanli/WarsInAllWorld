@@ -10,7 +10,7 @@ import {
   heatFill,
   peakHeatDensity,
 } from '../lib/heatmap'
-import { escapeHtml, pointLngLat } from '../lib/geoSafe'
+import { arcCenterLng, escapeHtml, pointLngLat, unwrapPointCollection } from '../lib/geoSafe'
 import {
   clearMapFocusConsumed,
   focusKey,
@@ -211,9 +211,18 @@ function FitToSelection({
     if (!bounds.isValid()) return
     lastFittedKeyRef.current = fitKey
     map.stop()
-    // Antimeridian: min/max lng span looks like a world box — fly to first point instead
+    // Antimeridian / world-spanning: the min/max box would be the whole world —
+    // centre on the circular mean of the war's points and show it zoomed out.
     if (east - west > 180 && first) {
-      map.setView([first[1], first[0]], 4, { animate: true })
+      const pts: number[] = []
+      battles?.features.forEach((f) => {
+        if (String(f.properties?.war_id ?? '') !== selectedId) return
+        const ll = pointLngLat(f.geometry)
+        if (ll) pts.push(ll[0])
+      })
+      // Centre of the same continuous arc the points/outline are drawn on
+      const lng = arcCenterLng(pts) ?? (first as [number, number])[0]
+      map.setView([bounds.getCenter().lat, lng], 2, { animate: true })
     } else {
       map.fitBounds(bounds.pad(0.2), { animate: true, maxZoom: 8 })
     }
@@ -389,7 +398,7 @@ export function WarMap({
 
   const filteredBattles = useMemo(() => {
     if (!active || showHeat || !layers.battles) return null
-    return filterPointFeatures(battles, {
+    const fc = filterPointFeatures(battles, {
       yearFrom: dyFrom,
       yearTo: dyTo,
       selectedId,
@@ -397,6 +406,9 @@ export function WarMap({
       warIds: selectedId ? null : allowedWarIds,
       limit: battleCap,
     })
+    // Pacific-spanning war: draw its points on one continuous world copy so they
+    // line up with the (equally unwrapped) theater outline.
+    return fc && selectedId ? unwrapPointCollection(fc) : fc
   }, [active, battles, layers.battles, selectedId, allowedWarIds, dyFrom, dyTo, battleCap, showHeat])
 
   const heatSource = useMemo(() => {
@@ -627,9 +639,15 @@ export function WarMap({
       </MapContainer>
       {showHeat && (
         <div className="heat-legend" aria-hidden>
-          <span>{heatScale === 'absolute' ? 'Lower (abs)' : 'Lower density'}</span>
+          <span>
+            <span className="hl-long">{heatScale === 'absolute' ? 'Lower (abs)' : 'Lower density'}</span>
+            <span className="hl-short">Low</span>
+          </span>
           <div className="heat-legend-bar" />
-          <span>{heatScale === 'absolute' ? 'Higher (abs)' : 'Higher density'}</span>
+          <span>
+            <span className="hl-long">{heatScale === 'absolute' ? 'Higher (abs)' : 'Higher density'}</span>
+            <span className="hl-short">High</span>
+          </span>
         </div>
       )}
       {sampledNote && (

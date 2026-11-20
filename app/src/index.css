@@ -2942,3 +2942,116 @@ a:focus-visible {
   font-size: 0.88rem;
   line-height: 1.55;
 }
+
+/* About → Build record: compact checksum list */
+.provenance-list li {
+  font-size: 0.8rem;
+  overflow-wrap: anywhere;
+}
+.provenance-list code {
+  opacity: 0.85;
+}
+
+/* =====================================================================
+   Layout fixes (UI audit 2026-11-20). Kept at the END of the file on
+   purpose: several responsive rules above were silently overridden by
+   base rules declared later (e.g. the Numbers stat strip stayed 5-up on
+   phones). Rules here must win the cascade.
+   ===================================================================== */
+
+/* Leaflet's own stylesheet loads after ours and resets the container to
+   light grey (#ddd) — visible as a pale band above the world on tall screens. */
+.map-root .leaflet-container {
+  background: #060b14;
+}
+
+/* Heat legend: full labels on wide screens, short ones on phones (was cut off). */
+.heat-legend .hl-short {
+  display: none;
+}
+
+/* Desktop: the details panel sits on the right edge — move the zoom
+   controls to its left so they are never hidden under it. */
+@media (min-width: 901px) {
+  .view-body:has(.panel-right) .map-root .leaflet-top.leaflet-left,
+  .view-body:has(.panel-right) .globe-zoom {
+    right: calc(min(var(--detail-w), calc(100vw - 1.5rem)) + 1.5rem);
+  }
+}
+
+@media (max-width: 900px) {
+  /* An open details sheet would cover the Points/Heat toggle (phone landscape). */
+  .view-body:has(.panel-right.mobile-open) .display-mode-wrap {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .heat-legend {
+    max-width: none;
+    overflow: visible;
+  }
+
+  .heat-legend .hl-long {
+    display: none;
+  }
+
+  .heat-legend .hl-short {
+    display: inline;
+  }
+
+  /* Numbers page */
+  .lens-stat-strip {
+    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  }
+
+  .lens-stat-n {
+    font-size: 1.25rem;
+    overflow-wrap: anywhere;
+  }
+
+  .lens-era {
+    display: flex;
+    width: 100%;
+    border-radius: 14px;
+  }
+
+  .lens-era-btn {
+    flex: 1 1 auto;
+    min-height: 2.5rem;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 380px) {
+  .lens-stat-strip {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Touch screens: comfortable tap targets for small text buttons. */
+@media (pointer: coarse) {
+  .btn {
+    min-height: 2.5rem;
+  }
+}
+
+/* Short landscape phones: header + banner + tabs + search used the whole
+   height, leaving the source chips cut off and no visible war list. Let the
+   whole Explorer panel scroll instead of only the list. */
+@media (max-width: 900px) and (max-height: 500px) and (orientation: landscape) {
+  .panel-left:not(.collapsed) {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .panel-left:not(.collapsed) .panel-body {
+    flex: none !important;
+    min-height: auto !important;
+    overflow: visible;
+  }
+
+  .panel-left:not(.collapsed) .war-list {
+    flex: none;
+    overflow: visible;
+  }
+}

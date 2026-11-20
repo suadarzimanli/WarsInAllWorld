@@ -83,3 +83,37 @@ export function theaterMethodLabel(method: string | null | undefined): string {
       return method ? String(method) : 'Derived outline'
   }
 }
+
+/** Human label for a war's death figure — COW and UCDP measure different things. */
+export function deathEstimateLabel(source: string | null | undefined): string {
+  switch (source) {
+    case 'cow_battle_deaths':
+      return 'Battle deaths (COW)'
+    case 'ucdp_best_total':
+      return 'Battle-related deaths, all years (UCDP best estimate)'
+    default:
+      return 'Death estimate'
+  }
+}
+
+/**
+ * Note shown when the map carries only a sample of a war's UCDP events.
+ * Returns null when everything linked is on the map (or the war has no UCDP link).
+ */
+export function ucdpSampleNote(war: Pick<War, 'ucdp_events_total' | 'ucdp_events_shown'>): string | null {
+  const total = war.ucdp_events_total ?? 0
+  const shown = war.ucdp_events_shown ?? 0
+  if (total <= 0 || shown >= total) return null
+  return `Map shows ${shown.toLocaleString('en-US')} of ${total.toLocaleString('en-US')} UCDP events (deadliest first). Totals use all events.`
+}
+
+/** Year span text; marks COW wars still ongoing when the source ends. */
+export function warSpanLabel(
+  war: Pick<War, 'start_year' | 'end_year' | 'ongoing_at_source_end' | 'span_from_battles'>,
+  fmt: (y: number | null) => string,
+): string {
+  const span = `${fmt(war.start_year)} – ${fmt(war.end_year)}`
+  if (war.ongoing_at_source_end) return `${span} (ongoing when source ends)`
+  if (war.span_from_battles) return `${span} (from its battles; source gives one year)`
+  return span
+}
