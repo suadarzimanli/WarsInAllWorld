@@ -5,6 +5,8 @@ type Props = {
 }
 
 /** Compact always-on legend so gold / purple / blue / heat stay unambiguous. */
+import { HudPortal } from './Hud'
+
 export function AtlasLegend({ displayMode, layers, selectedId = null }: Props) {
   const heat = displayMode === 'heatmap'
   const showBattles = !heat && layers.battles
@@ -15,6 +17,7 @@ export function AtlasLegend({ displayMode, layers, selectedId = null }: Props) {
   const theatersWaiting = layers.theaters && !selectedId && !heat
 
   return (
+    <HudPortal slot="bottom-left">
     <aside className="atlas-legend" aria-label="Map legend">
       <strong className="atlas-legend-title">Legend</strong>
       {heat ? (
@@ -59,5 +62,6 @@ export function AtlasLegend({ displayMode, layers, selectedId = null }: Props) {
         <div className="atlas-legend-row muted">No layers on — open Layers to enable.</div>
       )}
     </aside>
+    </HudPortal>
   )
 }

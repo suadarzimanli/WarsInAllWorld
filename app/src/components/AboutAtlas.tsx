@@ -238,6 +238,20 @@ export function AboutAtlas({ open, onClose, coverage, catalogMeta, progressHisto
             </section>
           )}
           <section>
+            <h3>Time bar and search</h3>
+            <p>
+              The bar along the bottom sets the years shown. Drag its edges or the window, pick an
+              era, or press ▶ to play through time. Its histogram shows <strong>mapped battles per
+              year</strong> on a square-root scale, and its time axis is <strong>uneven</strong>: recent
+              centuries get more width because they have far more records. Compare heights, not
+              widths.
+            </p>
+            <p>
+              Press <kbd>Ctrl</kbd>+<kbd>K</kbd> (or the search button) to find a war by name or jump
+              to a year, e.g. “Korean”, “Punic”, “1944”, “480 BCE”.
+            </p>
+          </section>
+          <section>
             <h3>Heat map</h3>
             <p>
               Heat shows <strong>density of mapped battle events</strong> (events per km²), not

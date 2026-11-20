@@ -19,14 +19,19 @@ import {
   stripMapFocusSearch,
 } from '../lib/insightsUrl'
 import {
-  BATTLE_OVERVIEW_SOFT_MAX,
+  battleSampleText,
   CENTROID_OVERVIEW_CAP,
   HEAT_POINT_SOFT_MAX,
   MIDLOC_OVERVIEW_CAP,
   filterPointFeatures,
   useDebouncedValue,
 } from '../lib/perf'
+import { elementClearShift } from '../lib/chromeAvoid'
+import { HudPortal } from './Hud'
 import 'leaflet/dist/leaflet.css'
+
+/** Leaflet's own auto-pan ignores our floating UI; PopupClearOfChrome replaces it. */
+const POPUP_OPTS: L.PopupOptions = { autoPan: false, maxWidth: 260 }
 
 type Props = {
   selectedId: string | null
@@ -354,6 +359,57 @@ function MapInvalidate({ active }: { active: boolean }) {
   return null
 }
 
+/**
+ * When a popup opens, pan the map just enough that the popup is inside the map
+ * and not under the Points/Heat switch, legend, panels or zoom buttons.
+ */
+function PopupClearOfChrome() {
+  const map = useMap()
+  useEffect(() => {
+    let raf = 0
+    const onOpen = (e: L.PopupEvent) => {
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() => {
+        const el = e.popup.getElement()
+        if (!el || !map.hasLayer(e.popup)) return
+        const { dx, dy } = elementClearShift(el, map.getContainer())
+        // Moving the popup by (dx, dy) on screen = panning the view by (-dx, -dy)
+        if (dx || dy) map.panBy([-dx, -dy], { animate: true, duration: 0.25 })
+      })
+    }
+    map.on('popupopen', onOpen)
+    return () => {
+      cancelAnimationFrame(raf)
+      map.off('popupopen', onOpen)
+    }
+  }, [map])
+  return null
+}
+
+/** Zoom buttons rendered into the HUD (Leaflet's own control floats over the map). */
+function MapZoom() {
+  const map = useMap()
+  return (
+    <HudPortal slot="bottom-right">
+      <div className="globe-zoom zoom-ctl" role="group" aria-label="Map zoom">
+        <button type="button" className="globe-zoom-btn" onClick={() => map.zoomIn()} title="Zoom in" aria-label="Zoom in">
+          +
+        </button>
+        <button type="button" className="globe-zoom-btn" onClick={() => map.zoomOut()} title="Zoom out" aria-label="Zoom out">
+          −
+        </button>
+      </div>
+      <p className="map-credit">
+        <span className="credit-long">Tiles © Esri — Esri, HERE, Garmin, FAO, NOAA, USGS</span>
+        <span className="credit-short">© Esri</span> ·{' '}
+        <a href="https://leafletjs.com" target="_blank" rel="noreferrer">
+          Leaflet
+        </a>
+      </p>
+    </HudPortal>
+  )
+}
+
 /** Reports Leaflet zoom so heat bins can coarsen/refine with the view. */
 function HeatZoomReporter({ enabled, onZoom }: { enabled: boolean; onZoom: (z: number) => void }) {
   const map = useMap()
@@ -410,6 +466,21 @@ export function WarMap({
     // line up with the (equally unwrapped) theater outline.
     return fc && selectedId ? unwrapPointCollection(fc) : fc
   }, [active, battles, layers.battles, selectedId, allowedWarIds, dyFrom, dyTo, battleCap, showHeat])
+
+  // With a war selected: the other battles of the period as faint grey context
+  const contextBattles = useMemo(() => {
+    if (!active || showHeat || !layers.battles || !selectedId) return null
+    const fc = filterPointFeatures(battles, {
+      yearFrom: dyFrom,
+      yearTo: dyTo,
+      selectedId: null,
+      requireWarMatch: false,
+      warIds: allowedWarIds,
+      limit: 8000,
+    })
+    if (!fc) return null
+    return { ...fc, features: fc.features.filter((f) => String(f.properties?.war_id ?? '') !== selectedId) }
+  }, [active, battles, layers.battles, selectedId, allowedWarIds, dyFrom, dyTo, showHeat])
 
   const heatSource = useMemo(() => {
     if (!active || !showHeat) return null
@@ -503,6 +574,8 @@ export function WarMap({
         zoom={2}
         minZoom={2}
         worldCopyJump
+        zoomControl={false}
+        attributionControl={false}
         preferCanvas
         style={{ height: '100%', width: '100%' }}
       >
@@ -511,6 +584,8 @@ export function WarMap({
           url="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}"
         />
         <MapInvalidate active={active} />
+        <PopupClearOfChrome />
+        <MapZoom />
         <HeatZoomReporter enabled={showHeat && active} onZoom={onMapZoom} />
         <FocusFromNumbers
           active={active}
@@ -548,6 +623,7 @@ export function WarMap({
               const pts = p.point_count != null ? `${escapeHtml(p.point_count)} unique points<br/>` : ''
               layer.bindPopup(
                 `<strong>Theater (approximate)</strong><br/>Quality: ${q}${method ? ` · ${method}` : ''}<br/>${pts}<span style="opacity:.7">Not a political border</span>`,
+                POPUP_OPTS,
               )
             }}
           />
@@ -590,8 +666,19 @@ export function WarMap({
                 src === 'battles' ? 'high' : src === 'ucdp_centroid' ? 'medium' : src === 'midloc_dyadic' ? 'low' : 'none'
               layer.bindPopup(
                 `<strong>${escapeHtml(p.title ?? 'War')}</strong><br/>${escapeHtml(p.start_year ?? '?')}–${escapeHtml(p.end_year ?? '?')}<br/><span style="opacity:.85">Map point confidence: ${escapeHtml(conf)} (${escapeHtml(src)})</span><br/><span style="opacity:.7">${escapeHtml(p.war_id ?? '')}</span>`,
+                POPUP_OPTS,
               )
             }}
+          />
+        )}
+        {contextBattles && contextBattles.features.length > 0 && (
+          <GeoJSON
+            key={`ctx-${selectedId}-${dyFrom}-${dyTo}-${contextBattles.features.length}`}
+            data={contextBattles as GeoJSON.FeatureCollection}
+            interactive={false}
+            pointToLayer={(_f, latlng) =>
+              L.circleMarker(latlng, { radius: 2, weight: 0, fillColor: '#8a98ad', fillOpacity: 0.32, interactive: false })
+            }
           />
         )}
         {filteredBattles && filteredBattles.features.length > 0 && (
@@ -599,18 +686,18 @@ export function WarMap({
             key={battleKey}
             data={filteredBattles as GeoJSON.FeatureCollection}
             pointToLayer={(_f, latlng) =>
-              L.circleMarker(latlng, {
-                radius: selectedId ? 5 : 3,
-                color: '#070d18',
-                weight: 1,
-                fillColor: '#f0c36a',
-                fillOpacity: selectedId ? 0.95 : 0.55,
-              })
+              L.circleMarker(
+                latlng,
+                selectedId
+                  ? { radius: 5, color: '#fff1cf', opacity: 0.6, weight: 1, fillColor: '#f2b84b', fillOpacity: 0.95 }
+                  : { radius: 3, color: '#05080d', weight: 1, fillColor: '#f2b84b', fillOpacity: 0.62 },
+              )
             }
             onEachFeature={(feature, layer) => {
               const p = feature.properties || {}
               layer.bindPopup(
                 `<strong>${escapeHtml(p.name ?? 'Battle')}</strong><br/>${escapeHtml(p.year ?? '?')} · ${escapeHtml(p.source ?? '')}<br/><span style="opacity:.7">${escapeHtml(p.war_id ?? '')}</span>`,
+                POPUP_OPTS,
               )
             }}
           />
@@ -632,11 +719,13 @@ export function WarMap({
               const p = feature.properties || {}
               layer.bindPopup(
                 `<strong>Militarized dispute (MIDLOC)</strong><br/>${escapeHtml(p.name ?? '')}<br/>${escapeHtml(p.year ?? '')}`,
+                POPUP_OPTS,
               )
             }}
           />
         )}
       </MapContainer>
+      <HudPortal slot="bottom-center">
       {showHeat && (
         <div className="heat-legend" aria-hidden>
           <span>
@@ -651,11 +740,11 @@ export function WarMap({
         </div>
       )}
       {sampledNote && (
-        <div className="perf-badge" title="Points load in stages; select a war for a denser sample">
-          Showing {filteredBattles!.features.length.toLocaleString()}
-          {battleCap < BATTLE_OVERVIEW_SOFT_MAX ? '+' : ''} battles (loading denser sample…)
+        <div className="perf-badge" role="status">
+          {battleSampleText(filteredBattles!.features.length, filteredBattles!.matched, battleCap)}
         </div>
       )}
+      </HudPortal>
     </div>
   )
 }

@@ -307,11 +307,6 @@ a:focus-visible {
 }
 
 .atlas-legend {
-  position: absolute;
-  left: 0.85rem;
-  bottom: 1rem;
-  z-index: 1300;
-  max-width: min(280px, calc(100vw - 5.5rem));
   padding: 0.55rem 0.7rem;
   border-radius: var(--radius-sm);
   border: 1px solid var(--line);
@@ -577,17 +572,11 @@ a:focus-visible {
 
 /* â€”â€”â€” Points | Heat map (centered on map surface) â€”â€”â€” */
 .display-mode-wrap {
-  position: absolute;
-  top: 0.85rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1500;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.35rem;
   pointer-events: none;
-  max-width: min(92vw, 420px);
   text-align: center;
 }
 
@@ -612,11 +601,6 @@ a:focus-visible {
 }
 
 .heat-legend {
-  position: absolute;
-  left: 50%;
-  bottom: 1rem;
-  transform: translateX(-50%);
-  z-index: 1200;
   display: flex;
   align-items: center;
   gap: 0.45rem;
@@ -706,7 +690,6 @@ a:focus-visible {
   line-height: 1.35;
 }
 
-
 .guide-card {
   margin-bottom: 0.75rem;
   padding: 0.7rem 0.75rem;
@@ -765,8 +748,6 @@ a:focus-visible {
 }
 
 .panel {
-  position: absolute;
-  z-index: 1500;
   background: var(--bg-panel);
   border: 1px solid var(--line);
   backdrop-filter: blur(16px) saturate(1.2);
@@ -775,10 +756,6 @@ a:focus-visible {
 }
 
 .panel-left {
-  top: 0.75rem;
-  left: 0.75rem;
-  width: min(var(--sidebar-w), calc(100vw - 1.5rem));
-  bottom: 0.75rem;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -786,8 +763,6 @@ a:focus-visible {
 }
 
 .panel-left.collapsed {
-  width: auto;
-  bottom: auto;
   padding: 0;
 }
 
@@ -796,10 +771,6 @@ a:focus-visible {
 }
 
 .panel-right {
-  top: 0.75rem;
-  right: 0.75rem;
-  width: min(var(--detail-w), calc(100vw - 1.5rem));
-  max-height: calc(100% - 1.5rem);
   overflow: auto;
   padding: 0;
   animation: panel-in 280ms var(--ease);
@@ -1451,12 +1422,6 @@ a:focus-visible {
 }
 
 .globe-zoom {
-  position: absolute;
-  right: 0.85rem;
-  top: auto;
-  bottom: 1.25rem;
-  transform: none;
-  z-index: 1400;
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
@@ -1490,12 +1455,6 @@ a:focus-visible {
 }
 
 .globe-pick {
-  position: absolute;
-  top: 0.65rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1450;
-  max-width: min(22rem, calc(100vw - 5.5rem));
   padding: 0.55rem 0.7rem 0.65rem;
   border-radius: var(--radius-sm);
   border: 1px solid var(--line);
@@ -1552,15 +1511,6 @@ a:focus-visible {
   font: inherit;
 }
 
-/* Keep zoom clear of the left explorer panel (default Leaflet is top-left). */
-.map-root .leaflet-top.leaflet-left {
-  top: auto;
-  bottom: 1.25rem;
-  left: auto;
-  right: 0.85rem;
-  z-index: 1400;
-}
-
 .map-root .leaflet-control-zoom {
   border: 1px solid var(--line) !important;
   border-radius: 10px !important;
@@ -1596,11 +1546,6 @@ a:focus-visible {
 }
 
 .perf-badge {
-  position: absolute;
-  left: 50%;
-  bottom: 1rem;
-  transform: translateX(-50%);
-  z-index: 1200;
   padding: 0.35rem 0.7rem;
   border-radius: 999px;
   border: 1px solid var(--line);
@@ -1731,12 +1676,6 @@ a:focus-visible {
 
   /* Collapsed explorer = compact floating Explore chip */
   .panel-left.collapsed {
-    top: 0.55rem;
-    left: max(0.55rem, var(--safe-left));
-    right: auto;
-    bottom: auto;
-    width: auto;
-    max-height: none;
     border-radius: 999px;
     overflow: visible;
     border: 1px solid var(--line-strong);
@@ -1769,13 +1708,7 @@ a:focus-visible {
   }
 
   .display-mode-wrap {
-    top: 0.5rem;
-    left: auto;
-    right: max(0.55rem, var(--safe-right));
-    transform: none;
     align-items: flex-end;
-    max-width: min(46vw, 11.25rem);
-    z-index: 1480;
     gap: 0.3rem;
   }
 
@@ -1785,12 +1718,7 @@ a:focus-visible {
   }
 
   .heat-legend {
-    left: max(0.55rem, var(--safe-left));
-    right: auto;
-    transform: none;
-    bottom: max(0.75rem, var(--safe-bottom));
     font-size: 0.62rem;
-    max-width: min(42vw, 10.5rem);
     overflow: hidden;
     text-overflow: ellipsis;
   }
@@ -1800,41 +1728,8 @@ a:focus-visible {
     display: none;
   }
 
-  .globe-zoom,
-  .map-root .leaflet-top.leaflet-left {
-    bottom: max(0.75rem, var(--safe-bottom));
-  }
-
-  /* Details FAB reserves the bottom center — lift left/right chrome */
-  .view-body:has(.mobile-detail-fab) .heat-legend {
-    bottom: calc(4.35rem + var(--safe-bottom));
-  }
-
-  .view-body:has(.mobile-detail-fab) .globe-zoom,
-  .view-body:has(.mobile-detail-fab) .map-root .leaflet-top.leaflet-left {
-    bottom: calc(4.35rem + var(--safe-bottom));
-  }
-
-  /* Bottom sheets cover the map — hide chrome that would sit under them */
-  .view-body:has(.panel-left:not(.collapsed)) .heat-legend,
-  .view-body:has(.panel-right.mobile-open) .heat-legend,
-  .view-body:has(.panel-left:not(.collapsed)) .globe-zoom,
-  .view-body:has(.panel-right.mobile-open) .globe-zoom,
-  .view-body:has(.panel-left:not(.collapsed)) .map-root .leaflet-top.leaflet-left,
-  .view-body:has(.panel-right.mobile-open) .map-root .leaflet-top.leaflet-left {
-    visibility: hidden;
-    pointer-events: none;
-  }
-
   /* Explorer: bottom sheet when open - map stays mostly visible */
   .panel-left {
-    top: auto;
-    left: max(0.5rem, var(--safe-left));
-    right: max(0.5rem, var(--safe-right));
-    bottom: max(0.5rem, var(--safe-bottom));
-    width: auto;
-    max-height: min(48vh, 420px);
-    max-height: min(48dvh, 420px);
     border-radius: var(--radius) var(--radius) calc(var(--radius) + 2px) calc(var(--radius) + 2px);
     display: flex;
     flex-direction: column;
@@ -1888,14 +1783,6 @@ a:focus-visible {
   .panel-right.mobile-open {
     display: flex;
     flex-direction: column;
-    left: max(0.5rem, var(--safe-left));
-    right: max(0.5rem, var(--safe-right));
-    bottom: max(0.5rem, var(--safe-bottom));
-    top: auto;
-    max-height: min(55vh, 480px);
-    max-height: min(55dvh, 480px);
-    width: auto;
-    z-index: 1700;
     overflow: hidden;
     animation: panel-in 240ms var(--ease);
   }
@@ -1915,10 +1802,6 @@ a:focus-visible {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    position: absolute;
-    right: max(0.65rem, var(--safe-right));
-    bottom: max(0.65rem, var(--safe-bottom));
-    z-index: 1600;
     min-height: var(--touch-min);
     min-width: var(--touch-min);
     padding: 0 0.85rem;
@@ -1960,22 +1843,10 @@ a:focus-visible {
     min-height: 2.35rem;
   }
 
-  .globe-zoom {
-    right: max(0.65rem, var(--safe-right));
-    top: auto;
-    transform: none;
-  }
-
   .globe-zoom-btn {
     width: var(--touch-min);
     height: var(--touch-min);
     font-size: 1.25rem;
-  }
-
-  .map-root .leaflet-top.leaflet-left {
-    right: max(0.65rem, var(--safe-right));
-    left: auto;
-    top: auto;
   }
 
   .map-root .leaflet-control-zoom a {
@@ -2071,7 +1942,6 @@ a:focus-visible {
     overscroll-behavior: contain;
   }
 }
-
 
 /* Narrow phones (iPhone SE-15, Galaxy S compact) — visual polish */
 @media (max-width: 560px) {
@@ -2180,13 +2050,7 @@ a:focus-visible {
 
   /* Keep Points/Heat top-right — never stack over the Details FAB */
   .display-mode-wrap {
-    top: 0.5rem;
-    bottom: auto;
-    left: auto;
-    right: max(0.55rem, var(--safe-right));
-    transform: none;
     align-items: flex-end;
-    max-width: min(44vw, 10.5rem);
   }
 
   .display-mode-wrap .display-mode-switch {
@@ -2211,11 +2075,6 @@ a:focus-visible {
   /* Sheet open: mode stays top-right (already clear of Explore chip) */
 
   .panel-left {
-    left: 0;
-    right: 0;
-    bottom: 0;
-    max-height: min(58vh, 440px);
-    max-height: min(58dvh, 440px);
     border-radius: 18px 18px 0 0;
     border-left: none;
     border-right: none;
@@ -2225,12 +2084,6 @@ a:focus-visible {
   }
 
   .panel-left.collapsed {
-    top: 0.55rem;
-    left: max(0.55rem, var(--safe-left));
-    right: auto;
-    bottom: auto;
-    width: auto;
-    max-height: none;
     border-radius: 999px;
     border: 1px solid var(--line-strong);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(62, 207, 191, 0.12);
@@ -2274,11 +2127,6 @@ a:focus-visible {
   }
 
   .panel-right.mobile-open {
-    left: 0;
-    right: 0;
-    bottom: 0;
-    max-height: min(72vh, 560px);
-    max-height: min(72dvh, 560px);
     border-radius: 18px 18px 0 0;
     border-left: none;
     border-right: none;
@@ -2313,7 +2161,6 @@ a:focus-visible {
     padding: 0.32rem 0.65rem;
     border-radius: 12px;
     box-shadow: var(--shadow-soft);
-    max-width: min(40vw, 9.5rem);
   }
 
   .heat-legend-bar {
@@ -2321,7 +2168,6 @@ a:focus-visible {
   }
 
   .globe-zoom {
-    right: max(0.7rem, var(--safe-right));
     gap: 0.35rem;
   }
 
@@ -2330,35 +2176,14 @@ a:focus-visible {
     box-shadow: var(--shadow-soft);
   }
 
-  .map-root .leaflet-top.leaflet-left {
-    top: auto;
-    left: auto;
-    right: max(0.7rem, var(--safe-right));
-  }
-
   .map-root .leaflet-control-zoom {
     border-radius: 12px !important;
     overflow: hidden;
     box-shadow: var(--shadow-soft) !important;
   }
 
-  .view-body:has(.mobile-detail-fab) .heat-legend {
-    bottom: calc(4.6rem + var(--safe-bottom));
-  }
-
-  .view-body:has(.mobile-detail-fab) .globe-zoom,
-  .view-body:has(.mobile-detail-fab) .map-root .leaflet-top.leaflet-left {
-    bottom: calc(4.6rem + var(--safe-bottom));
-  }
-
   .mobile-detail-fab {
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
-    bottom: max(0.85rem, calc(0.55rem + var(--safe-bottom)));
     min-width: min(12.5rem, calc(100vw - 2rem));
-    max-width: calc(100vw - 1.5rem);
-    height: auto;
     min-height: 2.85rem;
     padding: 0.55rem 1.1rem;
     border-radius: 999px;
@@ -2531,80 +2356,31 @@ a:focus-visible {
   }
 }
 
-
 /* Phone landscape — keep map tall, panels shorter */
 @media (max-width: 900px) and (max-height: 500px) and (orientation: landscape) {
   .panel-left:not(.collapsed) {
-    max-height: none;
-    height: auto;
-    left: max(0.4rem, var(--safe-left));
-    right: auto;
-    width: min(320px, 55vw);
-    top: 0.4rem;
-    bottom: max(0.4rem, var(--safe-bottom));
     border-radius: var(--radius);
     border: 1px solid var(--line);
   }
 
   .panel-right.mobile-open {
-    max-height: none;
-    width: min(340px, 58vw);
-    left: auto;
-    right: max(0.4rem, var(--safe-right));
-    top: 0.4rem;
-    bottom: max(0.4rem, var(--safe-bottom));
     border-radius: var(--radius);
     border: 1px solid var(--line);
   }
 
   .display-mode-wrap {
-    top: 0.35rem;
-    bottom: auto;
-    left: auto;
-    right: max(0.4rem, var(--safe-right));
-    transform: none;
     align-items: flex-end;
-    max-width: min(38vw, 10rem);
-  }
-
-  .heat-legend {
-    left: max(0.4rem, var(--safe-left));
-    right: auto;
-    transform: none;
-    bottom: max(0.5rem, var(--safe-bottom));
-    max-width: min(36vw, 9rem);
   }
 
   .atlas-legend {
     display: none;
   }
 
-  .globe-zoom,
-  .map-root .leaflet-top.leaflet-left {
-    bottom: max(0.5rem, var(--safe-bottom));
-    right: max(0.45rem, var(--safe-right));
-  }
-
   /* Landscape: FAB left of zoom so they don't share the corner */
   .mobile-detail-fab {
-    left: max(0.45rem, var(--safe-left));
-    right: auto;
-    transform: none;
     min-width: 0;
-    max-width: min(12rem, 40vw);
-    width: auto;
-    bottom: max(0.45rem, var(--safe-bottom));
     border-radius: 12px;
     padding: 0.4rem 0.7rem;
-  }
-
-  .view-body:has(.mobile-detail-fab) .heat-legend {
-    bottom: calc(3.6rem + var(--safe-bottom));
-  }
-
-  .view-body:has(.mobile-detail-fab) .globe-zoom,
-  .view-body:has(.mobile-detail-fab) .map-root .leaflet-top.leaflet-left {
-    bottom: max(0.5rem, var(--safe-bottom));
   }
 
   .mobile-detail-fab-title {
@@ -2646,8 +2422,6 @@ a:focus-visible {
     transition: none !important;
   }
 }
-
-
 
 /* â€”â€” Lens / insights page â€”â€” */
 .lens-page {
@@ -2972,22 +2746,14 @@ a:focus-visible {
 
 /* Desktop: the details panel sits on the right edge — move the zoom
    controls to its left so they are never hidden under it. */
-@media (min-width: 901px) {
-  .view-body:has(.panel-right) .map-root .leaflet-top.leaflet-left,
-  .view-body:has(.panel-right) .globe-zoom {
-    right: calc(min(var(--detail-w), calc(100vw - 1.5rem)) + 1.5rem);
-  }
-}
 
 @media (max-width: 900px) {
   /* An open details sheet would cover the Points/Heat toggle (phone landscape). */
   .view-body:has(.panel-right.mobile-open) .display-mode-wrap {
-    visibility: hidden;
     pointer-events: none;
   }
 
   .heat-legend {
-    max-width: none;
     overflow: visible;
   }
 
@@ -3053,5 +2819,22 @@ a:focus-visible {
   .panel-left:not(.collapsed) .war-list {
     flex: none;
     overflow: visible;
+  }
+}
+
+/* Desktop: the open Explorer runs full height on the left, so the map legend
+   (bottom-left) moves to the right of it instead of covering its footer. */
+
+/* Map popups: readable width and a close button big enough to tap. */
+.map-root .leaflet-popup-content {
+  margin: 0.65rem 2.4rem 0.65rem 0.8rem;
+  overflow-wrap: anywhere;
+}
+@media (pointer: coarse) {
+  .map-root .leaflet-popup-close-button {
+    width: 2.25rem !important;
+    height: 2.25rem !important;
+    font: 1.35rem/2.25rem system-ui, sans-serif !important;
+    text-align: center;
   }
 }

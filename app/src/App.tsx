@@ -3,6 +3,9 @@ import { NavLink, Navigate, Route, Routes, useLocation, useNavigate } from 'reac
 import { AboutAtlas } from './components/AboutAtlas'
 import { AtlasLegend } from './components/AtlasLegend'
 import { DisplayModeSwitch } from './components/DisplayModeSwitch'
+import { HudPortal, HudStage } from './components/Hud'
+import { TimeScrubber } from './components/TimeScrubber'
+import { SearchPalette } from './components/SearchPalette'
 import { InsightsPage } from './components/InsightsPage'
 import { WarChrome } from './components/WarChrome'
 import { WarMap } from './components/WarMap'
@@ -416,6 +419,23 @@ function ExplorerShell({
   search: string
 }) {
   const otherViewPath = view === 'map' ? '/globe' : '/map'
+  // Scrubber histogram/count follow the source, coverage and search filters (not years)
+  const scrubWarIds = useMemo(() => {
+    if (state.mode === 'all' && state.coverage === 'all' && !state.query.trim()) return null
+    const list = filterWars(wars, {
+      yearFrom: Number.NEGATIVE_INFINITY,
+      yearTo: Number.POSITIVE_INFINITY,
+      query: state.query,
+      mode: state.mode,
+      coverage: state.coverage,
+    })
+    return new Set(list.map((w) => w.war_id))
+  }, [wars, state.mode, state.coverage, state.query])
+  const selectedSpan = useMemo<[number, number] | null>(() => {
+    const w = state.selectedId ? wars.find((x) => x.war_id === state.selectedId) : null
+    if (!w || w.start_year == null) return null
+    return [w.start_year, w.end_year ?? w.start_year]
+  }, [wars, state.selectedId])
 
   return (
     <div
@@ -423,6 +443,8 @@ function ExplorerShell({
       aria-hidden={!active}
       {...(!active ? ({ inert: true } as HTMLAttributes<HTMLDivElement>) : {})}
     >
+      <HudStage
+        surface={
       <ErrorBoundary label={view === 'map' ? 'Map' : 'Globe'} compact>
         {view === 'map' ? (
           <WarMap
@@ -460,6 +482,8 @@ function ExplorerShell({
           />
         )}
       </ErrorBoundary>
+        }
+      >
       {active && (
         <>
           <DisplayModeSwitch
@@ -468,6 +492,21 @@ function ExplorerShell({
             heatScale={state.heatScale}
             onHeatScale={state.setHeatScale}
           />
+          <HudPortal slot="bar">
+            <TimeScrubber
+              battles={battles}
+              yearFrom={state.yearFrom}
+              yearTo={state.yearTo}
+              yearMin={state.yearMin}
+              yearMax={state.yearMax}
+              onRange={(f, t) => {
+                state.setYearFrom(f)
+                state.setYearTo(t)
+              }}
+              warIds={scrubWarIds}
+              selectedSpan={selectedSpan}
+            />
+          </HudPortal>
           <AtlasLegend
             displayMode={state.displayMode}
             layers={state.layers}
@@ -475,6 +514,7 @@ function ExplorerShell({
           />
           <WarChrome
             wars={wars}
+            battles={battles}
             selectedId={state.selectedId}
             onSelect={state.setSelectedId}
             yearFrom={state.yearFrom}
@@ -505,6 +545,7 @@ function ExplorerShell({
           />
         </>
       )}
+      </HudStage>
     </div>
   )
 }
@@ -630,6 +671,33 @@ export default function App() {
       })()
     : location.search
   const [wars, setWars] = useState<War[] | null>(null)
+  const navigate = useNavigate()
+  const [searchOpen, setSearchOpenState] = useState(false)
+  // Remember what had focus before the search opened, and return focus there on close
+  const searchOpenRef = useRef(false)
+  const searchOpener = useRef<HTMLElement | null>(null)
+  const setSearchOpen = useCallback((next: boolean) => {
+    if (next === searchOpenRef.current) return
+    searchOpenRef.current = next
+    if (next) {
+      searchOpener.current = document.activeElement as HTMLElement | null
+    } else {
+      const el = searchOpener.current
+      window.setTimeout(() => el?.focus?.(), 0)
+    }
+    setSearchOpenState(next)
+  }, [])
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        if (document.querySelector('.about-overlay')) return
+        e.preventDefault()
+        setSearchOpen(!searchOpenRef.current)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [setSearchOpen])
   const [battles, setBattles] = useState<GeoJSONFeatureCollection | null>(null)
   const [theaters, setTheaters] = useState<GeoJSONFeatureCollection | null>(null)
   const [midloc, setMidloc] = useState<GeoJSONFeatureCollection | null>(null)
@@ -762,6 +830,20 @@ export default function App() {
             </NavLink>
           </nav>
         </div>
+        <button
+          type="button"
+          className="topbar-search"
+          onClick={() => setSearchOpen(true)}
+          aria-label="Search wars and years"
+          title="Search (Ctrl+K)"
+        >
+          <svg viewBox="0 0 16 16" aria-hidden>
+            <circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" strokeWidth="1.6" />
+            <path d="m11 11 3.5 3.5" stroke="currentColor" strokeWidth="1.6" />
+          </svg>
+          <span className="topbar-search-label">Search wars, years…</span>
+          <kbd>Ctrl K</kbd>
+        </button>
         <div className="topbar-actions">
           {!onInsights && (
             <div
@@ -831,6 +913,13 @@ export default function App() {
           />
         )}
       </div>
+      <SearchPalette
+        wars={wars}
+        open={searchOpen}
+        onClose={() => setSearchOpen(false)}
+        onPickWar={(w) => navigate(`${path === '/globe' ? '/globe' : '/map'}?war=${encodeURIComponent(w.war_id)}&years=all`)}
+        onPickYear={(y) => navigate(`${path === '/globe' ? '/globe' : '/map'}?from=${y}&to=${y}`)}
+      />
       <AboutAtlas
         open={aboutOpen}
         onClose={closeAbout}

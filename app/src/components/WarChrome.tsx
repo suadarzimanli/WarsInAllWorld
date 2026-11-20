@@ -36,10 +36,15 @@ import {
   type CoverageStats,
 } from '../lib/geoLabels'
 import { useDebouncedValue } from '../lib/perf'
+import { HudPortal } from './Hud'
+import { BattleSpark } from './BattleSpark'
+import { indexWarBattles, sourceLabel, yearBins } from '../lib/warStats'
 import { buildExplorerSearch, explorerShareUrl } from '../lib/urlState'
 
 type Props = {
   wars: War[]
+  /** All battle points (for per-war charts in the details card) */
+  battles: GeoJSONFeatureCollection | null
   selectedId: string | null
   onSelect: (id: string | null) => void
   yearFrom: number
@@ -76,6 +81,14 @@ type Props = {
 
 type Tab = 'list' | 'filters' | 'layers'
 
+/** 16634907 → "16.6M", 52000 → "52k", null → "—" */
+function compactNumber(n: number | null | undefined): string {
+  if (n == null || !Number.isFinite(n)) return '—'
+  if (n >= 1e6) return `${(n / 1e6).toFixed(n >= 1e8 ? 0 : 1)}M`
+  if (n >= 1e4) return `${Math.round(n / 1e3)}k`
+  return Math.round(n).toLocaleString()
+}
+
 /** Paint the war list in chunks so the UI stays responsive, but load everything. */
 const LIST_CHUNK = 200
 
@@ -92,6 +105,7 @@ function yearPresets(yearMax: number): Array<{ label: string; from: number; to: 
 
 export function WarChrome({
   wars,
+  battles,
   selectedId,
   onSelect,
   yearFrom,
@@ -304,11 +318,24 @@ export function WarChrome({
     setRange(yearFrom, y)
   }
 
+  const battleIndex = useMemo(() => indexWarBattles(battles), [battles])
+  const selStats = selected ? battleIndex.get(selected.war_id) : undefined
+  const selBins = useMemo(
+    () =>
+      selected && selStats
+        ? yearBins(selStats.byYear, selected.start_year ?? Infinity, selected.end_year ?? selected.start_year ?? -Infinity)
+        : [],
+    [selected, selStats],
+  )
+  const listMaxBattles = useMemo(() => filtered.reduce((m, w) => Math.max(m, w.battle_count || 0), 1), [filtered])
+
   const shown = filtered.slice(0, visible)
   const listLoading = visible < filtered.length
 
   return (
-    <div className="explorer-chrome">
+    <>
+      {/* Collapsed: a compact chip in the top-left zone. Open: the left dock (desktop) or bottom sheet (phone). */}
+      <HudPortal slot={sidebarOpen ? 'dock-left' : 'top-left'}>
       <aside className={`panel panel-left${sidebarOpen ? '' : ' collapsed'}`}>
         <div className="panel-header">
           <div>
@@ -750,11 +777,15 @@ export function WarChrome({
                             <span className={`tier-pill ${w.definition_tier}`}>{tierLabel(w.definition_tier)}</span>
                           </span>
                           <span className="meta">
-                            <span>
+                            <span className="meta-years">
                               {formatYear(w.start_year)}–{formatYear(w.end_year)}
                             </span>
-                            <span>·</span>
-                            <span>{w.battle_count} pts</span>
+                            <span className="meta-bar" aria-hidden>
+                              <i style={{ width: `${w.battle_count ? Math.max(3, Math.sqrt(w.battle_count / listMaxBattles) * 100) : 0}%` }} />
+                            </span>
+                            <span className="meta-count">
+                              {w.battle_count ? `${w.battle_count.toLocaleString()} battle${w.battle_count === 1 ? '' : 's'}` : 'no battles'}
+                            </span>
                           </span>
                         </button>
                       </li>
@@ -774,8 +805,10 @@ export function WarChrome({
           </div>
         )}
       </aside>
+      </HudPortal>
 
       {selected && (
+        <HudPortal slot="dock-right">
         <aside className={`panel panel-right detail${mobileDetailOpen ? ' mobile-open' : ''}`}>
           <div className="detail-head">
             <div className="detail-actions-top">
@@ -791,43 +824,67 @@ export function WarChrome({
                 Close
               </button>
             </div>
-            <h2>{selected.title}</h2>
             <span className={`tier-pill ${selected.definition_tier}`}>{tierLabel(selected.definition_tier)}</span>
+            <h2>{selected.title}</h2>
+            <p className="detail-span">{warSpanLabel(selected, formatYear)}</p>
           </div>
           <div className="detail-body">
-            <section className="war-dossier" aria-label="War dossier">
-              <h3 className="dossier-title">Dossier</h3>
-              <div className="dossier-timeline" aria-hidden>
-                <span>{formatYear(selected.start_year)}</span>
-                <span className="dossier-timeline-bar" />
-                <span>{formatYear(selected.end_year)}</span>
+            <div className="dossier-stats">
+              <div className="dstat">
+                <span className="dstat-n">{selected.battle_count.toLocaleString()}</span>
+                <span className="dstat-l">Mapped battles</span>
               </div>
-              <p className="dossier-era">
-                {selected.era_bucket?.replace(/_/g, ' ') || 'Era unknown'} ·{' '}
-                {tierLabel(selected.definition_tier)} · {selected.war_class || 'class unknown'}
-              </p>
+              <div className="dstat" title={deathEstimateLabel(selected.death_source)}>
+                <span className="dstat-n">{compactNumber(selected.death_estimate)}</span>
+                <span className="dstat-l">
+                  {selected.death_source === 'cow_battle_deaths'
+                    ? 'Battle deaths · COW'
+                    : selected.death_source === 'ucdp_best_total'
+                      ? 'Deaths · UCDP best'
+                      : 'Deaths (est.)'}
+                </span>
+              </div>
+              <div className="dstat">
+                <span className="dstat-n">{(selected.sources || '').split('|').filter(Boolean).length || '—'}</span>
+                <span className="dstat-l">Catalogue sources</span>
+              </div>
+            </div>
+            {selBins.length > 0 ? (
+              <section className="dossier-block" aria-label="Mapped battles over time">
+                <h3 className="dossier-kicker">Mapped battles over time</h3>
+                <BattleSpark bins={selBins} />
+              </section>
+            ) : (
               <p className="dossier-spatial">
-                Spatial:{' '}
-                {warCoverageBucket(selected) === 'has_battles'
-                  ? `${selected.battle_count.toLocaleString()} mapped battle/combat points`
-                  : warCoverageBucket(selected) === 'proxy_only'
-                    ? `proxy only (${selected.geo_source}) — no battle points for heat`
-                    : 'unmapped — no battle points or location proxy'}
+                {warCoverageBucket(selected) === 'proxy_only'
+                  ? `No battle points — map shows a ${geoSourceLabel(selected.geo_source).toLowerCase()} instead.`
+                  : 'No battle points or location proxy yet — common for COW-only wars.'}
               </p>
+            )}
+            <section className="dossier-block" aria-label="Sources">
+              <h3 className="dossier-kicker">Where this war comes from</h3>
+              <div className="source-chips">
+                {(selected.sources || '')
+                  .split('|')
+                  .filter(Boolean)
+                  .map((s) => (
+                    <span key={`c-${s}`} className="source-chip catalog" title="War listed in this dataset">
+                      <i aria-hidden />
+                      {sourceLabel(s)} · war record
+                    </span>
+                  ))}
+                {selStats &&
+                  [...selStats.bySource.entries()]
+                    .sort((x, y) => y[1] - x[1])
+                    .map(([s, n]) => (
+                      <span key={`b-${s}`} className="source-chip battles" title="Mapped battle/combat events from this dataset">
+                        <i aria-hidden />
+                        {sourceLabel(s)} · {n.toLocaleString()} battle{n === 1 ? '' : 's'}
+                      </span>
+                    ))}
+              </div>
             </section>
             <dl className="meta-grid">
-              <div className="meta-card">
-                <dt>Years</dt>
-                <dd>{warSpanLabel(selected, formatYear)}</dd>
-              </div>
-              <div className="meta-card">
-                <dt>Points</dt>
-                <dd>{selected.battle_count.toLocaleString()}</dd>
-              </div>
-              <div className="meta-card wide">
-                <dt>Sources</dt>
-                <dd>{selected.sources || '—'}</dd>
-              </div>
               {selected.geo_source && (
                 <div className="meta-card wide">
                   <dt>Map point</dt>
@@ -880,7 +937,7 @@ export function WarChrome({
                 </div>
               )}
               {selected.death_estimate != null && (
-                <div className="meta-card">
+                <div className="meta-card wide">
                   <dt>{deathEstimateLabel(selected.death_source)}</dt>
                   <dd>{Math.round(selected.death_estimate).toLocaleString()}</dd>
                 </div>
@@ -962,9 +1019,11 @@ export function WarChrome({
             </p>
           </div>
         </aside>
+        </HudPortal>
       )}
 
       {selected && !mobileDetailOpen && (
+        <HudPortal slot="bottom-center">
         <button
           type="button"
           className="btn primary mobile-detail-fab"
@@ -979,7 +1038,8 @@ export function WarChrome({
             <span className="mobile-detail-fab-title">{selected.title}</span>
           </span>
         </button>
+        </HudPortal>
       )}
-    </div>
+    </>
   )
 }

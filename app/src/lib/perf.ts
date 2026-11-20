@@ -17,7 +17,8 @@ export const CENTROID_OVERVIEW_CAP = 2000
  */
 export const HEAT_POINT_SOFT_MAX = 60000
 
-export type FilteredPoints = GeoJSONFeatureCollection & { truncated: boolean }
+/** `matched` = points passing the filters before sampling down to `limit`. */
+export type FilteredPoints = GeoJSONFeatureCollection & { truncated: boolean; matched: number }
 
 /** Prefer evenly spaced sample so overview stays readable. */
 function sampleFeatures(
@@ -80,7 +81,19 @@ export function filterPointFeatures(
   const limit = opts.limit
   const truncated = limit != null && matched.length > limit
   const features = limit != null ? sampleFeatures(matched, limit) : matched
-  return { type: 'FeatureCollection', features, truncated }
+  return { type: 'FeatureCollection', features, truncated, matched: matched.length }
+}
+
+/**
+ * Badge text when only a sample of the matching battles is drawn. While the
+ * overview cap is still growing it says so; once it has reached the overview
+ * maximum it says the view is a fixed sample (it used to claim "loading…" forever).
+ */
+export function battleSampleText(shown: number, matched: number, cap: number): string {
+  const n = (v: number) => v.toLocaleString()
+  return cap < BATTLE_OVERVIEW_SOFT_MAX
+    ? `Loading battles… ${n(shown)} of ${n(matched)}`
+    : `Showing a sample of ${n(shown)} of ${n(matched)} battles — select a war or narrow the years to see every point`
 }
 
 /** Debounce a rapidly changing value (year sliders, search). */

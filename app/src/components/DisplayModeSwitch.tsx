@@ -1,4 +1,5 @@
 import type { DisplayMode, HeatScaleMode } from '../types'
+import { HudPortal } from './Hud'
 
 type Props = {
   mode: DisplayMode
@@ -10,6 +11,7 @@ type Props = {
 /** Centered Points | Heat map switch (sits on the map surface, under the topbar). */
 export function DisplayModeSwitch({ mode, onMode, heatScale, onHeatScale }: Props) {
   return (
+    <HudPortal slot="top-center">
     <div className="display-mode-wrap" role="group" aria-label="Display mode">
       <div className="display-mode-switch nav-switch">
         <button
@@ -64,5 +66,6 @@ export function DisplayModeSwitch({ mode, onMode, heatScale, onHeatScale }: Prop
             : 'Mapped battle density under your filters (redder = denser in this view). Not intensity of war. Point layers hidden.'}
       </p>
     </div>
+    </HudPortal>
   )
 }

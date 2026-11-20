@@ -21,9 +21,11 @@ import {
   CENTROID_OVERVIEW_CAP,
   HEAT_POINT_SOFT_MAX,
   MIDLOC_OVERVIEW_CAP,
+  battleSampleText,
   filterPointFeatures,
   useDebouncedValue,
 } from '../lib/perf'
+import { HudPortal } from './Hud'
 import 'cesium/Build/Cesium/Widgets/widgets.css'
 
 type Props = {
@@ -104,10 +106,11 @@ export function WarGlobe({
   )
   const debouncedHeatCellKm = useDebouncedValue(heatCellKm, 120)
 
-  const { points, battleTruncated } = useMemo(() => {
+  const { points, battleTruncated, sample } = useMemo(() => {
     const out: Pt[] = []
     let truncated = false
-    if (!active) return { points: out, battleTruncated: truncated }
+    let sample = { shown: 0, matched: 0 }
+    if (!active) return { points: out, battleTruncated: truncated, sample }
 
     if (showHeat) {
       const source = filterPointFeatures(battles, {
@@ -147,6 +150,7 @@ export function WarGlobe({
           limit: battleCap,
         })
         truncated = Boolean(fc?.truncated)
+        sample = { shown: fc?.features.length ?? 0, matched: fc?.matched ?? 0 }
         for (const f of fc?.features ?? []) {
           const ll = pointLngLat(f.geometry)
           if (!ll) continue
@@ -208,7 +212,7 @@ export function WarGlobe({
         }
       }
     }
-    return { points: out, battleTruncated: truncated }
+    return { points: out, battleTruncated: truncated, sample }
   }, [
     active,
     battles,
@@ -750,6 +754,8 @@ export function WarGlobe({
   return (
     <div className="globe-shell" aria-hidden={!active} style={{ visibility: active ? 'visible' : 'hidden' }}>
       <div className="globe-root" ref={containerRef} />
+      {/* Pick card sits in the top-centre zone, under the Points/Heat switch */}
+      <HudPortal slot="top-center">
       {pickInfo && (
         <div className="globe-pick" role="status">
           <div className="globe-pick-head">
@@ -769,7 +775,9 @@ export function WarGlobe({
           />
         </div>
       )}
-      <div className="globe-zoom" role="group" aria-label="Globe zoom">
+      </HudPortal>
+      <HudPortal slot="bottom-right">
+      <div className="globe-zoom zoom-ctl" role="group" aria-label="Globe zoom">
         <button type="button" className="globe-zoom-btn" onClick={() => zoomBy('in')} title="Zoom in" aria-label="Zoom in">
           +
         </button>
@@ -777,9 +785,18 @@ export function WarGlobe({
           −
         </button>
       </div>
+      <p className="map-credit">
+        <span className="credit-long">Imagery © Esri, Maxar, Earthstar Geographics</span>
+        <span className="credit-short">© Esri, Maxar</span> ·{' '}
+        <a href="https://cesium.com/platform/cesiumjs/" target="_blank" rel="noreferrer">
+          CesiumJS
+        </a>
+      </p>
+      </HudPortal>
+      <HudPortal slot="bottom-center">
       {battleTruncated && displayMode !== 'heatmap' && (
-        <div className="perf-badge" title="Points load in stages; select a war for a denser sample">
-          Loading denser battle sample…
+        <div className="perf-badge" role="status">
+          {battleSampleText(sample.shown, sample.matched, battleCap)}
         </div>
       )}
       {displayMode === 'heatmap' && (
@@ -795,6 +812,7 @@ export function WarGlobe({
           </span>
         </div>
       )}
+      </HudPortal>
     </div>
   )
 }
