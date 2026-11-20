@@ -1,5 +1,7 @@
 # Wars In All World
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24401841.svg)](https://doi.org/10.5281/zenodo.24401841)
+
 Interactive **research atlas** of recorded wars: timeline filters, battle and theater geography on **Map** and **Globe**, and a **Numbers** page that shows how counting and era windows change the story.
 
 The application is a browser over **geocoded records we ingested** from public conflict datasets—not a complete history of all wars, and not proof that any region “had the most war.”
